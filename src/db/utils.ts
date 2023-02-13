@@ -3,15 +3,17 @@ export type Games = Game[];
 export type Game = {
   id: string;
   name: string;
-  players: User[];
+  team1: Users;
+  team2: Users;
 };
 
 export type Users = User[];
 
 export type User = {
   id: string;
-  name: string;
+  username: string;
   email: string;
-  password: string;
-  games: string[];
+  cover: string;
+  games: Games;
+  goals: number;
 };

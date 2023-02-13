@@ -1,5 +1,5 @@
 import { collection, onSnapshot } from "firebase/firestore";
-import { db } from "../../firebase";
+import { db } from "../../services/firebase";
 import { Game, Games, User, Users } from "../utils";
 
 // GET ALL GAMES
