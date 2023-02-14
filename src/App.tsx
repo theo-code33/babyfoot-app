@@ -3,13 +3,19 @@ import { signUp } from "./services/auth/auth.service";
 
 function App() {
   const user = {
-    username: "test",
+    username: "patapouf",
     password: "test33",
-    email: "qsdfsgdh@gmail.com",
+    email: "dfsgb@gmail.com",
+    cover: null,
   };
 
-  const handleClick = () => {
+  const handleClick = (): void => {
     signUp(user);
+  };
+
+  const handleImage = (e: any): void => {
+    const file = e.target.files[0];
+    user.cover = file;
   };
 
   return (
@@ -27,6 +33,7 @@ function App() {
         >
           Learn React
         </a>
+        <input type="file" name="file" id="file" onInput={handleImage} />
       </header>
     </div>
   );
