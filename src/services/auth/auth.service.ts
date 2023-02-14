@@ -8,7 +8,7 @@ import {
 import { doc, getDoc } from "firebase/firestore";
 import { createUser } from "../../db/users/create.users";
 import { UserDb } from "../../db/users/utils";
-import { db } from "../firebase";
+import { db } from "../config/firebase";
 import { removeToken, setToken } from "../token/token.service";
 import { Sign, DefaultUser } from "./utils";
 
