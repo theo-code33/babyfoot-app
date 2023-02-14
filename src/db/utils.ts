@@ -3,8 +3,14 @@ export type Games = Game[];
 export type Game = {
   id: string;
   name: string;
-  blue: UsersGames;
-  red: UsersGames;
+  blue: {
+    score: number;
+    users: UsersGames;
+  };
+  red: {
+    score: number;
+    users: UsersGames;
+  };
   lastActions: LastActions;
   maxScore: number;
   time: number;

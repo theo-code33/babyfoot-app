@@ -5,8 +5,14 @@ import { ContextType, Props } from "./utils";
 export const gameDefault: Game = {
   id: "",
   name: "",
-  blue: [],
-  red: [],
+  blue: {
+    score: 0,
+    users: [],
+  },
+  red: {
+    score: 0,
+    users: [],
+  },
   lastActions: [],
   maxScore: 0,
   time: 0,
