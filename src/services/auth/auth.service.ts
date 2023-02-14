@@ -4,15 +4,14 @@ import { createUser } from "../../db/users/create.users";
 import { UserDb } from "../../db/users/utils";
 import { db } from "../firebase";
 import { removeToken, setToken } from "../token/token.service";
-import { Sign } from "./utils";
+import { Sign, SignUp } from "./utils";
 
-export const signUp = async (userDatas: UserDb) => {
+export const signUp = async (userDatas: SignUp) => {
     const auth = getAuth()
     try {
-        await createUser(userDatas)
         const userCredential = await createUserWithEmailAndPassword(auth, userDatas.email , userDatas.password)
         const {user} = userCredential
-        createUser(userDatas)
+        await createUser(userDatas, user.uid)
         // setUser(user)
         setToken(user.uid)
         

@@ -4,10 +4,9 @@ import { signUp } from './services/auth/auth.service';
 function App() {
 
   const user = {
-    uid: '',
     username: 'test',
     password: 'test33',
-    email: 'gittheo1@gmail.com'
+    email: 'qsdfsgdh@gmail.com'
   }
 
   const handleClick = () => {
