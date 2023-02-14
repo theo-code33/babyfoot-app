@@ -1,37 +1,12 @@
-import React, { useEffect } from 'react';
-import { signUp } from './services/auth/auth.service';
+import React, { useEffect } from "react";
+import { BrowserRouter } from "react-router-dom";
+import MainRouter from "./app/routes/MainRouter";
 
 function App() {
-
-  const user = {
-    username: 'test',
-    password: 'test33',
-    email: 'qsdfsgdh@gmail.com'
-  }
-
-  const handleClick = () => {
-    signUp(user)
-  }
-
   return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <button onClick={handleClick}>
-          Click me
-        </button>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <MainRouter />
+    </BrowserRouter>
   );
 }
 

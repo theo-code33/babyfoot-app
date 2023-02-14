@@ -28,14 +28,14 @@ export type UserGame = {
 export type Fouls = Foul[];
 
 export type Foul = {
-  name: "rateau" | "pisette" | " roulette";
-  number: number;
+  name: "rateau" | "pisette" | "roulette";
+  count: number;
 };
 export type Technicals = Technical[];
 
 export type Technical = {
-  name: "cendar" | "lob" | " but incroybable";
-  number: number;
+  name: "cendar" | "lob" | "but incroyable";
+  count: number;
 };
 
 export type Postes = Poste[];
