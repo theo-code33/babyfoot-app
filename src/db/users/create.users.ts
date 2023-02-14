@@ -1,13 +1,16 @@
-import { doc, setDoc } from "firebase/firestore";
+import { doc, Firestore, setDoc } from "firebase/firestore";
 import { db } from "../../services/firebase";
-import { User } from "../utils";
+import { UserDb } from "./utils";
 
-export const createUser = async (datas: User) => {
+
+export const createUser = async (datas: UserDb) => {
     try {
         const userCredential = datas
-        const userResponse = await setDoc(doc(db, 'users', userCredential.uid), userCredential)
+        const docRef = doc(db, 'users', userCredential.uid)
+        const userResponse = await setDoc(docRef, userCredential)
         return userResponse
     } catch (error: any) {
-        throw new Error(error.message)
+        const {code, message} = error;
+        console.error(`Error code: ${code} - Error message: ${message}`);
     }
 }

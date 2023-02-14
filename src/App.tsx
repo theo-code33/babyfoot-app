@@ -1,6 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { signUp } from './services/auth/auth.service';
 
 function App() {
+
+  const user = {
+    uid: '',
+    username: 'test',
+    password: 'test33',
+    email: 'gittheo1@gmail.com'
+  }
+
+  useEffect(() => {
+    signUp(user)
+  },[])
+
   return (
     <div className="App">
       <header className="App-header">

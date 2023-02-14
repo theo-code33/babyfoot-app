@@ -1,18 +1,19 @@
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, sendPasswordResetEmail } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
 import { createUser } from "../../db/users/create.users";
-import { User } from "../../db/utils";
+import { UserDb } from "../../db/users/utils";
 import { db } from "../firebase";
 import { removeToken, setToken } from "../token/token.service";
 import { Sign } from "./utils";
 
-export const signUp = async (userDatas: User, setUser: Function) => {
+export const signUp = async (userDatas: UserDb) => {
     const auth = getAuth()
     try {
         await createUser(userDatas)
         const userCredential = await createUserWithEmailAndPassword(auth, userDatas.email , userDatas.password)
         const {user} = userCredential
-        setUser(user)
+        createUser(userDatas)
+        // setUser(user)
         setToken(user.uid)
         
     } catch (error: any) {
