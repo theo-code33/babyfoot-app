@@ -77,7 +77,7 @@ const SignUp = () => {
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
-    signUp(user);
+    signUp(user, setUser);
   };
 
   return (

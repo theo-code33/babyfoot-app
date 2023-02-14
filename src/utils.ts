@@ -13,7 +13,7 @@ export type User = {
   uid?: string;
   username: string;
   email: string;
-  cover?: string;
+  cover?: any;
   games?: Games;
   goals?: number;
 };

@@ -12,7 +12,7 @@ import { db } from "../firebase";
 import { removeToken, setToken } from "../token/token.service";
 import { Sign, DefaultUser } from "./utils";
 
-export const signUp = async (userDatas: DefaultUser) => {
+export const signUp = async (userDatas: DefaultUser, setUser: Function) => {
   const auth = getAuth();
   try {
     const userCredential = await createUserWithEmailAndPassword(
@@ -22,7 +22,7 @@ export const signUp = async (userDatas: DefaultUser) => {
     );
     const { user } = userCredential;
     await createUser(userDatas, user.uid);
-    // setUser(user)
+    setUser(user);
     setToken(user.uid);
   } catch (error: any) {
     throw new Error(error.message);
