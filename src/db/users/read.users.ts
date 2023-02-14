@@ -1,4 +1,4 @@
-import { db } from "../../services/firebase";
+import { db } from "../../services/config/firebase";
 
 export const getUserByUid = async (uid: string) => {
 
