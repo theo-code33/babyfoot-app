@@ -1,17 +1,16 @@
-import React, { useEffect } from 'react';
-import { signUp } from './services/auth/auth.service';
+import React, { useEffect } from "react";
+import { signUp } from "./services/auth/auth.service";
 
 function App() {
-
   const user = {
-    username: 'test',
-    password: 'test33',
-    email: 'qsdfsgdh@gmail.com'
-  }
+    username: "test",
+    password: "test33",
+    email: "qsdfsgdh@gmail.com",
+  };
 
   const handleClick = () => {
-    signUp(user)
-  }
+    signUp(user);
+  };
 
   return (
     <div className="App">
@@ -19,9 +18,7 @@ function App() {
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
         </p>
-        <button onClick={handleClick}>
-          Click me
-        </button>
+        <button onClick={handleClick}>Click me</button>
         <a
           className="App-link"
           href="https://reactjs.org"
