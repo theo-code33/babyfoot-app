@@ -10,9 +10,8 @@ export type Game = {
 export type Users = User[];
 
 export type User = {
-  uid: string;
+  uid?: string;
   username: string;
-  password: string;
   email: string;
   cover?: string;
   games?: Games;
