@@ -10,9 +10,9 @@ function App() {
     email: 'gittheo1@gmail.com'
   }
 
-  useEffect(() => {
+  const handleClick = () => {
     signUp(user)
-  },[])
+  }
 
   return (
     <div className="App">
@@ -20,6 +20,9 @@ function App() {
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
         </p>
+        <button onClick={handleClick}>
+          Click me
+        </button>
         <a
           className="App-link"
           href="https://reactjs.org"
