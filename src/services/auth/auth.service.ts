@@ -21,8 +21,8 @@ export const signUp = async (userDatas: DefaultUser, setUser: Function) => {
       userDatas.password
     );
     const { user } = userCredential;
-    await createUser(userDatas, user.uid);
-    setUser(user);
+    const userDb = await createUser(userDatas, user.uid);
+    setUser(userDb);
     setToken(user.uid);
   } catch (error: any) {
     throw new Error(error.message);
