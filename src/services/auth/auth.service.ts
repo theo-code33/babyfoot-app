@@ -15,18 +15,21 @@ import { Sign, DefaultUser } from "./utils";
 export const signUp = async (userDatas: DefaultUser, setUser: Function) => {
   const auth = getAuth();
   try {
-    const userCredential = await createUserWithEmailAndPassword(
-      auth,
-      userDatas.email,
-      userDatas.password
-    );
-    const { user } = userCredential;
-    await createUser(userDatas, user.uid);
-    const userDb = await getDoc(doc(db, "users", user.uid));
-    if (!userDb.exists()) throw new Error("User not found");
-    const userSnap = userDb.data()
-    setUser(userSnap);
-    setToken(user.uid);
+    if(userDatas.password !== undefined){
+        const userCredential = await createUserWithEmailAndPassword(
+          auth,
+          userDatas.email,
+          userDatas.password
+        );
+        const { user } = userCredential;
+        delete userDatas.password;
+        await createUser(userDatas, user.uid);
+        const userDb = await getDoc(doc(db, "users", user.uid));
+        if (!userDb.exists()) throw new Error("User not found");
+        const userSnap = userDb.data()
+        setUser(userSnap);
+        setToken(user.uid);
+    }
   } catch (error: any) {
     throw new Error(error.message);
   }

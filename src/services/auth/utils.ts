@@ -7,7 +7,7 @@ export type Sign = {
 export type DefaultUser = {
   username: string;
   email: string;
-  password: string;
+  password?: string;
   goals: number;
   postes: Postes;
   fouls: Fouls;
