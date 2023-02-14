@@ -1,5 +1,5 @@
 import { collection, onSnapshot } from "firebase/firestore";
-import { db } from "../../services/firebase";
+import { db } from "../../services/config/firebase";
 import { Game, Games } from "../utils";
 
 export const getGames = async (

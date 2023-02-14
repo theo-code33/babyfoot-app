@@ -6,7 +6,7 @@ import { getGames } from "./db/game/readGames";
 import { Games } from "./db/utils";
 
 function App() {
-  const { game, setGame } = useContext(Context);
+  const { setGame } = useContext(Context);
   const [isFetching, setIsFetching] = useState<boolean>(true);
   const [games, setGames] = useState<Games | null>(null);
 
@@ -16,19 +16,19 @@ function App() {
 
   useEffect(() => {
     isFetching && games && setIsFetching(false);
-  }, [isFetching]);
+  }, [games]);
 
   useEffect(() => {
-    console.log("la");
-
-    if (isFetching && games) {
-      console.log("ici");
-
+    if (!isFetching && games && games.length > 0) {
       const game = games.find((game) => game.isActive === true);
-      console.log(game);
-      game && setGame(game);
+
+      if (game) {
+        console.log("game found");
+        console.log(game);
+        setGame(game);
+      }
     }
-  }, [games]);
+  }, [isFetching, games]);
 
   return (
     <BrowserRouter>
