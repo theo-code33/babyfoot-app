@@ -5,15 +5,15 @@ export type Game = {
   name: string;
   blue: {
     score: number;
-    users: UsersGames;
+    users?: UsersGames;
   };
   red: {
     score: number;
-    users: UsersGames;
+    users?: UsersGames;
   };
-  lastActions: LastActions;
+  lastActions?: LastActions;
   maxScore: number;
-  time: number;
+  time?: number;
   isActive: boolean;
   code: number[];
 };
