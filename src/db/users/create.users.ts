@@ -16,6 +16,7 @@ export const createUser = async (datas: User, uid: string) => {
         }
 
         const docRef = doc(db, 'users', uid)
+        datas.uid = uid
         const userResponse = await setDoc(docRef, datas)
         return userResponse
     } catch (error: any) {
