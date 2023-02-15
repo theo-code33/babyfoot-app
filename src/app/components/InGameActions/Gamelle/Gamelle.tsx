@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { Context } from "../../../../context/context";
+import { GameContext } from "../../../../context/gameContext";
 import { updateDoc } from "../../../../db/game/setGame";
 
 const Gamelle = () => {
@@ -7,7 +7,7 @@ const Gamelle = () => {
   const [gamelle, setGamelle] = useState<string>("");
   const [positions, setPositions] = useState<boolean>(false);
 
-  const { game, setGame } = useContext(Context);
+  const { game, setGame } = useContext(GameContext);
 
   function determinerPosition(value: string): string {
     if (value === "AC" || value === "AG" || value === "AD" || value === "M") {

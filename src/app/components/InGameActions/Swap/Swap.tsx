@@ -1,9 +1,9 @@
 import { useContext } from "react";
-import { Context } from "../../../../context/context";
+import { GameContext } from "../../../../context/gameContext";
 import { updateDoc } from "../../../../db/game/setGame";
 
 const Swap = () => {
-  const { game, setGame } = useContext(Context);
+  const { game, setGame } = useContext(GameContext);
 
   const handleClick = () => {
     console.log("click");
@@ -13,7 +13,7 @@ const Swap = () => {
         ...game,
         blue: {
           ...game.blue,
-          users: game.blue.users?.map((user) => {
+          users: game.blue.users?.map((user : any) => {
             if (user.playerPoste === "Attaquant") {
               return {
                 ...user,

@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { UserContext } from "../../../../context/userContext";
 import { signIn } from "../../../../services/auth/auth.service";
 import { Sign } from "../../../../services/auth/utils";
 
@@ -7,6 +8,7 @@ const SignIn = () => {
     email: "",
     password: "",
   });
+  const { setUser: setGlobalUser } = useContext(UserContext);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUser({ ...user, [e.target.name]: e.target.value });
@@ -16,7 +18,7 @@ const SignIn = () => {
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
-    signIn(user, setUser);
+    signIn(user, setGlobalUser);
   };
 
   return (

@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { Context } from "../../../../context/context";
+import { GameContext } from "../../../../context/gameContext";
 import { updateDoc } from "../../../../db/game/setGame";
 
 const But = () => {
@@ -19,7 +19,7 @@ const But = () => {
       return "error";
     }
   }
-  const { game, setGame } = useContext(Context);
+  const { game, setGame } = useContext(GameContext);
 
   const handleGoal = () => {
     setPositions(!positions);

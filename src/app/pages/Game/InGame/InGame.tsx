@@ -1,11 +1,21 @@
-import { useContext, useState } from "react";
-import { Context } from "../../../../context/context";
+import { useContext, useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { GameContext } from "../../../../context/gameContext";
 import But from "../../../components/InGameActions/But";
 import Gamelle from "../../../components/InGameActions/Gamelle";
 import Swap from "../../../components/InGameActions/Swap/Swap";
 
 const InGame = () => {
-  const { game, setGame } = useContext(Context);
+  const { game, setGame } = useContext(GameContext);
+  const { id } = useParams();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (id !== game.id) {
+      navigate('/game');
+    }
+  }, [id])
+
   return (
     <div>
       <div>

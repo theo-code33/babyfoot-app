@@ -45,6 +45,8 @@ export const signIn = async (datas: Sign, setUser: Function) => {
     const userSnap = await getDoc(doc(db, "users", userCredential.user.uid));
     if (!userSnap.exists()) throw new Error("User not found");
     const user = userSnap.data();
+
+    
     setUser(user);
     setToken(user.uid);
   } catch (error: any) {
