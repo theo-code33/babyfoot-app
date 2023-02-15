@@ -309,6 +309,7 @@ function App() {
 
   useEffect(() => {
     isFetching && getGames(setGames);
+
     // updateDoc({
     //   newDatas: gameDefault,
     //   collectionId: "games",
