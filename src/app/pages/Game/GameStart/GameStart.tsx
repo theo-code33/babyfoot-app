@@ -1,16 +1,25 @@
 import { useContext, useEffect } from "react";
-import { Context } from "../../../../context/context";
+import { GameContext } from "../../../../context/gameContext";
+import { useNavigate } from "react-router-dom";
 
 const GameStart = () => {
-  const { game, setGame } = useContext(Context);
+  const { game, setGame } = useContext(GameContext);
+
+  const navigate = useNavigate();
+
+  const handleNavigate = () => {
+    navigate("/game/create");
+  }
 
   useEffect(() => {
-    console.log(game);
-  }, []);
+    if(game.id !== ""){
+      navigate(`/game/${game.id}`);
+    }
+  }, [game])
 
   return (
     <div>
-      <h1>GameStart</h1>
+      <button onClick={handleNavigate}>Create game</button>
     </div>
   );
 };
