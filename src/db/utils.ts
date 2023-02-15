@@ -36,9 +36,12 @@ export type UserGame = {
 export type Fouls = Foul[];
 
 export type Foul = {
-  name: "rateau" | "pisette" | "roulette";
+  name: FoulName;
   count: number;
 };
+
+export type FoulName = "rateau" | "pisette" | "roulette" | "";
+
 export type Technicals = Technical[];
 
 export type Technical = {
@@ -49,9 +52,11 @@ export type Technical = {
 export type Postes = Poste[];
 
 export type Poste = {
-  name: "AG" | "AC" | "AD" | "M" | "DG" | "DD" | "G";
+  name: PostesName;
   goals: number;
 };
+
+export type PostesName = "AG" | "AC" | "AD" | "M" | "DG" | "DD" | "G" | "";
 
 export type LastActions = LastAction[];
 

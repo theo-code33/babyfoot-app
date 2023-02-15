@@ -26,19 +26,23 @@ export const gameDefault: Game = {
 export const actionDefault: Action = {
   drawerIsOpen: false,
   type: "",
+  team: "red",
 };
 
 // TYPE
 export type Action = {
   drawerIsOpen: boolean;
   type: ActionType;
+  team?: Team;
 };
+
+export type Team = "blue" | "red";
 
 export type ActionType =
   | "But"
   | "Gamelle"
   | "Faute"
-  | "Geste Techniques"
+  | "Techniques"
   | "Demi"
   | "Swap"
   | "";

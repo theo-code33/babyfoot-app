@@ -1,65 +1,82 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { GameContext } from "../../../../context/gameContext";
+import { Team } from "../../../../context/utils";
 import { updateDoc } from "../../../../db/game/setGame";
+import { FoulName, Poste, PostesName, UserGame } from "../../../../db/utils";
+import { setButDatas, setFoulsDatas, setGamelleDatas } from "./utils";
 
 const Drawer = () => {
-  const { game } = useContext(GameContext);
+  const { game, action } = useContext(GameContext);
+  const [gamelle, setGamelle] = useState<string>("");
+  const [foulName, setFoulName] = useState<FoulName>("");
 
-  // function determinerPosition(value: string): string {
-  //   if (value === "AC" || value === "AG" || value === "AD" || value === "M") {
-  //     return "Attaquant";
-  //   } else if (
-  //     value === "G" ||
-  //     value === "DG" ||
-  //     value === "DC" ||
-  //     value === "DD"
-  //   ) {
-  //     return "Défenseur";
-  //   } else {
-  //     return "error";
-  //   }
-  // }
-  // const handlClick = (e: any) => {
-  //   console.log(e.target.value);
-  //   const poste = determinerPosition(e.target.value);
+  const determinerPosition = (value: PostesName) => {
+    if (value === "AC" || value === "AG" || value === "AD" || value === "M") {
+      return "Attaquant";
+    } else if (value === "G" || value === "DG" || value === "DD") {
+      return "Défenseur";
+    } else {
+      return "error";
+    }
+  };
 
-  //   console.log(game.currentPoint);
+  const handlClick = (e: any, team: Team) => {
+    const currentPosition: PostesName = e.target.value;
+    const currentPoste: string = determinerPosition(currentPosition);
 
-  //   const points = game.blue.score + game.currentPoint;
-  //   const team = "blue";
+    const otherTeam: Team = team === "blue" ? "blue" : "red";
 
-  //   console.log(points);
+    const points = game.blue.score + game.currentPoint;
 
-  //   const datas = {
-  //     ...game,
-  //     [team]: {
-  //       ...game[team],
-  //       score: game[team].score + game.currentPoint,
-  //       users: game[team].users?.map((user) => {
-  //         if (user.playerPoste === poste) {
-  //           user.goals = user.goals + 1;
-  //           user.postes?.map((poste) => {
-  //             if (poste.name === e.target.value) {
-  //               poste.goals = poste.goals + 1;
-  //             }
-  //           });
-  //         }
-  //         return user;
-  //       }),
-  //     },
-  //     currentPoint: 1,
-  //   };
+    let newDatas = {};
 
-  //   updateDoc({
-  //     newDatas: datas,
-  //     collectionId: "games",
-  //     docId: game.id,
-  //   });
-  //   // setPositions(!positions);
-  // };
+    switch (action.type) {
+      case "But":
+        newDatas = setButDatas({
+          game,
+          team,
+          currentPoste,
+          currentPosition,
+        });
+        break;
+
+      case "Gamelle":
+        newDatas = setGamelleDatas({
+          game,
+          team,
+          currentPoste,
+          currentPosition,
+          gamelle,
+        });
+        break;
+
+      case "Faute":
+        newDatas = setFoulsDatas({
+          game,
+          team,
+          currentPoste,
+          foulName,
+        });
+        break;
+
+      default:
+        break;
+    }
+
+    const datasFaute = {};
+
+    const datasTechniques = {};
+
+    updateDoc({
+      newDatas,
+      collectionId: "games",
+      docId: game.id,
+    });
+    // setPositions(!positions);
+  };
+
   return (
     <div>
-      <h1>dtcfghgvjbkn</h1>
       {/* {positions && (
         <div>
           <button value="AG" onClick={(e) => handlClick(e)}>
@@ -85,6 +102,17 @@ const Drawer = () => {
           </button>
           <button onClick={(e) => handlClick(e)} value="G">
             G
+          </button>
+        </div>
+      )} */}
+
+      {/* {chooseBonus && (
+        <div>
+          <button value="+" onClick={(e) => handlePosition(e)}>
+            +1 pour vous
+          </button>
+          <button value="-" onClick={(e) => handlePosition(e)}>
+            -1 pour l'adversaire
           </button>
         </div>
       )} */}

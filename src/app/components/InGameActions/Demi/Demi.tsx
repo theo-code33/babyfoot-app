@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { GameContext } from "../../../../context/gameContext";
-import { ActionType } from "../../../../context/utils";
+import { ActionType, Team } from "../../../../context/utils";
 import { updateDoc } from "../../../../db/game/setGame";
 
 const Demi = ({

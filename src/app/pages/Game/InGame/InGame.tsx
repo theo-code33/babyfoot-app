@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { GameContext } from "../../../../context/gameContext";
-import { ActionType } from "../../../../context/utils";
+import { ActionType, Team } from "../../../../context/utils";
 import { updateDoc } from "../../../../db/game/setGame";
 import But from "../../../components/InGameActions/But";
 import Demi from "../../../components/InGameActions/Demi";
@@ -20,7 +20,7 @@ const InGame = () => {
     }
   }, [id]);
 
-  const setNewAction = (type: ActionType) => {
+  const setNewAction = (type: ActionType, team?: Team) => {
     switch (type) {
       case "Demi":
         setDemi();
@@ -31,7 +31,7 @@ const InGame = () => {
         break;
 
       default:
-        setAction({ ...action, type: type, drawerIsOpen: true });
+        setAction({ ...action, type: type, drawerIsOpen: true, team: team });
         break;
     }
   };
