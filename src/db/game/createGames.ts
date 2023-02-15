@@ -3,29 +3,29 @@ import { db } from "../../services/config/firebase";
 import { Game } from "../utils";
 
 export const createGame = async (maxScore: number) => {
-    const id = Math.floor(Math.random() * 10000).toString();
+  const id = Math.floor(Math.random() * 10000).toString();
 
-    const newGame = {
-        id,
-        name: `game#${id}`,
-        blue: {
-            score: 0,
-        },
-        red: {
-            score: 0,
-        },
-        maxScore: maxScore,
-        isActive: true,
-        code: [
-            +id
-        ],
-    } as Game
+  const newGame = {
+    id,
+    name: `game#${id}`,
+    blue: {
+      score: 0,
+    },
+    red: {
+      score: 0,
+    },
+    maxScore: maxScore,
+    isActive: true,
+    isPlaying: false,
+    currentPoint: 1,
+    code: [+id],
+  } as Game;
 
-    try {
-        const gameRef = doc(db, 'games', id)
-        await setDoc(gameRef, newGame)
-        return newGame
-    } catch (error: any) {
-        throw new Error(error.message)
-    }
-}
+  try {
+    const gameRef = doc(db, "games", id);
+    await setDoc(gameRef, newGame);
+    return newGame;
+  } catch (error: any) {
+    throw new Error(error.message);
+  }
+};

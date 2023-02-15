@@ -18,6 +18,8 @@ export const gameDefault: Game = {
   maxScore: 0,
   time: 0,
   isActive: false,
+  isPlaying: false,
+  currentPoint: 1,
   code: [],
 };
 
@@ -30,8 +32,8 @@ export const GameContextProvider: FC<Props> = ({ children }) => {
   const [game, setGame] = useState<Game>(gameDefault);
 
   useEffect(() => {
-      getGames(setGame);
-  },[])
+    getGames(setGame);
+  }, []);
   return (
     <GameContext.Provider value={{ game, setGame }}>
       {children}

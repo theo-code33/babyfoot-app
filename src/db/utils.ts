@@ -15,6 +15,8 @@ export type Game = {
   maxScore: number;
   time?: number;
   isActive: boolean;
+  isPlaying: boolean;
+  currentPoint: number;
   code: number[];
 };
 

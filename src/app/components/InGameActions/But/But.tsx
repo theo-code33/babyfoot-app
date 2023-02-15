@@ -29,30 +29,41 @@ const But = () => {
     console.log(e.target.value);
     const poste = determinerPosition(e.target.value);
 
-    updateDoc({
-      newDatas: {
-        ...game,
-        blue: {
-          ...game.blue,
-          score: game.blue.score + 1,
-          users: game.blue.users?.map((user) => {
-            if (user.playerPoste === poste) {
-              user.goals = user.goals + 1;
-              user.postes?.map((poste) => {
-                if (poste.name === e.target.value) {
-                  poste.goals = poste.goals + 1;
-                }
-              });
-            }
-            return user;
-          }),
-        },
+    console.log(game.currentPoint);
+
+    const points = game.blue.score + game.currentPoint;
+    const team = "blue";
+
+    console.log(points);
+
+    const datas = {
+      ...game,
+      [team]: {
+        ...game[team],
+        score: game[team].score + game.currentPoint,
+        users: game[team].users?.map((user) => {
+          if (user.playerPoste === poste) {
+            user.goals = user.goals + 1;
+            user.postes?.map((poste) => {
+              if (poste.name === e.target.value) {
+                poste.goals = poste.goals + 1;
+              }
+            });
+          }
+          return user;
+        }),
       },
+      currentPoint: 1,
+    };
+
+    updateDoc({
+      newDatas: datas,
       collectionId: "games",
-      docId: "kdniUnglQAtDDQERnsua",
+      docId: game.id,
     });
     setPositions(!positions);
   };
+
   return (
     <div>
       <button onClick={handleGoal}>BUT</button>

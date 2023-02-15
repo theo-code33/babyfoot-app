@@ -7,7 +7,7 @@ const Gamelle = () => {
   const [gamelle, setGamelle] = useState<string>("");
   const [positions, setPositions] = useState<boolean>(false);
 
-  const { game, setGame } = useContext(GameContext);
+  const { game } = useContext(GameContext);
 
   function determinerPosition(value: string): string {
     if (value === "AC" || value === "AG" || value === "AD" || value === "M") {

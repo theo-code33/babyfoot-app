@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { GameContext } from "../../../../context/gameContext";
 import But from "../../../components/InGameActions/But";
+import Demi from "../../../components/InGameActions/Demi";
 import Gamelle from "../../../components/InGameActions/Gamelle";
 import Swap from "../../../components/InGameActions/Swap/Swap";
 
@@ -12,9 +13,9 @@ const InGame = () => {
 
   useEffect(() => {
     if (id !== game.id) {
-      navigate('/game');
+      navigate("/game");
     }
-  }, [id])
+  }, [id]);
 
   return (
     <div>
@@ -28,6 +29,7 @@ const InGame = () => {
       <But />
       <Gamelle />
       <Swap />
+      <Demi />
     </div>
   );
 };
