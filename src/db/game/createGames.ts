@@ -23,8 +23,8 @@ export const createGame = async (maxScore: number) => {
 
     try {
         const gameRef = doc(db, 'games', id)
-        const gameResponse = await setDoc(gameRef, newGame)
-        return gameResponse
+        await setDoc(gameRef, newGame)
+        return newGame
     } catch (error: any) {
         throw new Error(error.message)
     }
