@@ -1,26 +1,18 @@
-import { useContext, useEffect } from "react";
-import { GameContext } from "../../../../context/gameContext";
-import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { UserContext } from "../../../../context/userContext";
+import AdminGameStart from "../../../components/game/admin/AdminGameStart";
+import UserGameConnect from "../../../components/game/user/UserGameConnect";
 
 const GameStart = () => {
-  const { game, setGame } = useContext(GameContext);
-
-  const navigate = useNavigate();
-
-  const handleNavigate = () => {
-    navigate("/game/create");
-  }
-
-  useEffect(() => {
-    if(game.id !== ""){
-      navigate(`/game/${game.id}`);
-    }
-  }, [game])
+  const { user } = useContext(UserContext);
 
   return (
-    <div>
-      <button onClick={handleNavigate}>Create game</button>
-    </div>
+    <>
+      {user.email == "admin@admin.com"
+      ? <AdminGameStart/>
+      : <UserGameConnect />
+      }
+    </>
   );
 };
 

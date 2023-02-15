@@ -10,11 +10,11 @@ const InGame = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (id !== game.id) {
-      navigate('/game');
-    }
-  }, [id])
+  // useEffect(() => {
+  //   if (id !== game.id) {
+  //     navigate('/game');
+  //   }
+  // }, [id])
 
   return (
     <div>

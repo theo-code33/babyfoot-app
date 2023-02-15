@@ -1,5 +1,6 @@
 import { createContext, FC, useEffect, useState } from "react";
 import { getGames } from "../db/game/readGames";
+import { updateGame } from "../db/game/updateGame";
 import { Game, Games } from "../db/utils";
 import { GameContextType, Props } from "./utils";
 
@@ -19,6 +20,7 @@ export const gameDefault: Game = {
   time: 0,
   isActive: false,
   code: [],
+  gameMember: "1v1",
 };
 
 export const GameContext = createContext<GameContextType>({
@@ -31,6 +33,7 @@ export const GameContextProvider: FC<Props> = ({ children }) => {
 
   useEffect(() => {
       getGames(setGame);
+      updateGame(game, setGame)
   },[])
   return (
     <GameContext.Provider value={{ game, setGame }}>
