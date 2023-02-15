@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { UserContext } from "../../../../context/userContext";
 import { signUp } from "../../../../services/auth/auth.service";
 import { DefaultUser } from "../../../../services/auth/utils";
 
@@ -69,15 +70,25 @@ const SignUp = () => {
     wins: 0,
     startedGames: 0,
   });
+  const { setUser: setGlobalUser } = useContext(UserContext);
+  const [error, setError] = useState<boolean>(false);
+  const [success, setSuccess] = useState<boolean>(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setError(false);
+    setSuccess(false);
     setUser({ ...user, [e.target.name]: e.target.value });
     console.log(user);
   };
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
-    signUp(user, setUser);
+    try{
+      signUp(user, setGlobalUser);
+      setSuccess(true);
+    }catch(err){
+      setError(true);
+    }
   };
 
   return (
