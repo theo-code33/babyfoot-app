@@ -33,6 +33,8 @@ export type UserGame = {
   technicals: Technicals;
 };
 
+export type Position = "Attaquant" | "Défenseur" | "";
+
 export type Fouls = Foul[];
 
 export type Foul = {
@@ -45,9 +47,11 @@ export type FoulName = "rateau" | "pisette" | "roulette" | "";
 export type Technicals = Technical[];
 
 export type Technical = {
-  name: "cendar" | "lob" | "but incroyable";
+  name: TechnicalName;
   count: number;
 };
+
+export type TechnicalName = "cendar" | "lob" | "but incroyable" | "";
 
 export type Postes = Poste[];
 
@@ -56,7 +60,7 @@ export type Poste = {
   goals: number;
 };
 
-export type PostesName = "AG" | "AC" | "AD" | "M" | "DG" | "DD" | "G" | "";
+export type PostesName = "AG" | "AC" | "AD" | "M" | "DG" | "DD" | "G";
 
 export type LastActions = LastAction[];
 

@@ -308,12 +308,12 @@ function App() {
   // };
 
   // useEffect(() => {
-    // isFetching && getGames(setGames);
-    // updateDoc({
-    //   newDatas: gameDefault,
-    //   collectionId: "games",
-    //   docId: "kdniUnglQAtDDQERnsua",
-    // });
+  // isFetching && getGames(setGame);
+  // updateDoc({
+  //   newDatas: gameDefault,
+  //   collectionId: "games",
+  //   docId: "kdniUnglQAtDDQERnsua",
+  // });
   // }, []);
 
   // useEffect(() => {

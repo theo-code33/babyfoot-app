@@ -1,6 +1,6 @@
 import { ActionType, Team } from "../../../../context/utils";
 
-const Gamelle = ({
+const Technicals = ({
   setNewAction,
   team,
 }: {
@@ -9,9 +9,9 @@ const Gamelle = ({
 }) => {
   return (
     <div>
-      <button onClick={() => setNewAction("Gamelle", team)}>Gamelle</button>
+      <button onClick={() => setNewAction("Techniques", team)}>Technicals</button>
     </div>
   );
 };
 
-export default Gamelle;
+export default Technicals;

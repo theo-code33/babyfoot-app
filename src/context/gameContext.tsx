@@ -23,6 +23,7 @@ export const GameContextProvider: FC<Props> = ({ children }) => {
   useEffect(() => {
     getGames(setGame);
   }, []);
+
   return (
     <GameContext.Provider value={{ game, setGame, action, setAction }}>
       {children}

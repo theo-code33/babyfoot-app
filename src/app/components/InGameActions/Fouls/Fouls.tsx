@@ -1,9 +1,8 @@
 import { useContext } from "react";
 import { GameContext } from "../../../../context/gameContext";
 import { ActionType, Team } from "../../../../context/utils";
-import { updateDoc } from "../../../../db/game/setGame";
 
-const Swap = ({
+const Fouls = ({
   setNewAction,
   team,
 }: {
@@ -12,9 +11,9 @@ const Swap = ({
 }) => {
   return (
     <div>
-      <button onClick={() => setNewAction("Swap", team)}>Swap Team</button>
+      <button onClick={() => setNewAction("Faute", team)}>Faute de jeu</button>
     </div>
   );
 };
 
-export default Swap;
+export default Fouls;

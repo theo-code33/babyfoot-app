@@ -27,13 +27,15 @@ export const actionDefault: Action = {
   drawerIsOpen: false,
   type: "",
   team: "red",
+  postOverlay: false,
 };
 
 // TYPE
 export type Action = {
   drawerIsOpen: boolean;
   type: ActionType;
-  team?: Team;
+  team: Team;
+  postOverlay: boolean;
 };
 
 export type Team = "blue" | "red";

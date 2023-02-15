@@ -5,9 +5,10 @@ import { ActionType, Team } from "../../../../context/utils";
 import { updateDoc } from "../../../../db/game/setGame";
 import But from "../../../components/InGameActions/But";
 import Demi from "../../../components/InGameActions/Demi";
-import Drawer from "../../../components/InGameActions/Drawer";
 import Gamelle from "../../../components/InGameActions/Gamelle";
 import Swap from "../../../components/InGameActions/Swap/Swap";
+import Overlay from "../../../components/InGameActions/Overlay";
+import Fouls from "../../../components/InGameActions/Fouls";
 
 const InGame = () => {
   const { game, setGame, action, setAction } = useContext(GameContext);
@@ -20,7 +21,7 @@ const InGame = () => {
     }
   }, [id]);
 
-  const setNewAction = (type: ActionType, team?: Team) => {
+  const setNewAction = (type: ActionType, team: Team) => {
     switch (type) {
       case "Demi":
         setDemi();
@@ -30,8 +31,34 @@ const InGame = () => {
         setSwap();
         break;
 
+      case "Faute":
+        setAction({
+          ...action,
+          type: type,
+          drawerIsOpen: true,
+          team: team,
+          postOverlay: false,
+        });
+        break;
+
+      case "But":
+        setAction({
+          ...action,
+          type: type,
+          drawerIsOpen: true,
+          team: team,
+          postOverlay: true,
+        });
+        break;
+
       default:
-        setAction({ ...action, type: type, drawerIsOpen: true, team: team });
+        setAction({
+          ...action,
+          type: type,
+          drawerIsOpen: true,
+          team: team,
+          postOverlay: false,
+        });
         break;
     }
   };
@@ -83,12 +110,29 @@ const InGame = () => {
       <div>
         <h2>Point Équipe rouge :{game.red.score}</h2>
       </div>
-      <But setNewAction={setNewAction} />
-      <Gamelle setNewAction={setNewAction} />
-      <Swap setNewAction={setNewAction} />
-      <Demi setNewAction={setNewAction} />
+      <div>
+        <h2>CurrentPoint :{game.currentPoint}</h2>
+      </div>
 
-      <Drawer />
+      <div>
+        <h2>Équipe bleue</h2>
+        <But setNewAction={setNewAction} team="blue" />
+        <Gamelle setNewAction={setNewAction} team="blue" />
+        <Swap setNewAction={setNewAction} team="blue" />
+        <Demi setNewAction={setNewAction} team="blue" />
+        <Fouls setNewAction={setNewAction} team="blue" />
+      </div>
+
+      <div>
+        <h2>Équipe rouge</h2>
+        <But setNewAction={setNewAction} team="red" />
+        <Gamelle setNewAction={setNewAction} team="red" />
+        <Swap setNewAction={setNewAction} team="red" />
+        <Demi setNewAction={setNewAction} team="red" />
+        <Fouls setNewAction={setNewAction} team="red" />
+      </div>
+
+      <Overlay />
     </div>
   );
 };
