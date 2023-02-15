@@ -10,6 +10,7 @@ const InGame = () => {
     <div>
       <div>
         <h2>Point Équipe bleue :{game.blue.score}</h2>
+        {/* <h2>{game.blue.users?[0].goals}</h2> */}
       </div>
       <div>
         <h2>Point Équipe rouge :{game.red.score}</h2>

@@ -13,7 +13,7 @@ const Swap = () => {
         ...game,
         blue: {
           ...game.blue,
-          users: game.blue.users.map((user) => {
+          users: game.blue.users?.map((user) => {
             if (user.playerPoste === "Attaquant") {
               return {
                 ...user,
