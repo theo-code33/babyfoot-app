@@ -1,8 +1,13 @@
 import { useContext, useState } from "react";
 import { GameContext } from "../../../../context/gameContext";
+import { ActionType } from "../../../../context/utils";
 import { updateDoc } from "../../../../db/game/setGame";
 
-const Gamelle = () => {
+const Gamelle = ({
+  setNewAction,
+}: {
+  setNewAction: (type: ActionType) => void;
+}) => {
   const [chooseBonus, setChooseBonus] = useState<boolean>(false);
   const [gamelle, setGamelle] = useState<string>("");
   const [positions, setPositions] = useState<boolean>(false);
@@ -27,6 +32,7 @@ const Gamelle = () => {
   const handleGoal = () => {
     setChooseBonus(!chooseBonus);
   };
+
   const handlePosition = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
@@ -71,7 +77,7 @@ const Gamelle = () => {
   };
   return (
     <div>
-      <button onClick={handleGoal}>Gamelle</button>
+      <button onClick={() => setNewAction("Gamelle")}>Gamelle</button>
       {chooseBonus && (
         <div>
           <button value="+" onClick={(e) => handlePosition(e)}>

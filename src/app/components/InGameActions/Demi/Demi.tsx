@@ -1,24 +1,16 @@
 import { useContext } from "react";
 import { GameContext } from "../../../../context/gameContext";
+import { ActionType } from "../../../../context/utils";
 import { updateDoc } from "../../../../db/game/setGame";
 
-const Demi = () => {
-  const { game } = useContext(GameContext);
-
-  const handlClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    updateDoc({
-      newDatas: {
-        ...game,
-        currentPoint: game.currentPoint + 1,
-      },
-      collectionId: "games",
-      docId: game.id,
-    });
-  };
-
+const Demi = ({
+  setNewAction,
+}: {
+  setNewAction: (type: ActionType) => void;
+}) => {
   return (
     <div>
-      <button onClick={(e) => handlClick(e)}>Demi</button>
+      <button onClick={() => setNewAction("Demi")}>Demi</button>
     </div>
   );
 };
