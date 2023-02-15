@@ -1,7 +1,24 @@
+import { useContext, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { GameContext } from '../../../../context/gameContext';
+
 const InGame = () => {
+  const { id } = useParams();
+  const { game } = useContext(GameContext)
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (id !== game.id) {
+      navigate('/game');
+    }
+  }, [id])
+
   return (
     <div>
-      <h1>InGame</h1>
+      <div>
+        <h1>Game {id}</h1>
+
+      </div>
     </div>
   );
 };
