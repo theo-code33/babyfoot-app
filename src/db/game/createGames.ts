@@ -84,12 +84,14 @@ export const createGame = async (maxScore: number, gameMember: GameMember) => {
         }
         user1.playerNumber = 1
         user1.userName = "Player1"
+        user1.playerPoste = "Mixte"
         userBlue.push(user1)
         const user2 = {
             ...defaultUser
         }
         user2.playerNumber = 2
         user2.userName = "Player2"
+        user2.playerPoste = "Mixte"
         userRed.push(user2)
     }else if(gameMember === "2v2"){
         const user1 = {
@@ -97,24 +99,28 @@ export const createGame = async (maxScore: number, gameMember: GameMember) => {
         }
         user1.playerNumber = 1
         user1.userName = "Player1"
+        user1.playerPoste = "Attaquant"
         userBlue.push(user1)
         const user2 = {
             ...defaultUser
         }
         user2.playerNumber = 2
         user2.userName = "Player2"
+        user2.playerPoste = "Défenseur"
         userBlue.push(user2)
         const user3 = {
             ...defaultUser
         }
         user3.playerNumber = 3
         user3.userName = "Player3"
+        user3.playerPoste = "Attaquant"
         userRed.push(user3)
         const user4 = {
             ...defaultUser
         }
         user4.playerNumber = 4
         user4.userName = "Player4"
+        user4.playerPoste = "Défenseur"
         userRed.push(user4)
     }else if(gameMember === "1v2"){
         const user1 = {
@@ -122,18 +128,21 @@ export const createGame = async (maxScore: number, gameMember: GameMember) => {
         }
         user1.playerNumber = 1
         user1.userName = "Player1"
+        user1.playerPoste = "Mixte"
         userBlue.push(user1)
         const user2 = {
             ...defaultUser
         }
         user2.playerNumber = 2
         user2.userName = "Player2"
+        user2.playerPoste = "Attaquant"
         userRed.push(user2)
         const user3 = {
             ...defaultUser
         }
         user3.playerNumber = 3
         user3.userName = "Player3"
+        user3.playerPoste = "Défenseur"
         userRed.push(user3)
     }else{
         const user1 = {
@@ -141,18 +150,21 @@ export const createGame = async (maxScore: number, gameMember: GameMember) => {
         }
         user1.playerNumber = 1
         user1.userName = "Player1"
+        user1.playerPoste = "Attaquant"
         userBlue.push(user1)
         const user2 = {
             ...defaultUser
         }
         user2.playerNumber = 2
         user2.userName = "Player2"
+        user2.playerPoste = "Défenseur"
         userBlue.push(user2)
         const user3 = {
             ...defaultUser
         }
         user3.playerNumber = 3
         user3.userName = "Player3"
+        user3.playerPoste = "Mixte"
         userRed.push(user3)
     }
 

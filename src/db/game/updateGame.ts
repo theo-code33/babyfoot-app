@@ -3,44 +3,90 @@ import { useContext } from "react";
 import { GameContext } from "../../context/gameContext";
 import { db } from "../../services/config/firebase";
 import { User } from "../../utils";
-import { Game, Team, UserGame } from "../utils";
+import { Game, Team, UpdatedUser, UserGame } from "../utils";
 
-export const updateGamePlayer = async (user: UserGame, position: string, team: Team, gameId: number, game: Game) => {
+export const updateGamePlayer = async (user: UpdatedUser, position: string, team: Team, gameId: number, game: Game) => {
     try {
         const updateGame = {
             ...game
         }
+
+        const userIsInGame = game[team].users?.find((userGame) => userGame.userId === user.userId)
+        if(userIsInGame){
+            const indexUser = game[team].users?.findIndex((userGame) => userGame.userId === user.userId)
+            
+            updateGame[team].users[indexUser].userId = ""
+            updateGame[team].users[indexUser].userName = ""
+            updateGame[team].users?.map((userGame) => {
+                if(userGame.playerPoste === position){
+                    userGame.userId = user.userId
+                    userGame.userName = user.userName
+                }
+            })
+            const gameRef = doc(db, 'games', gameId.toString())
+            await setDoc(gameRef, updateGame, { merge: true })
+            return
+        }
+
+        if(team === "blue"){
+            const indexUser = game["red"].users?.findIndex((userGame) => userGame.userId === user.userId)
+            if(indexUser !== -1){
+                updateGame["red"].users[indexUser].userId = ""
+                updateGame["red"].users[indexUser].userName = ""
+            }
+        }else if(team === "red"){
+            const indexUser = game["blue"].users?.findIndex((userGame) => userGame.userId === user.userId)
+            if(indexUser !== -1){
+                updateGame["blue"].users[indexUser].userId = ""
+                updateGame["blue"].users[indexUser].userName = ""
+            }
+        }
+
         if(updateGame.gameMember == "1v1"){
-            updateGame[team].users = [user]
+            updateGame[team].users[0].userId = user.userId
+            updateGame[team].users[0].userName = user.userName
         }else if(updateGame.gameMember == "1v2" && team === "blue"){
-            updateGame[team].users = [user]
+            updateGame[team].users[0].userId = user.userId
+            updateGame[team].users[0].userName = user.userName
         }else if(updateGame.gameMember == "2v1" && team === "red"){
-            updateGame[team].users = [user]
+            updateGame[team].users[0].userId = user.userId
+            updateGame[team].users[0].userName = user.userName
         }else{
             const indexUserSamePosition = updateGame[team].users?.findIndex((userGame) => userGame.playerPoste === position)
-            console.log('indexUserSamePosition => ', indexUserSamePosition);
-            console.log('indexUserSamePosition ? => ', indexUserSamePosition !== -1);
             const indexUserWithoutPosition = updateGame[team].users?.findIndex((userGame) => userGame.playerPoste === "")
-            console.log('indexUserWithoutPosition => ', indexUserWithoutPosition);
-            console.log('indexUserSamePosition ? => ', indexUserWithoutPosition && indexUserWithoutPosition !== -1);
             
             if(indexUserSamePosition !== -1){
                 updateGame[team].users?.filter((userGame) => userGame.playerPoste !== position)
-                updateGame[team].users[indexUserSamePosition] = user
-                console.log("je rentre dans le premier if");
+                updateGame[team].users[indexUserSamePosition].userId = ""
+                updateGame[team].users[indexUserSamePosition].userName = ""
+                updateGame[team].users?.map(userGame => {
+                    if(userGame.playerPoste === position){
+                        userGame.userId = user.userId
+                        userGame.userName = user.userName
+                    }
+                })
             }else if(indexUserWithoutPosition !== -1){
                 updateGame[team].users?.filter((userGame) => userGame.playerPoste !== "")
-                updateGame[team].users[indexUserWithoutPosition] = user 
-                console.log("je rentre dans le second if");
+                updateGame[team].users[indexUserWithoutPosition].userId = ""
+                updateGame[team].users[indexUserWithoutPosition].userName = ""
+                updateGame[team].users?.map(userGame => {
+                    if(userGame.playerPoste === position){
+                        userGame.userId = user.userId
+                        userGame.userName = user.userName
+                    }
+                })
+                
             }else{
-                updateGame[team].users?.push(user)
-                console.log("je rentre dans ta mere");
+                updateGame[team].users?.map((userGame) => {
+                    if(userGame.userId === "" && userGame.playerPoste === position){
+                        userGame.userId = user.userId
+                        userGame.userName = user.userName
+                    }
+                })
             }
 
         }
 
-        console.log('updateGame => ', updateGame);
-        
         const gameRef = doc(db, 'games', gameId.toString())
         const updatedGame = await setDoc(gameRef, {
             ...game,
@@ -48,8 +94,6 @@ export const updateGamePlayer = async (user: UserGame, position: string, team: T
                 users: updateGame[team].users
             }
         }, { merge: true })
-        console.log('updated => ', updatedGame);
-        
         return updatedGame
 
     } catch (error: any) {
@@ -60,7 +104,7 @@ export const updateGamePlayer = async (user: UserGame, position: string, team: T
 export const updateGame = async (game: Game, setGame: React.Dispatch<React.SetStateAction<Game>>) => {
     const snapRef = doc(db, 'games', game.id.toString())
     
-    onSnapshot(snapRef, async (doc) => {
+    await onSnapshot(snapRef, async (doc) => {
         setGame(doc.data() as Game)
     })
 }

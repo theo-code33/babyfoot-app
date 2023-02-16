@@ -28,13 +28,19 @@ export type UsersGames = UserGame[];
 export type UserGame = {
   playerPoste: string;
   userName: "Player1" | "Player2" | string;
-  playerNumber: 1 | 2 | 3 | 4;
+  playerNumber?: 1 | 2 | 3 | 4;
   userId: string;
   goals: number;
   postes: Postes;
   fouls: Fouls;
   technicals: Technicals;
 };
+
+export type UpdatedUser = {
+  userId: string;
+  userName: string;
+  playerPoste: string;
+}
 
 export type Position = "Attaquant" | "Défenseur" | "";
 

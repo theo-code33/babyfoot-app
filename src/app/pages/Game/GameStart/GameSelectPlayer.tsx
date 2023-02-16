@@ -3,16 +3,16 @@ import { useParams } from "react-router-dom"
 import { GameContext } from "../../../../context/gameContext"
 import { UserContext } from "../../../../context/userContext"
 import { updateGamePlayer } from "../../../../db/game/updateGame"
-import { Team, UserGame } from "../../../../db/utils"
+import { Team, UpdatedUser, UserGame } from "../../../../db/utils"
 import { User } from "../../../../utils"
 
 const GameSelectPlayer = () => {
-    const [attaquantBlue, setAttaquantBlue] = useState< User | UserGame | null>(null)
-    const [defenseurBlue, setDefenseurBlue] = useState< User | UserGame | null>(null)
-    const [attaquantRed, setAttaquantRed] = useState< User | UserGame | null>(null)
-    const [defenseurRed, setDefenseurRed] = useState< User | UserGame | null>(null)
-    const [mixteBlue, setMixteBlue] = useState< any | null>(null)
-    const [mixteRed, setMixteRed] = useState< any | null>(null)
+    const [attaquantBlue, setAttaquantBlue] = useState< UpdatedUser | null>(null)
+    const [defenseurBlue, setDefenseurBlue] = useState< UpdatedUser | null>(null)
+    const [attaquantRed, setAttaquantRed] = useState< UpdatedUser | null>(null)
+    const [defenseurRed, setDefenseurRed] = useState< UpdatedUser | null>(null)
+    const [mixteBlue, setMixteBlue] = useState< UpdatedUser | null>(null)
+    const [mixteRed, setMixteRed] = useState< UpdatedUser | null>(null)
 
     const {user: userContext} = useContext(UserContext)
     const {game, setGame} = useContext(GameContext)
@@ -63,6 +63,13 @@ const GameSelectPlayer = () => {
         console.log("game => ", game);
         console.log("game.blue => ", game.blue.users);
         console.log("game.red => ", game.red.users);
+
+        setAttaquantBlue(null)
+        setDefenseurBlue(null)
+        setMixteBlue(null)
+        setAttaquantRed(null)
+        setDefenseurRed(null)
+        setMixteRed(null)
         
         if(game.blue.users) {
             game.blue.users.map(user => {
@@ -80,12 +87,16 @@ const GameSelectPlayer = () => {
         if(game.red.users) {
             game.red.users.map(user => {
                 if(user.playerPoste === 'Attaquant') {
+                    console.log("user attaquant => ", user.playerNumber);
+                    
                     setAttaquantRed(user)
                 }
                 if(user.playerPoste === 'Défenseur') {
+                    console.log("user defenseur => ", user.playerNumber);
                     setDefenseurRed(user)
                 }
                 if(user.playerPoste === 'Mixte') {
+                    console.log("user mixte => ", user.playerNumber);
                     setMixteRed(user)
                 }
             })
@@ -97,101 +108,37 @@ const GameSelectPlayer = () => {
         const team = e.currentTarget.dataset.team as Team
         const position = e.currentTarget.dataset.position
 
-        const userGame = {
-            playerPoste: "",
+        const userGame: UpdatedUser = {
             userName: userContext.username,
-            playerNumber: 1,
-            userId: userContext.uid,
-            goals: 0,
-            postes: [
-                {
-                    name: "AG",
-                    goals: 0,
-                },
-                {
-                    name: "AC",
-                    goals: 0,
-                },
-                {
-                    name: "AD",
-                    goals: 0,
-                },
-                {
-                    name: "M",
-                    goals: 0,
-                },
-                {
-                    name: "DG",
-                    goals: 0,
-                },
-                {
-                    name: "DC",
-                    goals: 0,
-                },
-                {
-                    name: "DD",
-                    goals: 0,
-                },
-                {
-                    name: "G",
-                    goals: 0,
-                },
-            ],
-            fouls: [
-                {
-                    name: "rateau",
-                    count: 0,
-                },
-                {
-                    name: "pisette",
-                    count: 0,
-                },
-                {
-                    name: "roulette",
-                    count: 0,
-                },
-            ],
-            technicals: [
-                {
-                    name: "cendar",
-                    count: 0,
-                },
-                {
-                    name: "cendar",
-                    count: 0,
-                },
-                {
-                    name: "cendar",
-                    count: 0,
-                },
-            ],
-        } as UserGame
+            userId: userContext.uid as string,
+            playerPoste: position as string,
+        }
         
         if(team && position && id) {
             if(team === 'blue') {
-                if(position === 'attaquant') {
+                if(position === 'Attaquant') {
                     userGame.playerPoste = 'Attaquant'
                     setAttaquantBlue(userGame)
                 }
-                if(position === 'defenseur') {
+                if(position === 'Défenseur') {
                     userGame.playerPoste = 'Défenseur'
                     setDefenseurBlue(userGame)
                 }
-                if(position === 'mixte') {
+                if(position === 'Mixte') {
                     userGame.playerPoste = 'Mixte'
                     setMixteBlue(userGame)
                 }
 
             }else{
-                if(position === 'attaquant') {
+                if(position === 'Attaquant') {
                     userGame.playerPoste = 'Attaquant'
                     setAttaquantRed(userGame)
                 }
-                if(position === 'defenseur') {
+                if(position === 'Défenseur') {
                     userGame.playerPoste = 'Défenseur'
                     setDefenseurRed(userGame)
                 }
-                if(position === 'mixte') {
+                if(position === 'Mixte') {
                     userGame.playerPoste = 'Mixte'
                     setMixteRed(userGame)
                 }
@@ -205,8 +152,8 @@ const GameSelectPlayer = () => {
             {
                 game.blue.users && game.blue.users.map((user, index) => {
                     if(game.blue.users?.length === 1){
-                        if(mixteBlue === null) {
-                        return( <div key={index} style={styleCardBlue} data-team="blue"  data-position="mixte" onClick={handleCardClick}>
+                        if(mixteBlue === null || mixteBlue.userId === "") {
+                        return( <div key={index} style={styleCardBlue} data-team="blue"  data-position="Mixte" onClick={handleCardClick}>
                             <h1>Mixte</h1>
                         </div>)
                         }else{
@@ -216,8 +163,8 @@ const GameSelectPlayer = () => {
                         }
                     }else{
                         if(index === 0) {
-                            if(attaquantBlue === null) {
-                                return( <div style={styleCardBlue} data-team="blue"  data-position="attaquant" onClick={handleCardClick}>
+                            if(attaquantBlue === null || attaquantBlue.userId === "") {
+                                return( <div style={styleCardBlue} data-team="blue"  data-position="Attaquant" onClick={handleCardClick}>
                                 <h1>Attaquant</h1>
                             </div>)
                             }else{
@@ -226,8 +173,8 @@ const GameSelectPlayer = () => {
                                 </div>)
                             }
                         }else{
-                            if(defenseurBlue === null) {
-                                return( <div style={styleCardBlue} data-team="blue"  data-position="defenseur" onClick={handleCardClick}>
+                            if(defenseurBlue === null || defenseurBlue.userId === "") {
+                                return( <div style={styleCardBlue} data-team="blue"  data-position="Défenseur" onClick={handleCardClick}>
                                 <h1>Défenseur</h1>
                             </div>)
                             }else{
@@ -242,8 +189,8 @@ const GameSelectPlayer = () => {
             {
                 game.red.users && game.red.users.map((user, index) => {
                     if(game.red.users?.length === 1){
-                        if(mixteRed === null) {
-                        return( <div key={index} style={styleCardRed} data-team="red"  data-position="mixte" onClick={handleCardClick}>
+                        if(mixteRed === null || mixteRed.userId === "") {
+                        return( <div key={index} style={styleCardRed} data-team="red"  data-position="Mixte" onClick={handleCardClick}>
                             <h1>Mixte</h1>
                         </div>)
                         }else{
@@ -253,21 +200,25 @@ const GameSelectPlayer = () => {
                         }
                     }else{
                         if(index === 0) {
-                            if(attaquantRed === null) {
-                                return( <div style={styleCardRed} data-team="red"  data-position="attaquant" onClick={handleCardClick}>
+                            if(attaquantRed === null || attaquantRed.userId === "") {
+                                console.log("attaquant red=> ", attaquantRed);
+                                return( <div style={styleCardRed} data-team="red"  data-position="Attaquant" onClick={handleCardClick}>
                                 <h1>Attaquant</h1>
                             </div>)
                             }else{
+                                console.log("attaquant red disabled=> ", attaquantRed);
                                 return (<div style={styleCardRedDisabled} >
                                     <h1>Attaquant</h1>
                                 </div>)
                             }
                         }else{
-                            if(defenseurRed === null) {
-                                return( <div style={styleCardRed} data-team="red"  data-position="defenseur" onClick={handleCardClick}>
+                            if(defenseurRed === null || defenseurRed.userId === "") {
+                                console.log("defenseur red => ", defenseurRed);
+                                return( <div style={styleCardRed} data-team="red"  data-position="Défenseur" onClick={handleCardClick}>
                                 <h1>Défenseur</h1>
                             </div>)
                             }else{
+                                console.log("defenseur red disabled=> ", defenseurRed);
                                 return (<div style={styleCardRedDisabled} >
                                     <h1>Défenseur</h1>
                                 </div>)
