@@ -66,7 +66,12 @@ const setButDatas = ({
       ...game[team],
       score: game[team].score + game.currentPoint,
       users: game[team].users?.map((user: UserGame) => {
-        if (user.playerPoste === currentPosition) {
+        if (
+          user.playerPoste === currentPosition ||
+          user.playerPoste === "Mixte"
+        ) {
+          console.log("user.playerPoste", user.playerPoste);
+
           user.goals = user.goals + 1;
           user.postes?.map((poste: Poste) => {
             if (poste.name === currentPoste) {
@@ -87,6 +92,8 @@ const setFoulsDatas = ({
   foulName,
   currentPosition,
 }: SetDatasProps) => {
+  console.log("foulName", foulName);
+
   if (foulName === "pisette" || foulName === "rateau") {
     return {
       ...game,
@@ -94,7 +101,10 @@ const setFoulsDatas = ({
         ...game[team],
         score: foulName === "pisette" ? game[team].score - 1 : game[team].score,
         users: game[team].users?.map((user) => {
-          if (user.playerPoste === "Attaquant") {
+          if (
+            user.playerPoste === "Attaquant" ||
+            user.playerPoste === "Mixte"
+          ) {
             user.fouls?.map((foul) => {
               if (foul.name === foulName) {
                 foul.count = foul.count + 1;
@@ -111,7 +121,10 @@ const setFoulsDatas = ({
       [team]: {
         ...game[team],
         users: game[team].users?.map((user) => {
-          if (user.playerPoste === currentPosition) {
+          if (
+            user.playerPoste === currentPosition ||
+            user.playerPoste === "Mixte"
+          ) {
             user.fouls?.map((foul) => {
               if (foul.name === foulName) {
                 foul.count = foul.count + 1;
