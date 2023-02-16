@@ -9,6 +9,7 @@ import Gamelle from "../../../components/InGameActions/Gamelle";
 import Swap from "../../../components/InGameActions/Swap/Swap";
 import Overlay from "../../../components/InGameActions/Overlay";
 import Fouls from "../../../components/InGameActions/Fouls";
+import Technicals from "../../../components/InGameActions/Technicals";
 
 const InGame = () => {
   const { game, setGame, action, setAction } = useContext(GameContext);
@@ -113,23 +114,61 @@ const InGame = () => {
       <div>
         <h2>CurrentPoint :{game.currentPoint}</h2>
       </div>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-around",
+        }}
+      >
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <h2>Équipe bleue</h2>
+          <But setNewAction={setNewAction} team="blue" />
+          <div style={{ display: "flex" }}>
+            <Demi setNewAction={setNewAction} team="blue" />
+            <Gamelle setNewAction={setNewAction} team="blue" />
+          </div>
+          <div style={{ display: "flex" }}>
+            <Fouls setNewAction={setNewAction} team="blue" />
+            <Technicals setNewAction={setNewAction} team="blue" />
+          </div>
+          {game.blue.users?.map((user) => (
+            <p>
+              {user.userName} : {user.playerPoste}
+            </p>
+          ))}
+          <Swap setNewAction={setNewAction} team="blue" />
+        </div>
 
-      <div>
-        <h2>Équipe bleue</h2>
-        <But setNewAction={setNewAction} team="blue" />
-        <Gamelle setNewAction={setNewAction} team="blue" />
-        <Swap setNewAction={setNewAction} team="blue" />
-        <Demi setNewAction={setNewAction} team="blue" />
-        <Fouls setNewAction={setNewAction} team="blue" />
-      </div>
-
-      <div>
-        <h2>Équipe rouge</h2>
-        <But setNewAction={setNewAction} team="red" />
-        <Gamelle setNewAction={setNewAction} team="red" />
-        <Swap setNewAction={setNewAction} team="red" />
-        <Demi setNewAction={setNewAction} team="red" />
-        <Fouls setNewAction={setNewAction} team="red" />
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <h2>Équipe rouge</h2>
+          <But setNewAction={setNewAction} team="red" />
+          <div style={{ display: "flex" }}>
+            <Demi setNewAction={setNewAction} team="red" />
+            <Gamelle setNewAction={setNewAction} team="red" />
+          </div>
+          <div style={{ display: "flex" }}>
+            <Fouls setNewAction={setNewAction} team="red" />
+            <Technicals setNewAction={setNewAction} team="red" />
+          </div>
+          {game.red.users?.map((user) => (
+            <p>
+              {user.userName} : {user.playerPoste}
+            </p>
+          ))}
+          <Swap setNewAction={setNewAction} team="red" />
+        </div>
       </div>
 
       <Overlay />

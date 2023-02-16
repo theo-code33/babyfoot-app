@@ -124,7 +124,6 @@ const Overlay = () => {
 
   return (
     <div>
-      ‡
       <Drawer
         anchor="bottom"
         open={action.drawerIsOpen}
@@ -156,6 +155,47 @@ const Overlay = () => {
                 }}
               >
                 -1 pour l'adversaire
+              </button>
+            </div>
+          )}
+        </div>
+        <div>
+          {action.type === "Techniques" && (
+            <div>
+              <button
+                style={{
+                  backgroundColor:
+                    technicalName === "cendar" ? "blue" : "white",
+                }}
+                onClick={() => {
+                  setTechnicalName("cendar");
+                  setAction({ ...action, postOverlay: true });
+                }}
+              >
+                cendar
+              </button>
+              <button
+                style={{
+                  backgroundColor: technicalName === "lob" ? "blue" : "white",
+                }}
+                onClick={() => {
+                  setTechnicalName("lob");
+                  setAction({ ...action, postOverlay: true });
+                }}
+              >
+                lob
+              </button>
+              <button
+                style={{
+                  backgroundColor:
+                    technicalName === "but incroyable" ? "blue" : "white",
+                }}
+                onClick={() => {
+                  setTechnicalName("but incroyable");
+                  setAction({ ...action, postOverlay: true });
+                }}
+              >
+                but incroyable
               </button>
             </div>
           )}

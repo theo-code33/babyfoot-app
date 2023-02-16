@@ -1,3 +1,4 @@
+import { LogLevel } from "@slack/web-api";
 import { Team } from "../../../../context/utils";
 import {
   FoulName,
@@ -8,6 +9,7 @@ import {
   TechnicalName,
   UserGame,
 } from "../../../../db/utils";
+import { logOut } from "../../../../services/auth/auth.service";
 
 type SetDatasProps = {
   game: Game;
@@ -130,26 +132,30 @@ const setTechnicalsDatas = ({
   currentPosition,
   technicalName,
 }: SetDatasProps) => {
+  console.log("currentPoste", currentPoste);
+  console.log("currentPosition", currentPosition);
+  console.log("technicalName", technicalName);
+
   return {
     ...game,
     [team]: {
       ...game[team],
       score: game[team].score + game.currentPoint,
       users: game[team].users?.map((user) => {
-        if (user.playerPoste === currentPoste) {
+        if (user.playerPoste === currentPosition) {
           user.goals = user.goals + 1;
           user.postes?.map((poste) => {
             if (poste.name === currentPoste) {
               poste.goals = poste.goals + 1;
             }
-            user.technicals?.map((technique) => {
-              if (technique.name === technicalName) {
-                technique.count = technique.count + 1;
-              }
-            });
           });
-          return user;
+          user.technicals?.map((technical) => {
+            if (technical.name === technicalName) {
+              technical.count = technical.count + 1;
+            }
+          });
         }
+        return user;
       }),
     },
     currentPoint: 1,
