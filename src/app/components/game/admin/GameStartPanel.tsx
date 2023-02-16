@@ -1,14 +1,16 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { GameContext } from "../../../../context/gameContext";
 import { UserContext } from "../../../../context/userContext";
 import { updateGameStatus } from "../../../../db/game/updateGame";
+import QRCode from "qrcode";
 
 const GameStartPanel = () => {
     const {id} = useParams();
     const {game} = useContext(GameContext);
     const {user} = useContext(UserContext);
     const navigate = useNavigate();
+    const canvasRef = useRef<HTMLCanvasElement>(null);
 
     const handleStartGame = async () => {
         await updateGameStatus(game, true)
@@ -18,6 +20,13 @@ const GameStartPanel = () => {
     useEffect(() => {
         if(user.email !== "admin@admin.com"){
             navigate("/game")
+        }else{
+
+            QRCode.toCanvas(
+                canvasRef.current,
+                `10.14.72.115:3000/qr-code/${id}`,
+                (error) => error && console.error(error)
+              );
         }
     },[])
 
@@ -31,6 +40,7 @@ const GameStartPanel = () => {
                     )
                 })
             }
+            <canvas ref={canvasRef} />
             { game.red && game.red.users.map((player, index) => {
                     return (
                         <div key={index} className="player">

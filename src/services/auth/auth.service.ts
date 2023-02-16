@@ -39,7 +39,8 @@ export const signUp = async (userDatas: DefaultUser, setUser: Function) => {
 
 export const signInWithGoogle = async (
   setError: React.Dispatch<React.SetStateAction<boolean>>,
-  navigate: Function
+  navigate: Function,
+  id: string | undefined,
   ): Promise<void> => {
   const auth = getAuth();
   const provider = new GoogleAuthProvider();
@@ -123,7 +124,11 @@ export const signInWithGoogle = async (
         await createUser(newUser, user.uid);
     }
     setToken(user.uid);
-    navigate("/game")
+    if(id !== undefined){
+      navigate(`/game/${id}/select-player`);
+    }else{
+      navigate("/game");
+    }
     
   }).catch((error) => {
     const errorCode = error.code;

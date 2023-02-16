@@ -1,10 +1,10 @@
 import { useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../../../../context/userContext";
 import { signUp, signInWithGoogle } from "../../../../services/auth/auth.service";
 import { DefaultUser } from "../../../../services/auth/utils";
 
-const SignUp = () => {
+const SignUp = ({id}: {id?: string}) => {
   const [user, setUser] = useState<DefaultUser>({
     email: "",
     username: "",
@@ -89,14 +89,18 @@ const SignUp = () => {
     try{
       signUp(user, setGlobalUser);
       setSuccess(true);
-      navigate("/game");
+      if(id){
+        navigate(`/game/${id}/select-player`);
+      }else{
+        navigate("/game");
+      }
     }catch(err){
       setError(true);
     }
   };
 
   const handleSignUpWithGoogle = async () => {
-    await signInWithGoogle(setError, navigate)
+    await signInWithGoogle(setError, navigate, id)
   }
 
   return (
@@ -123,6 +127,15 @@ const SignUp = () => {
         <button onClick={(e) => handleClick(e)} type="submit">Validez</button>
       </form>
       <button onClick={handleSignUpWithGoogle}>Sign Up With Google</button>
+      {
+      id 
+      ? <Link to={`/signin/${id}`}>
+          J'ai déjà un compte
+        </Link>
+      : <Link to="/signin">
+          J'ai déjà un compte
+        </Link>
+    }
     </>
   );
 };
