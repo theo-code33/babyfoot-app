@@ -11,7 +11,7 @@ export type Game = {
     score: number;
     users: UsersGames;
   };
-  lastActions?: LastActions;
+  lastActions: LastActions | never[];
   maxScore: number;
   time?: number;
   isActive: boolean;
