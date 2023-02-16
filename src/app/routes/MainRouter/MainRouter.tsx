@@ -5,6 +5,7 @@ import SignInPage from "../../pages/authPages/SignInPage";
 import InGame from "../../pages/Game/InGame";
 import Game from "../../pages/Game";
 import GameCreate from "../../pages/Game/GameCreate/GameCreate";
+import GameSelectPlayer from "../../pages/Game/GameStart/GameSelectPlayer";
 
 const MainRouter = () => {
   return (
@@ -16,7 +17,7 @@ const MainRouter = () => {
         <Route path="/game" element={<Game />} />
         <Route path="/game/create" element={<GameCreate />} />
         <Route path="/game/:id" element={<InGame />} />
-
+        <Route path="/game/:id/select-player" element={<GameSelectPlayer />} />
       </Routes>
     </>
   );

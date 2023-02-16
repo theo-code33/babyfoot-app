@@ -17,7 +17,6 @@ export const updateGamePlayer = async (user: UserGame, position: string, team: T
         }else if(updateGame.gameMember == "2v1" && team === "red"){
             updateGame[team].users = [user]
         }else{
-
             const indexUserSamePosition = updateGame[team].users?.findIndex((userGame) => userGame.playerPoste === position)
             console.log('indexUserSamePosition => ', indexUserSamePosition);
             console.log('indexUserSamePosition ? => ', indexUserSamePosition !== -1);

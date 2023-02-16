@@ -18,7 +18,7 @@ export const signUp = async (userDatas: DefaultUser, setUser: Function) => {
         const userCredential = await createUserWithEmailAndPassword(
           auth,
           userDatas.email,
-          userDatas.password
+          userDatas.password,
         );
         const { user } = userCredential;
         delete userDatas.password;

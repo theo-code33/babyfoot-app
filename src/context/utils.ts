@@ -21,6 +21,7 @@ export const gameDefault: Game = {
   isPlaying: false,
   currentPoint: 1,
   code: [],
+  gameMember: "1v1",
 };
 
 export const actionDefault: Action = {

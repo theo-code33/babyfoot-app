@@ -1,4 +1,5 @@
-import { useContext, useState } from "react";
+import { FormEventHandler, useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../../../context/userContext";
 import { signIn } from "../../../../services/auth/auth.service";
 import { Sign } from "../../../../services/auth/utils";
@@ -9,20 +10,20 @@ const SignIn = () => {
     password: "",
   });
   const { setUser: setGlobalUser } = useContext(UserContext);
+  const navigate = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUser({ ...user, [e.target.name]: e.target.value });
-
-    console.log(user);
   };
 
-  const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    signIn(user, setGlobalUser);
+    await signIn(user, setGlobalUser);
+    navigate("/game");
   };
 
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <input
         type="text"
         name="email"
@@ -35,7 +36,7 @@ const SignIn = () => {
         placeholder="Entrez votre mot de passe"
         onChange={(e) => handleChange(e)}
       />
-      <button onClick={(e) => handleClick(e)}>Validez</button>
+      <button type="submit">Validez</button>
     </form>
   );
 };

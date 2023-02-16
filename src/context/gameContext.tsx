@@ -1,5 +1,6 @@
 import { createContext, FC, useEffect, useState } from "react";
 import { getGames } from "../db/game/readGames";
+import { updateGame } from "../db/game/updateGame";
 import { Game, Games } from "../db/utils";
 import {
   actionDefault,
@@ -21,9 +22,9 @@ export const GameContextProvider: FC<Props> = ({ children }) => {
   const [action, setAction] = useState<Action>(actionDefault);
 
   useEffect(() => {
-    getGames(setGame);
-  }, []);
-
+      getGames(setGame);
+      updateGame(game, setGame)
+  },[])
   return (
     <GameContext.Provider value={{ game, setGame, action, setAction }}>
       {children}

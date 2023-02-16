@@ -5,11 +5,11 @@ export type Game = {
   name: string;
   blue: {
     score: number;
-    users?: UsersGames;
+    users: UsersGames;
   };
   red: {
     score: number;
-    users?: UsersGames;
+    users: UsersGames;
   };
   lastActions?: LastActions;
   maxScore: number;
@@ -18,7 +18,10 @@ export type Game = {
   isPlaying: boolean;
   currentPoint: number;
   code: number[];
+  gameMember: GameMember;
 };
+
+export type Team = "blue" | "red";
 
 export type UsersGames = UserGame[];
 
@@ -87,3 +90,5 @@ export type User = {
   wins: number;
   startedGames: number;
 };
+
+export type GameMember = '1v1' | '2v2' | '1v2' | '2v1'
