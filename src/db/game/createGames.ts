@@ -68,11 +68,11 @@ export const createGame = async (maxScore: number, gameMember: GameMember) => {
                 count: 0,
             },
             {
-                name: "cendar",
+                name: "lob",
                 count: 0,
             },
             {
-                name: "cendar",
+                name: "but incroyable",
                 count: 0,
             },
         ],
