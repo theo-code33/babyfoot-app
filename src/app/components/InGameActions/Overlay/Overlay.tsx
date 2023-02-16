@@ -17,6 +17,7 @@ import {
   setFoulsDatas,
   setGamelleDatas,
   setTechnicalsDatas,
+  setButCSCDatas,
 } from "./utils";
 import Postes from "../Postes";
 import Positions from "../Positions";
@@ -44,7 +45,6 @@ const Overlay = () => {
     team: Team
   ) => {
     let position: Position = "";
-    console.log("je suis dans mon handleClick");
     if (
       e.currentTarget.value === "Attaquant" ||
       e.currentTarget.value === "Défenseur" ||
@@ -67,13 +67,25 @@ const Overlay = () => {
     const otherTeam: Team = team === "blue" ? "blue" : "red";
 
     const points = game.blue.score + game.currentPoint;
+
+    if (e.currentTarget.value === "CSC") {
+      const newDatas = setButCSCDatas({
+        game,
+        team: team,
+      });
+
+      updateDoc({
+        newDatas,
+        collectionId: "games",
+        docId: game.id,
+      });
+      setAction({ ...action, drawerIsOpen: false, postOverlay: false });
+    }
   };
 
   let newDatas = {};
 
   useEffect(() => {
-    console.log("je suis dans mon useEffect");
-
     if (action.type != "" && currentPosition != "" && action.type != "Faute") {
       switch (action.type) {
         case "But":
@@ -97,19 +109,6 @@ const Overlay = () => {
             time: timer,
           });
           break;
-
-        // case "Faute":
-        //   newDatas = setFoulsDatas({
-        //     game,
-        //     team: action.team,
-        //     currentPosition,
-        //     foulName,
-        //     currentPoste,
-        //   });
-
-        //   setFoulName("");
-        //   break;
-
         case "Techniques":
           newDatas = setTechnicalsDatas({
             game,
@@ -139,8 +138,6 @@ const Overlay = () => {
       currentPosition != "" &&
       action.type === "Faute"
     ) {
-      console.log("je suis dans le else if");
-
       newDatas = setFoulsDatas({
         game,
         team: action.team,

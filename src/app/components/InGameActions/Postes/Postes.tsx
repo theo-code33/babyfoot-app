@@ -30,9 +30,11 @@ const Postes = ({
       <button onClick={(e) => handleClick(e, action.team)} value="DD">
         DD
       </button>
-      <button onClick={(e) => handleClick(e, action.team)} value="G">
-        G
-      </button>
+      {action.type === "But" ? (
+        <button onClick={(e) => handleClick(e, action.team)} value="CSC">
+          CSC
+        </button>
+      ) : null}
     </div>
   );
 };

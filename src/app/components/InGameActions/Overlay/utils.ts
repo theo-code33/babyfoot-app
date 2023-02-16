@@ -87,6 +87,8 @@ const setButDatas = ({
       ...game[team],
       score: game[team].score + game.currentPoint,
       users: game[team].users?.map((user: UserGame) => {
+        console.log(currentPoste);
+
         if (
           user.playerPoste === currentPosition ||
           user.playerPoste === "Mixte"
@@ -128,8 +130,6 @@ const setFoulsDatas = ({
   //   (user) => user.playerPoste === "Attaquant" || user.playerPoste === "Mixte"
   // );
 
-  // console.log(user);
-
   if (foulName === "pisette" || foulName === "rateau") {
     const user = game[team].users.find(
       (user) => user.playerPoste === "Attaquant" || user.playerPoste === "Mixte"
@@ -170,9 +170,7 @@ const setFoulsDatas = ({
       (user) =>
         user.playerPoste === currentPosition || user.playerPoste === "Mixte"
     );
-    console.log(currentPosition);
     if (user?.playerPoste === "Mixte") {
-      console.log("mixte");
     }
     return {
       ...game,
@@ -255,6 +253,20 @@ const setTechnicalsDatas = ({
   };
 };
 
+const setButCSCDatas = ({ game, team }: SetDatasProps) => {
+  console.log("ddadedasazdazdaza");
+  console.log(game[team].score);
+
+  return {
+    ...game,
+    [team]: {
+      ...game[team],
+      score: game[team].score - 1,
+    },
+    currentPoint: 1,
+  };
+};
+
 const newActions = (
   action: string,
   playerNumber: number,
@@ -281,4 +293,5 @@ export {
   setFoulsDatas,
   setTechnicalsDatas,
   newActions,
+  setButCSCDatas,
 };
