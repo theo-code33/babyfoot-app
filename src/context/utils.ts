@@ -56,6 +56,8 @@ export type GameContextType = {
   setGame: Dispatch<SetStateAction<Game>>;
   action: Action;
   setAction: Dispatch<SetStateAction<Action>>;
+  timer: number;
+  setTimer: Dispatch<SetStateAction<number>>;
 };
 
 export type UserContextType = {

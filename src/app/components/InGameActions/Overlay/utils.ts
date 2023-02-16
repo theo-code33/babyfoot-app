@@ -1,4 +1,3 @@
-import { LogLevel } from "@slack/web-api";
 import { Team } from "../../../../context/utils";
 import {
   FoulName,
@@ -9,7 +8,6 @@ import {
   TechnicalName,
   UserGame,
 } from "../../../../db/utils";
-import { logOut } from "../../../../services/auth/auth.service";
 
 type SetDatasProps = {
   game: Game;
@@ -19,6 +17,7 @@ type SetDatasProps = {
   currentPosition?: Position;
   foulName?: FoulName;
   technicalName?: TechnicalName;
+  time?: number;
 };
 
 const setGamelleDatas = ({
@@ -27,16 +26,14 @@ const setGamelleDatas = ({
   currentPoste,
   gamelle,
   currentPosition,
+  time,
 }: SetDatasProps) => {
   const otherTeam = team === "blue" ? "red" : "blue";
 
   const user = game[team].users.find(
-    (user) => user.playerPoste === currentPosition
+    (user) =>
+      user.playerPoste === currentPosition || user.playerPoste === "Mixte"
   );
-
-  console.log("user", user);
-
-  console.log(game);
 
   return {
     ...game,
@@ -66,7 +63,7 @@ const setGamelleDatas = ({
         playerNumber: user?.playerNumber,
         action: "gamelle",
         position: currentPoste,
-        time: new Date().getTime(),
+        time,
       },
     ],
   };
@@ -77,9 +74,11 @@ const setButDatas = ({
   team,
   currentPoste,
   currentPosition,
+  time,
 }: SetDatasProps) => {
   const user = game[team].users.find(
-    (user) => user.playerPoste === currentPosition
+    (user) =>
+      user.playerPoste === currentPosition || user.playerPoste === "Mixte"
   );
 
   return {
@@ -88,13 +87,14 @@ const setButDatas = ({
       ...game[team],
       score: game[team].score + game.currentPoint,
       users: game[team].users?.map((user: UserGame) => {
+        console.log(currentPoste);
+
         if (
           user.playerPoste === currentPosition ||
           user.playerPoste === "Mixte"
         ) {
-          console.log("user.playerPoste", user.playerPoste);
-
           user.goals = user.goals + 1;
+
           user.postes?.map((poste: Poste) => {
             if (poste.name === currentPoste) {
               poste.goals = poste.goals + 1;
@@ -114,6 +114,7 @@ const setButDatas = ({
         time: new Date().getTime(),
       },
     ],
+    time,
   };
 };
 
@@ -123,12 +124,17 @@ const setFoulsDatas = ({
   foulName,
   currentPosition,
   currentPoste,
+  time,
 }: SetDatasProps) => {
-  const user = game[team].users.find(
-    (user) => user.playerPoste === currentPosition
-  );
+  // const user = game[team].users.find(
+  //   (user) => user.playerPoste === "Attaquant" || user.playerPoste === "Mixte"
+  // );
 
   if (foulName === "pisette" || foulName === "rateau") {
+    const user = game[team].users.find(
+      (user) => user.playerPoste === "Attaquant" || user.playerPoste === "Mixte"
+    );
+
     return {
       ...game,
       [team]: {
@@ -157,11 +163,15 @@ const setFoulsDatas = ({
           time: new Date().getTime(),
         },
       ],
+      time,
     };
   } else {
-    console.log(currentPoste);
-    console.log(currentPosition);
-
+    const user = game[team].users.find(
+      (user) =>
+        user.playerPoste === currentPosition || user.playerPoste === "Mixte"
+    );
+    if (user?.playerPoste === "Mixte") {
+    }
     return {
       ...game,
       [team]: {
@@ -189,6 +199,7 @@ const setFoulsDatas = ({
           time: new Date().getTime(),
         },
       ],
+      time,
     };
   }
 };
@@ -199,9 +210,11 @@ const setTechnicalsDatas = ({
   currentPoste,
   currentPosition,
   technicalName,
+  time,
 }: SetDatasProps) => {
   const user = game[team].users.find(
-    (user) => user.playerPoste === currentPosition
+    (user) =>
+      user.playerPoste === currentPosition || user.playerPoste === "Mixte"
   );
 
   return {
@@ -236,6 +249,21 @@ const setTechnicalsDatas = ({
         time: new Date().getTime(),
       },
     ],
+    time,
+  };
+};
+
+const setButCSCDatas = ({ game, team }: SetDatasProps) => {
+  console.log("ddadedasazdazdaza");
+  console.log(game[team].score);
+
+  return {
+    ...game,
+    [team]: {
+      ...game[team],
+      score: game[team].score - 1,
+    },
+    currentPoint: 1,
   };
 };
 
@@ -265,4 +293,5 @@ export {
   setFoulsDatas,
   setTechnicalsDatas,
   newActions,
+  setButCSCDatas,
 };

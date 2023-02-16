@@ -17,12 +17,13 @@ import {
   setFoulsDatas,
   setGamelleDatas,
   setTechnicalsDatas,
+  setButCSCDatas,
 } from "./utils";
 import Postes from "../Postes";
 import Positions from "../Positions";
 
 const Overlay = () => {
-  const { game, action, setAction } = useContext(GameContext);
+  const { game, action, setAction, timer } = useContext(GameContext);
   const [gamelle, setGamelle] = useState<string>("");
   const [foulName, setFoulName] = useState<FoulName>("");
   const [technicalName, setTechnicalName] = useState<TechnicalName>("");
@@ -44,34 +45,48 @@ const Overlay = () => {
     team: Team
   ) => {
     let position: Position = "";
-
     if (
       e.currentTarget.value === "Attaquant" ||
-      e.currentTarget.value === "Défenseur"
+      e.currentTarget.value === "Défenseur" ||
+      e.currentTarget.value === "Mixte" ||
+      e.currentTarget.value === ""
     ) {
       position = e.currentTarget.value as Position;
-      setCurrentPosition(position);
+      if (foulName === "pisette" || foulName === "rateau") {
+        setCurrentPosition("Attaquant");
+      } else {
+        setCurrentPosition(position);
+      }
     } else {
       const poste = e.currentTarget.value as PostesName;
       const position = determinerPosition(poste);
       setCurrentPoste(poste);
       setCurrentPosition(position);
-      console.log("yoooo");
     }
 
     const otherTeam: Team = team === "blue" ? "blue" : "red";
 
     const points = game.blue.score + game.currentPoint;
+
+    if (e.currentTarget.value === "CSC") {
+      const newDatas = setButCSCDatas({
+        game,
+        team: team,
+      });
+
+      updateDoc({
+        newDatas,
+        collectionId: "games",
+        docId: game.id,
+      });
+      setAction({ ...action, drawerIsOpen: false, postOverlay: false });
+    }
   };
 
   let newDatas = {};
 
   useEffect(() => {
-    console.log("test");
-
-    if (action.type != "" || currentPosition != "" || foulName != "") {
-      console.log("pisette");
-
+    if (action.type != "" && currentPosition != "" && action.type != "Faute") {
       switch (action.type) {
         case "But":
           newDatas = setButDatas({
@@ -79,7 +94,9 @@ const Overlay = () => {
             team: action.team,
             currentPoste,
             currentPosition,
+            time: timer,
           });
+
           break;
 
         case "Gamelle":
@@ -89,24 +106,9 @@ const Overlay = () => {
             currentPoste,
             currentPosition,
             gamelle,
+            time: timer,
           });
-
-          console.log(newDatas);
           break;
-
-        case "Faute":
-          console.log("yoooooo");
-
-          newDatas = setFoulsDatas({
-            game,
-            team: action.team,
-            currentPosition,
-            foulName,
-            currentPoste,
-          });
-
-          break;
-
         case "Techniques":
           newDatas = setTechnicalsDatas({
             game,
@@ -114,6 +116,7 @@ const Overlay = () => {
             currentPoste,
             currentPosition,
             technicalName,
+            time: timer,
           });
           break;
 
@@ -129,8 +132,32 @@ const Overlay = () => {
 
       setAction({ ...action, drawerIsOpen: false, postOverlay: false });
       setCurrentPosition("");
+    } else if (
+      action.type != "" &&
+      foulName != "" &&
+      currentPosition != "" &&
+      action.type === "Faute"
+    ) {
+      newDatas = setFoulsDatas({
+        game,
+        team: action.team,
+        currentPosition,
+        foulName,
+        currentPoste,
+        time: timer,
+      });
+
+      updateDoc({
+        newDatas,
+        collectionId: "games",
+        docId: game.id,
+      });
+
+      setFoulName("");
+      setAction({ ...action, drawerIsOpen: false, postOverlay: false });
+      setCurrentPosition("");
     }
-  }, [currentPosition, foulName]);
+  }, [currentPosition, foulName, action.type]);
 
   return (
     <div>
@@ -215,14 +242,19 @@ const Overlay = () => {
           {action.type === "Faute" && (
             <div>
               <button
+                value="Mixte"
                 onClick={(e) => {
                   setFoulName("roulette");
-                  handleClick(e, action.team);
+                  setAction({ ...action });
+                  if (game[action.team].users.length === 1) {
+                    handleClick(e, action.team);
+                  }
                 }}
               >
                 roulette
               </button>
               <button
+                value={game[action.team].users.length === 1 ? "Mixte" : ""}
                 onClick={(e) => {
                   setFoulName("pisette");
                   handleClick(e, action.team);
@@ -231,6 +263,7 @@ const Overlay = () => {
                 pisette
               </button>
               <button
+                value={game[action.team].users.length === 1 ? "Mixte" : ""}
                 onClick={(e) => {
                   setFoulName("rateau");
                   handleClick(e, action.team);
@@ -246,9 +279,12 @@ const Overlay = () => {
           <Postes action={action} handleClick={handleClick} />
         )}
 
-        {action.team && action.type === "Faute" && foulName === "roulette" && (
-          <Positions action={action} handleClick={handleClick} />
-        )}
+        {action.team &&
+          action.type === "Faute" &&
+          foulName === "roulette" &&
+          game[action.team].users.length > 1 && (
+            <Positions action={action} handleClick={handleClick} />
+          )}
 
         <button onClick={() => setAction({ ...action, drawerIsOpen: false })}>
           Annuler
