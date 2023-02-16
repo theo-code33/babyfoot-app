@@ -17,6 +17,7 @@ type SetDatasProps = {
   currentPosition?: Position;
   foulName?: FoulName;
   technicalName?: TechnicalName;
+  time?: number;
 };
 
 const setGamelleDatas = ({
@@ -25,6 +26,7 @@ const setGamelleDatas = ({
   currentPoste,
   gamelle,
   currentPosition,
+  time,
 }: SetDatasProps) => {
   const otherTeam = team === "blue" ? "red" : "blue";
 
@@ -61,7 +63,7 @@ const setGamelleDatas = ({
         playerNumber: user?.playerNumber,
         action: "gamelle",
         position: currentPoste,
-        time: new Date().getTime(),
+        time,
       },
     ],
   };
@@ -72,6 +74,7 @@ const setButDatas = ({
   team,
   currentPoste,
   currentPosition,
+  time,
 }: SetDatasProps) => {
   const user = game[team].users.find(
     (user) =>
@@ -111,6 +114,7 @@ const setButDatas = ({
         time: new Date().getTime(),
       },
     ],
+    time,
   };
 };
 
@@ -120,6 +124,7 @@ const setFoulsDatas = ({
   foulName,
   currentPosition,
   currentPoste,
+  time,
 }: SetDatasProps) => {
   // const user = game[team].users.find(
   //   (user) => user.playerPoste === "Attaquant" || user.playerPoste === "Mixte"
@@ -158,6 +163,7 @@ const setFoulsDatas = ({
           time: new Date().getTime(),
         },
       ],
+      time,
     };
   } else {
     const user = game[team].users.find(
@@ -193,6 +199,7 @@ const setFoulsDatas = ({
           time: new Date().getTime(),
         },
       ],
+      time,
     };
   }
 };
@@ -203,6 +210,7 @@ const setTechnicalsDatas = ({
   currentPoste,
   currentPosition,
   technicalName,
+  time,
 }: SetDatasProps) => {
   const user = game[team].users.find(
     (user) =>
@@ -241,6 +249,7 @@ const setTechnicalsDatas = ({
         time: new Date().getTime(),
       },
     ],
+    time,
   };
 };
 
