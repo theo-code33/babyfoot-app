@@ -13,6 +13,7 @@ import Technicals from "../../../components/InGameActions/Technicals";
 import { LastActions } from "../../../../db/utils";
 
 const InGame = () => {
+  const [isEnded, setIsEnded] = useState<boolean>(false);
   const { game, setGame, action, setAction, timer, setTimer } =
     useContext(GameContext);
   const { id } = useParams();
@@ -29,6 +30,9 @@ const InGame = () => {
   useEffect(() => {
     if (game.id) {
       setInterval(() => setTimer((timer) => timer + 1), 1000);
+      if (game.blue.score >= game.maxScore || game.red.score >= game.maxScore) {
+        setIsEnded(true);
+      }
     }
   }, [game]);
 
@@ -218,6 +222,25 @@ const InGame = () => {
           ))}
           <Swap setNewAction={setNewAction} team="red" />
         </div>
+      </div>
+
+      <div>
+        {isEnded ? (
+          <div>
+            <h2>Fin de la partie</h2>
+            <h2>Équipe bleue : {game.blue.score}</h2>
+            <h2>Équipe rouge : {game.red.score}</h2>
+
+            <button
+              onClick={() => {
+                navigate(`/game/${game.id}/end-game`);
+                setGame({ ...game, isActive: false });
+              }}
+            >
+              Continuer
+            </button>
+          </div>
+        ) : null}
       </div>
 
       <Overlay />
