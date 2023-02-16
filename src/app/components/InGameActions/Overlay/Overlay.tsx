@@ -56,6 +56,7 @@ const Overlay = () => {
       const position = determinerPosition(poste);
       setCurrentPoste(poste);
       setCurrentPosition(position);
+      console.log("yoooo");
     }
 
     const otherTeam: Team = team === "blue" ? "blue" : "red";
@@ -89,6 +90,8 @@ const Overlay = () => {
             currentPosition,
             gamelle,
           });
+
+          console.log(newDatas);
           break;
 
         case "Faute":
@@ -99,6 +102,7 @@ const Overlay = () => {
             team: action.team,
             currentPosition,
             foulName,
+            currentPoste,
           });
 
           break;
