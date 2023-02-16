@@ -32,7 +32,7 @@ const GameFormCreate = () => {
         try {
             const newGame = await createGame(credentials.maxScore, credentials.member);
             const { id } = newGame;
-            navigate(`/game/${id}`);
+            navigate(`/game/${id}/start-game`);
             
         } catch (error) {
             

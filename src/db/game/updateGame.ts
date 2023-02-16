@@ -108,3 +108,15 @@ export const updateGame = async (game: Game, setGame: React.Dispatch<React.SetSt
         setGame(doc.data() as Game)
     })
 }
+
+export const updateGameStatus = async (game: Game, status: boolean) => {
+    try {
+        const gameRef = doc(db, 'games', game.id.toString())
+        await setDoc(gameRef, {
+            ...game,
+            isPlaying: status
+        }, { merge: true })
+    } catch (error: any) {
+        throw new Error(error.message)
+    }
+}

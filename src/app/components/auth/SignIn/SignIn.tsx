@@ -1,14 +1,15 @@
 import { FormEventHandler, useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { UserContext } from "../../../../context/userContext";
-import { signIn } from "../../../../services/auth/auth.service";
+import { signIn, signInWithGoogle } from "../../../../services/auth/auth.service";
 import { Sign } from "../../../../services/auth/utils";
 
-const SignIn = () => {
+const SignIn = ({id}:{id?:string}) => {
   const [user, setUser] = useState<Sign>({
     email: "",
     password: "",
   });
+  const [error, setError] = useState<boolean>(false);
   const { setUser: setGlobalUser } = useContext(UserContext);
   const navigate = useNavigate();
 
@@ -19,10 +20,19 @@ const SignIn = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     await signIn(user, setGlobalUser);
-    navigate("/game");
+    if(id){
+      navigate(`/game/${id}/select-player`);
+    }else{
+      navigate("/game");
+    }
   };
 
+  const handleSignUpWithGoogle = async () => {
+    await signInWithGoogle(setError, navigate, id)
+  }
+
   return (
+    <>
     <form onSubmit={handleSubmit}>
       <input
         type="text"
@@ -38,6 +48,17 @@ const SignIn = () => {
       />
       <button type="submit">Validez</button>
     </form>
+    <button onClick={handleSignUpWithGoogle}>Sign Up With Google</button>
+    {
+      id 
+      ? <Link to={`/signup/${id}`}>
+          Créer un compte
+        </Link>
+      : <Link to="/signup">
+          Créer un compte
+        </Link>
+    }
+    </>
   );
 };
 
