@@ -1,4 +1,3 @@
-import { LogLevel } from "@slack/web-api";
 import { Team } from "../../../../context/utils";
 import {
   FoulName,
@@ -9,7 +8,6 @@ import {
   TechnicalName,
   UserGame,
 } from "../../../../db/utils";
-import { logOut } from "../../../../services/auth/auth.service";
 
 type SetDatasProps = {
   game: Game;
@@ -31,12 +29,9 @@ const setGamelleDatas = ({
   const otherTeam = team === "blue" ? "red" : "blue";
 
   const user = game[team].users.find(
-    (user) => user.playerPoste === currentPosition
+    (user) =>
+      user.playerPoste === currentPosition || user.playerPoste === "Mixte"
   );
-
-  console.log("user", user);
-
-  console.log(game);
 
   return {
     ...game,
@@ -79,7 +74,8 @@ const setButDatas = ({
   currentPosition,
 }: SetDatasProps) => {
   const user = game[team].users.find(
-    (user) => user.playerPoste === currentPosition
+    (user) =>
+      user.playerPoste === currentPosition || user.playerPoste === "Mixte"
   );
 
   return {
@@ -92,9 +88,8 @@ const setButDatas = ({
           user.playerPoste === currentPosition ||
           user.playerPoste === "Mixte"
         ) {
-          console.log("user.playerPoste", user.playerPoste);
-
           user.goals = user.goals + 1;
+
           user.postes?.map((poste: Poste) => {
             if (poste.name === currentPoste) {
               poste.goals = poste.goals + 1;
@@ -124,11 +119,18 @@ const setFoulsDatas = ({
   currentPosition,
   currentPoste,
 }: SetDatasProps) => {
-  const user = game[team].users.find(
-    (user) => user.playerPoste === currentPosition
-  );
+  // const user = game[team].users.find(
+  //   (user) => user.playerPoste === "Attaquant" || user.playerPoste === "Mixte"
+  // );
+
+  // console.log(user);
 
   if (foulName === "pisette" || foulName === "rateau") {
+    const user = game[team].users.find(
+      (user) => user.playerPoste === "Attaquant" || user.playerPoste === "Mixte"
+    );
+    console.log("yooooooo");
+
     return {
       ...game,
       [team]: {
@@ -159,9 +161,14 @@ const setFoulsDatas = ({
       ],
     };
   } else {
-    console.log(currentPoste);
+    const user = game[team].users.find(
+      (user) =>
+        user.playerPoste === currentPosition || user.playerPoste === "Mixte"
+    );
     console.log(currentPosition);
-
+    if (user?.playerPoste === "Mixte") {
+      console.log("mixte");
+    }
     return {
       ...game,
       [team]: {
@@ -201,7 +208,8 @@ const setTechnicalsDatas = ({
   technicalName,
 }: SetDatasProps) => {
   const user = game[team].users.find(
-    (user) => user.playerPoste === currentPosition
+    (user) =>
+      user.playerPoste === currentPosition || user.playerPoste === "Mixte"
   );
 
   return {

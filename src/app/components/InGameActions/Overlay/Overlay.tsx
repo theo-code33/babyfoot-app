@@ -44,19 +44,24 @@ const Overlay = () => {
     team: Team
   ) => {
     let position: Position = "";
-
+    console.log("je suis dans mon handleClick");
     if (
       e.currentTarget.value === "Attaquant" ||
-      e.currentTarget.value === "Défenseur"
+      e.currentTarget.value === "Défenseur" ||
+      e.currentTarget.value === "Mixte" ||
+      e.currentTarget.value === ""
     ) {
       position = e.currentTarget.value as Position;
-      setCurrentPosition(position);
+      if (foulName === "pisette" || foulName === "rateau") {
+        setCurrentPosition("Attaquant");
+      } else {
+        setCurrentPosition(position);
+      }
     } else {
       const poste = e.currentTarget.value as PostesName;
       const position = determinerPosition(poste);
       setCurrentPoste(poste);
       setCurrentPosition(position);
-      console.log("yoooo");
     }
 
     const otherTeam: Team = team === "blue" ? "blue" : "red";
@@ -67,11 +72,9 @@ const Overlay = () => {
   let newDatas = {};
 
   useEffect(() => {
-    console.log("test");
+    console.log("je suis dans mon useEffect");
 
-    if (action.type != "" || currentPosition != "" || foulName != "") {
-      console.log("pisette");
-
+    if (action.type != "" && currentPosition != "" && action.type != "Faute") {
       switch (action.type) {
         case "But":
           newDatas = setButDatas({
@@ -80,6 +83,9 @@ const Overlay = () => {
             currentPoste,
             currentPosition,
           });
+
+          console.log(newDatas);
+
           break;
 
         case "Gamelle":
@@ -94,18 +100,17 @@ const Overlay = () => {
           console.log(newDatas);
           break;
 
-        case "Faute":
-          console.log("yoooooo");
+        // case "Faute":
+        //   newDatas = setFoulsDatas({
+        //     game,
+        //     team: action.team,
+        //     currentPosition,
+        //     foulName,
+        //     currentPoste,
+        //   });
 
-          newDatas = setFoulsDatas({
-            game,
-            team: action.team,
-            currentPosition,
-            foulName,
-            currentPoste,
-          });
-
-          break;
+        //   setFoulName("");
+        //   break;
 
         case "Techniques":
           newDatas = setTechnicalsDatas({
@@ -129,8 +134,33 @@ const Overlay = () => {
 
       setAction({ ...action, drawerIsOpen: false, postOverlay: false });
       setCurrentPosition("");
+    } else if (
+      action.type != "" &&
+      foulName != "" &&
+      currentPosition != "" &&
+      action.type === "Faute"
+    ) {
+      console.log("je suis dans le else if");
+
+      newDatas = setFoulsDatas({
+        game,
+        team: action.team,
+        currentPosition,
+        foulName,
+        currentPoste,
+      });
+
+      updateDoc({
+        newDatas,
+        collectionId: "games",
+        docId: game.id,
+      });
+
+      setFoulName("");
+      setAction({ ...action, drawerIsOpen: false, postOverlay: false });
+      setCurrentPosition("");
     }
-  }, [currentPosition, foulName]);
+  }, [currentPosition, foulName, action.type]);
 
   return (
     <div>
@@ -215,14 +245,19 @@ const Overlay = () => {
           {action.type === "Faute" && (
             <div>
               <button
+                value="Mixte"
                 onClick={(e) => {
                   setFoulName("roulette");
-                  handleClick(e, action.team);
+                  setAction({ ...action });
+                  if (game[action.team].users.length === 1) {
+                    handleClick(e, action.team);
+                  }
                 }}
               >
                 roulette
               </button>
               <button
+                value={game[action.team].users.length === 1 ? "Mixte" : ""}
                 onClick={(e) => {
                   setFoulName("pisette");
                   handleClick(e, action.team);
@@ -231,6 +266,7 @@ const Overlay = () => {
                 pisette
               </button>
               <button
+                value={game[action.team].users.length === 1 ? "Mixte" : ""}
                 onClick={(e) => {
                   setFoulName("rateau");
                   handleClick(e, action.team);
@@ -246,9 +282,12 @@ const Overlay = () => {
           <Postes action={action} handleClick={handleClick} />
         )}
 
-        {action.team && action.type === "Faute" && foulName === "roulette" && (
-          <Positions action={action} handleClick={handleClick} />
-        )}
+        {action.team &&
+          action.type === "Faute" &&
+          foulName === "roulette" &&
+          game[action.team].users.length > 1 && (
+            <Positions action={action} handleClick={handleClick} />
+          )}
 
         <button onClick={() => setAction({ ...action, drawerIsOpen: false })}>
           Annuler

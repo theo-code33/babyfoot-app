@@ -13,17 +13,24 @@ import Technicals from "../../../components/InGameActions/Technicals";
 import { LastActions } from "../../../../db/utils";
 
 const InGame = () => {
-  const { game, setGame, action, setAction } = useContext(GameContext);
+  const { game, setGame, action, setAction, timer, setTimer } =
+    useContext(GameContext);
   const { id } = useParams();
   const navigate = useNavigate();
 
   const [lastActionsInGame, setLastActionsInGame] = useState<LastActions>([]);
 
+  // useEffect(() => {
+  //   if (id !== game.id) {
+  //     navigate("/game");
+  //   }
+  // }, [id]);
+
   useEffect(() => {
-    if (id !== game.id) {
-      navigate("/game");
+    if (game.id) {
+      setInterval(() => setTimer((timer) => timer + 1), 1000);
     }
-  }, [id]);
+  }, [game]);
 
   const setNewAction = (type: ActionType, team: Team) => {
     switch (type) {
@@ -115,6 +122,22 @@ const InGame = () => {
     }
   };
 
+  const getUserName = (playerNumber: number) => {
+    const user = game.blue.users?.find(
+      (user) => user.playerNumber === playerNumber
+    );
+    if (user) {
+      return user.userName;
+    } else {
+      const user = game.red.users?.find(
+        (user) => user.playerNumber === playerNumber
+      );
+      if (user) {
+        return user.userName;
+      }
+    }
+  };
+
   useEffect(() => {
     lastActions();
   }, [game]);
@@ -135,7 +158,7 @@ const InGame = () => {
       <div>
         {lastActionsInGame.map((action) => (
           <p>
-            {action.playerNumber} : {action.position}
+            {getUserName(action.playerNumber)} : {action.position}
           </p>
         ))}
       </div>

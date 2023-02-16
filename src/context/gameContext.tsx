@@ -15,18 +15,23 @@ export const GameContext = createContext<GameContextType>({
   setGame: () => {},
   action: actionDefault,
   setAction: () => {},
+  timer: 0,
+  setTimer: () => {},
 });
 
 export const GameContextProvider: FC<Props> = ({ children }) => {
   const [game, setGame] = useState<Game>(gameDefault);
   const [action, setAction] = useState<Action>(actionDefault);
+  const [timer, setTimer] = useState<number>(0);
 
   useEffect(() => {
-      getGames(setGame);
-      updateGame(game, setGame)
-  },[])
+    getGames(setGame);
+    updateGame(game, setGame);
+  }, []);
   return (
-    <GameContext.Provider value={{ game, setGame, action, setAction }}>
+    <GameContext.Provider
+      value={{ game, setGame, action, setAction, timer, setTimer }}
+    >
       {children}
     </GameContext.Provider>
   );
