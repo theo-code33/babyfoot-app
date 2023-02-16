@@ -5,20 +5,19 @@ import { UserContext } from "../../../context/userContext";
 const Qrcode = () => {
     const {user} = useContext(UserContext)
     const {id} = useParams();
+    const token = localStorage.getItem("babytoken");
     const navigate = useNavigate();
     useEffect(() => {
-        console.log(user);
-        
-        if (user.uid !== "") {
+        console.log(user)
+        if (token) {
             navigate(`/game/${id}/select-player`)
         }else{
             navigate(`/signin/${id}`)
         }
-    },[])
+    },[user])
     return ( 
-        <div>
-            <h1>Qrcode</h1>
-        </div>
+        <>
+        </>
      );
 }
  

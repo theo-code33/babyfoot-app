@@ -11,7 +11,7 @@ import { collection, doc, getDoc, getDocs, query, where } from "firebase/firesto
 import { createUser } from "../../db/users/create.users";
 import { Game, User } from "../../utils";
 import { db } from "../config/firebase";
-import { removeToken, setToken } from "../token/token.service";
+import { removeToken, addToken } from "../token/token.service";
 import { Sign, DefaultUser } from "./utils";
 
 export const signUp = async (userDatas: DefaultUser, setUser: Function) => {
@@ -30,7 +30,7 @@ export const signUp = async (userDatas: DefaultUser, setUser: Function) => {
         if (!userDb.exists()) throw new Error("User not found");
         const userSnap = userDb.data()
         setUser(userSnap);
-        setToken(user.uid);
+        addToken(user.uid);
     }
   } catch (error: any) {
     throw new Error(error.message);
@@ -50,10 +50,10 @@ export const signInWithGoogle = async (
     const credential = GoogleAuthProvider.credentialFromResult(result);
     const token = credential?.accessToken;
     const user = result.user;
+    console.log(user);
     
     const queryUserDb = query(collection(db, "users"), where("email", "==", user.email));
     const userDb = await getDocs(queryUserDb);
-    console.log(userDb.docs.length);
     
     if(userDb.docs.length === 0 && user.displayName !== null && user.email !== null){
         const newUser = {
@@ -123,7 +123,7 @@ export const signInWithGoogle = async (
         }
         await createUser(newUser, user.uid);
     }
-    setToken(user.uid);
+    addToken(user.uid);
     if(id !== undefined){
       navigate(`/game/${id}/select-player`);
     }else{
@@ -153,7 +153,7 @@ export const signIn = async (datas: Sign, setUser: Function) => {
 
     
     setUser(user);
-    setToken(user.uid);
+    addToken(user.uid);
   } catch (error: any) {
     throw new Error(error.message);
   }

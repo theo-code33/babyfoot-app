@@ -1,12 +1,12 @@
 import { Token } from './utils'
-export const setToken = (token : Token) => {
-    localStorage.setItem('token', token)
+export const addToken = (token : Token) => {
+    localStorage.setItem('babytoken', token)
 }
 
 export const getToken = () => {
-    return localStorage.getItem('token')
+    return localStorage.getItem('babytoken')
 }
 
 export const removeToken = () => {
-    localStorage.removeItem('token')
+    localStorage.removeItem('babytoken')
 }
