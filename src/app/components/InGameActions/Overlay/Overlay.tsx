@@ -56,6 +56,7 @@ const Overlay = () => {
       const position = determinerPosition(poste);
       setCurrentPoste(poste);
       setCurrentPosition(position);
+      console.log("yoooo");
     }
 
     const otherTeam: Team = team === "blue" ? "blue" : "red";
@@ -67,6 +68,7 @@ const Overlay = () => {
 
   useEffect(() => {
     if (action.type != "" && currentPosition != "") {
+      console.log(currentPosition);
       switch (action.type) {
         case "But":
           newDatas = setButDatas({
@@ -85,6 +87,8 @@ const Overlay = () => {
             currentPosition,
             gamelle,
           });
+
+          console.log(newDatas);
           break;
 
         case "Faute":
@@ -93,6 +97,7 @@ const Overlay = () => {
             team: action.team,
             currentPosition,
             foulName,
+            currentPoste,
           });
 
           break;

@@ -10,17 +10,20 @@ import Swap from "../../../components/InGameActions/Swap/Swap";
 import Overlay from "../../../components/InGameActions/Overlay";
 import Fouls from "../../../components/InGameActions/Fouls";
 import Technicals from "../../../components/InGameActions/Technicals";
+import { LastActions } from "../../../../db/utils";
 
 const InGame = () => {
   const { game, setGame, action, setAction } = useContext(GameContext);
   const { id } = useParams();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (id !== game.id) {
-      navigate("/game");
-    }
-  }, [id]);
+  const [lastActionsInGame, setLastActionsInGame] = useState<LastActions>([]);
+
+  // useEffect(() => {
+  //   if (id !== game.id) {
+  //     navigate("/game");
+  //   }
+  // }, [id]);
 
   const setNewAction = (type: ActionType, team: Team) => {
     switch (type) {
@@ -29,7 +32,7 @@ const InGame = () => {
         break;
 
       case "Swap":
-        setSwap();
+        setSwap(team);
         break;
 
       case "Faute":
@@ -75,13 +78,13 @@ const InGame = () => {
     });
   };
 
-  const setSwap = () => {
+  const setSwap = (team: Team) => {
     updateDoc({
       newDatas: {
         ...game,
-        blue: {
-          ...game.blue,
-          users: game.blue.users?.map((user: any) => {
+        [team]: {
+          ...game[team],
+          users: game[team].users?.map((user: any) => {
             if (user.playerPoste === "Attaquant") {
               return {
                 ...user,
@@ -102,6 +105,20 @@ const InGame = () => {
     });
   };
 
+  const lastActions = () => {
+    const lastActions = game.lastActions;
+    if (lastActions) {
+      const lastActionsInGame = lastActions.sort(
+        (a: any, b: any) => b.time - a.time
+      );
+      setLastActionsInGame(lastActionsInGame.slice(0, 4));
+    }
+  };
+
+  useEffect(() => {
+    lastActions();
+  }, [game]);
+
   return (
     <div>
       <div>
@@ -114,6 +131,15 @@ const InGame = () => {
       <div>
         <h2>CurrentPoint :{game.currentPoint}</h2>
       </div>
+
+      <div>
+        {lastActionsInGame.map((action) => (
+          <p>
+            {action.playerNumber} : {action.position}
+          </p>
+        ))}
+      </div>
+
       <div
         style={{
           display: "flex",
