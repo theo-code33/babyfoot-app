@@ -40,9 +40,9 @@ export type UpdatedUser = {
   userId: string;
   userName: string;
   playerPoste: string;
-}
+};
 
-export type Position = "Attaquant" | "Défenseur" | "";
+export type Position = "Attaquant" | "Défenseur" | "Mixte" | "";
 
 export type Fouls = Foul[];
 
@@ -97,4 +97,4 @@ export type User = {
   startedGames: number;
 };
 
-export type GameMember = '1v1' | '2v2' | '1v2' | '2v1'
+export type GameMember = "1v1" | "2v2" | "1v2" | "2v1";

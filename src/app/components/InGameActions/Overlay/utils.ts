@@ -29,6 +29,15 @@ const setGamelleDatas = ({
   currentPosition,
 }: SetDatasProps) => {
   const otherTeam = team === "blue" ? "red" : "blue";
+
+  const user = game[team].users.find(
+    (user) => user.playerPoste === currentPosition
+  );
+
+  console.log("user", user);
+
+  console.log(game);
+
   return {
     ...game,
     [team]: {
@@ -51,6 +60,15 @@ const setGamelleDatas = ({
       score:
         gamelle === "-" ? game[otherTeam].score - 1 : game[otherTeam].score,
     },
+    lastActions: [
+      ...game.lastActions,
+      {
+        playerNumber: user?.playerNumber,
+        action: "gamelle",
+        position: currentPoste,
+        time: new Date().getTime(),
+      },
+    ],
   };
 };
 
@@ -60,13 +78,22 @@ const setButDatas = ({
   currentPoste,
   currentPosition,
 }: SetDatasProps) => {
+  const user = game[team].users.find(
+    (user) => user.playerPoste === currentPosition
+  );
+
   return {
     ...game,
     [team]: {
       ...game[team],
       score: game[team].score + game.currentPoint,
       users: game[team].users?.map((user: UserGame) => {
-        if (user.playerPoste === currentPosition) {
+        if (
+          user.playerPoste === currentPosition ||
+          user.playerPoste === "Mixte"
+        ) {
+          console.log("user.playerPoste", user.playerPoste);
+
           user.goals = user.goals + 1;
           user.postes?.map((poste: Poste) => {
             if (poste.name === currentPoste) {
@@ -78,6 +105,15 @@ const setButDatas = ({
       }),
     },
     currentPoint: 1,
+    lastActions: [
+      ...game.lastActions,
+      {
+        playerNumber: user?.playerNumber,
+        action: "but",
+        position: currentPoste,
+        time: new Date().getTime(),
+      },
+    ],
   };
 };
 
@@ -86,7 +122,12 @@ const setFoulsDatas = ({
   team,
   foulName,
   currentPosition,
+  currentPoste,
 }: SetDatasProps) => {
+  const user = game[team].users.find(
+    (user) => user.playerPoste === currentPosition
+  );
+
   if (foulName === "pisette" || foulName === "rateau") {
     return {
       ...game,
@@ -94,7 +135,10 @@ const setFoulsDatas = ({
         ...game[team],
         score: foulName === "pisette" ? game[team].score - 1 : game[team].score,
         users: game[team].users?.map((user) => {
-          if (user.playerPoste === "Attaquant") {
+          if (
+            user.playerPoste === "Attaquant" ||
+            user.playerPoste === "Mixte"
+          ) {
             user.fouls?.map((foul) => {
               if (foul.name === foulName) {
                 foul.count = foul.count + 1;
@@ -104,14 +148,29 @@ const setFoulsDatas = ({
           return user;
         }),
       },
+      lastActions: [
+        ...game.lastActions,
+        {
+          playerNumber: user?.playerNumber,
+          action: foulName,
+          position: currentPosition,
+          time: new Date().getTime(),
+        },
+      ],
     };
   } else {
+    console.log(currentPoste);
+    console.log(currentPosition);
+
     return {
       ...game,
       [team]: {
         ...game[team],
         users: game[team].users?.map((user) => {
-          if (user.playerPoste === currentPosition) {
+          if (
+            user.playerPoste === currentPosition ||
+            user.playerPoste === "Mixte"
+          ) {
             user.fouls?.map((foul) => {
               if (foul.name === foulName) {
                 foul.count = foul.count + 1;
@@ -121,6 +180,15 @@ const setFoulsDatas = ({
           return user;
         }),
       },
+      lastActions: [
+        ...game.lastActions,
+        {
+          playerNumber: user?.playerNumber,
+          action: foulName,
+          position: currentPosition,
+          time: new Date().getTime(),
+        },
+      ],
     };
   }
 };
@@ -132,9 +200,9 @@ const setTechnicalsDatas = ({
   currentPosition,
   technicalName,
 }: SetDatasProps) => {
-  console.log("currentPoste", currentPoste);
-  console.log("currentPosition", currentPosition);
-  console.log("technicalName", technicalName);
+  const user = game[team].users.find(
+    (user) => user.playerPoste === currentPosition
+  );
 
   return {
     ...game,
@@ -159,7 +227,42 @@ const setTechnicalsDatas = ({
       }),
     },
     currentPoint: 1,
+    lastActions: [
+      ...game.lastActions,
+      {
+        playerNumber: user?.playerNumber,
+        action: technicalName,
+        position: currentPoste,
+        time: new Date().getTime(),
+      },
+    ],
   };
 };
 
-export { setGamelleDatas, setButDatas, setFoulsDatas, setTechnicalsDatas };
+const newActions = (
+  action: string,
+  playerNumber: number,
+  position: PostesName,
+  game: Game
+) => {
+  return {
+    ...game,
+    lastActions: [
+      ...game.lastActions,
+      {
+        action,
+        playerNumber,
+        position,
+        time: new Date().getTime(),
+      },
+    ],
+  };
+};
+
+export {
+  setGamelleDatas,
+  setButDatas,
+  setFoulsDatas,
+  setTechnicalsDatas,
+  newActions,
+};

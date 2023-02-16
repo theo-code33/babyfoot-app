@@ -56,6 +56,7 @@ const Overlay = () => {
       const position = determinerPosition(poste);
       setCurrentPoste(poste);
       setCurrentPosition(position);
+      console.log("yoooo");
     }
 
     const otherTeam: Team = team === "blue" ? "blue" : "red";
@@ -66,7 +67,11 @@ const Overlay = () => {
   let newDatas = {};
 
   useEffect(() => {
-    if (action.type != "" && currentPosition != "") {
+    console.log("test");
+
+    if (action.type != "" || currentPosition != "" || foulName != "") {
+      console.log("pisette");
+
       switch (action.type) {
         case "But":
           newDatas = setButDatas({
@@ -85,14 +90,19 @@ const Overlay = () => {
             currentPosition,
             gamelle,
           });
+
+          console.log(newDatas);
           break;
 
         case "Faute":
+          console.log("yoooooo");
+
           newDatas = setFoulsDatas({
             game,
             team: action.team,
             currentPosition,
             foulName,
+            currentPoste,
           });
 
           break;
@@ -120,7 +130,7 @@ const Overlay = () => {
       setAction({ ...action, drawerIsOpen: false, postOverlay: false });
       setCurrentPosition("");
     }
-  }, [currentPosition]);
+  }, [currentPosition, foulName]);
 
   return (
     <div>
@@ -205,9 +215,9 @@ const Overlay = () => {
           {action.type === "Faute" && (
             <div>
               <button
-                onClick={() => {
+                onClick={(e) => {
                   setFoulName("roulette");
-                  setAction({ ...action });
+                  handleClick(e, action.team);
                 }}
               >
                 roulette
