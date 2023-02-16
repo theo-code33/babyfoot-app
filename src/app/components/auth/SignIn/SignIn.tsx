@@ -1,7 +1,7 @@
 import { FormEventHandler, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../../../context/userContext";
-import { signIn } from "../../../../services/auth/auth.service";
+import { signIn, signInWithGoogle } from "../../../../services/auth/auth.service";
 import { Sign } from "../../../../services/auth/utils";
 
 const SignIn = () => {
@@ -9,6 +9,7 @@ const SignIn = () => {
     email: "",
     password: "",
   });
+  const [error, setError] = useState<boolean>(false);
   const { setUser: setGlobalUser } = useContext(UserContext);
   const navigate = useNavigate();
 
@@ -22,7 +23,12 @@ const SignIn = () => {
     navigate("/game");
   };
 
+  const handleSignUpWithGoogle = async () => {
+    await signInWithGoogle(setError, navigate)
+  }
+
   return (
+    <>
     <form onSubmit={handleSubmit}>
       <input
         type="text"
@@ -38,6 +44,8 @@ const SignIn = () => {
       />
       <button type="submit">Validez</button>
     </form>
+    <button onClick={handleSignUpWithGoogle}>Sign Up With Google</button>
+    </>
   );
 };
 

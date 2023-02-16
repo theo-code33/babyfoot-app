@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../../../context/userContext";
-import { signUp } from "../../../../services/auth/auth.service";
+import { signUp, signInWithGoogle } from "../../../../services/auth/auth.service";
 import { DefaultUser } from "../../../../services/auth/utils";
 
 const SignUp = () => {
@@ -74,6 +75,8 @@ const SignUp = () => {
   const [error, setError] = useState<boolean>(false);
   const [success, setSuccess] = useState<boolean>(false);
 
+  const navigate = useNavigate()
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setError(false);
     setSuccess(false);
@@ -86,33 +89,41 @@ const SignUp = () => {
     try{
       signUp(user, setGlobalUser);
       setSuccess(true);
+      navigate("/game");
     }catch(err){
       setError(true);
     }
   };
 
+  const handleSignUpWithGoogle = async () => {
+    await signInWithGoogle(setError, navigate)
+  }
+
   return (
-    <form>
-      <input
-        type="text"
-        name="email"
-        placeholder="Entrez votre email"
-        onChange={(e) => handleChange(e)}
-      />
-      <input
-        type="text"
-        name="username"
-        placeholder="Entrez votre username"
-        onChange={(e) => handleChange(e)}
-      />
-      <input
-        type="password"
-        name="password"
-        placeholder="Entrez votre mot de passe"
-        onChange={(e) => handleChange(e)}
-      />
-      <button onClick={(e) => handleClick(e)}>Validez</button>
-    </form>
+    <>
+      <form>
+        <input
+          type="text"
+          name="email"
+          placeholder="Entrez votre email"
+          onChange={(e) => handleChange(e)}
+        />
+        <input
+          type="text"
+          name="username"
+          placeholder="Entrez votre username"
+          onChange={(e) => handleChange(e)}
+        />
+        <input
+          type="password"
+          name="password"
+          placeholder="Entrez votre mot de passe"
+          onChange={(e) => handleChange(e)}
+        />
+        <button onClick={(e) => handleClick(e)} type="submit">Validez</button>
+      </form>
+      <button onClick={handleSignUpWithGoogle}>Sign Up With Google</button>
+    </>
   );
 };
 
