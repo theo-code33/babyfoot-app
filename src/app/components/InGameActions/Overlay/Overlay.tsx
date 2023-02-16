@@ -22,7 +22,7 @@ import Postes from "../Postes";
 import Positions from "../Positions";
 
 const Overlay = () => {
-  const { game, action, setAction } = useContext(GameContext);
+  const { game, action, setAction, timer } = useContext(GameContext);
   const [gamelle, setGamelle] = useState<string>("");
   const [foulName, setFoulName] = useState<FoulName>("");
   const [technicalName, setTechnicalName] = useState<TechnicalName>("");
@@ -82,9 +82,8 @@ const Overlay = () => {
             team: action.team,
             currentPoste,
             currentPosition,
+            time: timer,
           });
-
-          console.log(newDatas);
 
           break;
 
@@ -95,9 +94,8 @@ const Overlay = () => {
             currentPoste,
             currentPosition,
             gamelle,
+            time: timer,
           });
-
-          console.log(newDatas);
           break;
 
         // case "Faute":
@@ -119,6 +117,7 @@ const Overlay = () => {
             currentPoste,
             currentPosition,
             technicalName,
+            time: timer,
           });
           break;
 
@@ -148,6 +147,7 @@ const Overlay = () => {
         currentPosition,
         foulName,
         currentPoste,
+        time: timer,
       });
 
       updateDoc({
