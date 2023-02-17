@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from "react";
+import "./styles/main.scss";
 import { BrowserRouter } from "react-router-dom";
 import MainRouter from "./app/routes/MainRouter";
 import { GameContext } from "./context/gameContext";

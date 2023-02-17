@@ -12,6 +12,9 @@ import Fouls from "../../../components/InGameActions/Fouls";
 import Technicals from "../../../components/InGameActions/Technicals";
 import { LastActions } from "../../../../db/utils";
 
+import score from "../../../../assets/inGame/scoreboard.png";
+import logo from "../../../../assets/inGame/logo.png";
+
 const InGame = () => {
   const [isEnded, setIsEnded] = useState<boolean>(false);
   const { game, setGame, action, setAction, timer, setTimer } =
@@ -146,26 +149,49 @@ const InGame = () => {
     lastActions();
   }, [game]);
 
+  function formatTime(totalSeconds: number): string {
+    const minutes: number = Math.floor(totalSeconds / 60);
+    const seconds: number = totalSeconds % 60;
+    return `${minutes}:${seconds.toString().padStart(2, "0")}`;
+  }
+
+  const time = formatTime(timer);
+
   return (
-    <div>
-      <div>
+    <div className="inGame">
+      <img className="scoreboard" src={score} alt="" />
+      <div className="header">
+        <div className="left-content">
+          <img className="logo" src={logo} alt="" />
+          <h2>{time}</h2>
+        </div>
+        <div className="score">
+          <p>{game.blue.score}</p>
+          <p>{game.red.score}</p>
+        </div>
+        <div className="right-content">
+          <p>pause</p>
+          <p className="leave">QUITTER LA PARTIE</p>
+        </div>
+      </div>
+      {/* <div>
         <h2>Point Équipe bleue :{game.blue.score}</h2>
-        {/* <h2>{game.blue.users?[0].goals}</h2> */}
+        <h2>{game.blue.users?[0].goals}</h2>
       </div>
       <div>
         <h2>Point Équipe rouge :{game.red.score}</h2>
       </div>
       <div>
         <h2>CurrentPoint :{game.currentPoint}</h2>
-      </div>
+      </div> */}
 
-      <div>
+      {/* <div>
         {lastActionsInGame.map((action) => (
           <p>
             {getUserName(action.playerNumber)} : {action.position}
           </p>
         ))}
-      </div>
+      </div> */}
 
       <div
         style={{
@@ -178,23 +204,18 @@ const InGame = () => {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
+            gap: "10px",
           }}
         >
-          <h2>Équipe bleue</h2>
           <But setNewAction={setNewAction} team="blue" />
-          <div style={{ display: "flex" }}>
+          <div style={{ display: "flex", gap: "10px" }}>
             <Demi setNewAction={setNewAction} team="blue" />
             <Gamelle setNewAction={setNewAction} team="blue" />
           </div>
-          <div style={{ display: "flex" }}>
-            <Fouls setNewAction={setNewAction} team="blue" />
+          <div style={{ display: "flex", gap: "10px" }}>
             <Technicals setNewAction={setNewAction} team="blue" />
+            <Fouls setNewAction={setNewAction} team="blue" />
           </div>
-          {game.blue.users?.map((user) => (
-            <p>
-              {user.userName} : {user.playerPoste}
-            </p>
-          ))}
           <Swap setNewAction={setNewAction} team="blue" />
         </div>
 
@@ -203,23 +224,18 @@ const InGame = () => {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
+            gap: "10px",
           }}
         >
-          <h2>Équipe rouge</h2>
           <But setNewAction={setNewAction} team="red" />
-          <div style={{ display: "flex" }}>
+          <div style={{ display: "flex", gap: "10px" }}>
             <Demi setNewAction={setNewAction} team="red" />
             <Gamelle setNewAction={setNewAction} team="red" />
           </div>
-          <div style={{ display: "flex" }}>
+          <div style={{ display: "flex", gap: "10px" }}>
             <Fouls setNewAction={setNewAction} team="red" />
             <Technicals setNewAction={setNewAction} team="red" />
           </div>
-          {game.red.users?.map((user) => (
-            <p>
-              {user.userName} : {user.playerPoste}
-            </p>
-          ))}
           <Swap setNewAction={setNewAction} team="red" />
         </div>
       </div>
