@@ -21,15 +21,13 @@ const Demi = ({
   }, [team]);
 
   return (
-    <div>
-      <button
-        style={{ backgroundImage: `url(${backgroundUrl})` }}
-        className="demiBtn"
-        onClick={() => setNewAction("Demi", team)}
-      >
-        DEMI
-      </button>
-    </div>
+    <button
+      style={{ backgroundImage: `url(${backgroundUrl})` }}
+      className="demiBtn"
+      onClick={() => setNewAction("Demi", team)}
+    >
+      DEMI
+    </button>
   );
 };
 

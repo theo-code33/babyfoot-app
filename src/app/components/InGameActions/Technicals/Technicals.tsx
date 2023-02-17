@@ -18,16 +18,14 @@ const Technicals = ({
     console.log("newUrl", newUrl);
   }, [team]);
   return (
-    <div>
-      <button
-        style={{ backgroundImage: `url(${backgroundUrl})` }}
-        className="techniquesBtn"
-        onClick={() => setNewAction("Techniques", team)}
-      >
-        GESTE <br />
-        TECHNIQUE
-      </button>
-    </div>
+    <button
+      style={{ backgroundImage: `url(${backgroundUrl})` }}
+      className="techniquesBtn"
+      onClick={() => setNewAction("Techniques", team)}
+    >
+      GESTE <br />
+      TECHNIQUE
+    </button>
   );
 };
 

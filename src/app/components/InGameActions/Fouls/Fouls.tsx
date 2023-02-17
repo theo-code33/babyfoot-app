@@ -19,17 +19,15 @@ const Fouls = ({
     console.log("newUrl", newUrl);
   }, [team]);
   return (
-    <div>
-      <button
-        style={{ backgroundImage: `url(${backgroundUrl})` }}
-        className="fauteBtn"
-        onClick={() => setNewAction("Faute", team)}
-      >
-        FAUTE DE
-        <br />
-        JEU
-      </button>
-    </div>
+    <button
+      style={{ backgroundImage: `url(${backgroundUrl})` }}
+      className="fauteBtn"
+      onClick={() => setNewAction("Faute", team)}
+    >
+      FAUTE DE
+      <br />
+      JEU
+    </button>
   );
 };
 

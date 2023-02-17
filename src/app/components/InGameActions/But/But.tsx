@@ -21,15 +21,13 @@ const But = ({
     console.log("newUrl", newUrl);
   }, [team]);
   return (
-    <div>
-      <button
-        style={{ backgroundImage: `url(${backgroundUrl})` }}
-        className="butBtn"
-        onClick={() => setNewAction("But", team)}
-      >
-        BUT !
-      </button>
-    </div>
+    <button
+      style={{ backgroundImage: `url(${backgroundUrl})` }}
+      className="butBtn"
+      onClick={() => setNewAction("But", team)}
+    >
+      BUT !
+    </button>
   );
 };
 
