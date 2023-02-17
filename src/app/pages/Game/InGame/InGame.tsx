@@ -26,11 +26,11 @@ const InGame = () => {
 
   const [lastActionsInGame, setLastActionsInGame] = useState<LastActions>([]);
 
-  // useEffect(() => {
-  //   if (id !== game.id) {
-  //     navigate("/game");
-  //   }
-  // }, [id]);
+  useEffect(() => {
+    if (id !== game.id) {
+      navigate("/game");
+    }
+  }, [id]);
 
   useEffect(() => {
     if (game.id) {
@@ -39,14 +39,15 @@ const InGame = () => {
     const interval = setInterval(() => {
       if (game.id) {
         setTimer((timer) => timer + 1);
-        if (
-          game.blue.score >= game.maxScore ||
-          game.red.score >= game.maxScore
-        ) {
-          setIsEnded(true);
-        }
+
       }
     }, 1000);
+    if (
+      game.blue.score >= game.maxScore ||
+      game.red.score >= game.maxScore
+    ) {
+      setIsEnded(true);
+    }
     return () => clearInterval(interval);
   }, [game]);
 
