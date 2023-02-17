@@ -197,6 +197,7 @@ const InGame = () => {
         style={{
           display: "flex",
           justifyContent: "space-around",
+          marginTop: "50px",
         }}
       >
         <div
@@ -233,8 +234,8 @@ const InGame = () => {
             <Gamelle setNewAction={setNewAction} team="red" />
           </div>
           <div style={{ display: "flex", gap: "10px" }}>
-            <Fouls setNewAction={setNewAction} team="red" />
             <Technicals setNewAction={setNewAction} team="red" />
+            <Fouls setNewAction={setNewAction} team="red" />
           </div>
           <Swap setNewAction={setNewAction} team="red" />
         </div>
