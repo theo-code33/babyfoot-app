@@ -283,7 +283,7 @@ const InGame = () => {
           gap: "10px",
         }}
       >
-        {/* {isEnded ? (
+        {isEnded ? (
           <Modal
             open={isEnded}
             onClose={() => {
@@ -321,7 +321,7 @@ const InGame = () => {
               </p>
             </Box>
           </Modal>
-        ) : null} */}
+        ) : null}
       </Box>
 
       <Overlay />
