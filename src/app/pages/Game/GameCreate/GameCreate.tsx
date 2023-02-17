@@ -14,7 +14,10 @@ const GameCreate = () => {
         background: `url(${backgroundRules})`
     } as React.CSSProperties
     const styleH1 = {
+        width: "90%",
         fontSize: '80px',
+        marginTop: "0px",
+        marginBottom: "20px",
     }
     return ( 
         <Box sx={style}>

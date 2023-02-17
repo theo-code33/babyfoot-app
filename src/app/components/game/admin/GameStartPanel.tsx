@@ -3,7 +3,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import { GameContext } from "../../../../context/gameContext";
 import { UserContext } from "../../../../context/userContext";
 import { updateGameStatus } from "../../../../db/game/updateGame";
+import { Box } from "@mui/material";
 import QRCode from "qrcode";
+import backgroundGameStartPanel from "../../../../assets/background-start-game.svg";
 
 const GameStartPanel = () => {
   const { id } = useParams();
@@ -29,35 +31,52 @@ const GameStartPanel = () => {
     }
   }, []);
 
+  const style = {
+    background: `url(${backgroundGameStartPanel})`,
+  }
+
   return (
-    <div>
-      {game.blue &&
-        game.blue.users.map((player, index) => {
-          return (
-            <div key={index} className="player">
-              <div>
-                {player.userName
-                  ? player.userName
-                  : `Player ${player.playerNumber}`}
-              </div>
-            </div>
-          );
-        })}
-      <canvas ref={canvasRef} />
-      {game.red &&
-        game.red.users.map((player, index) => {
-          return (
-            <div key={index} className="player">
-              <div>
-                {player.userName
-                  ? player.userName
-                  : `Player ${player.playerNumber}`}
-              </div>
-            </div>
-          );
-        })}
+    <Box sx={style} className="container-start-game">
+        <Box className="content-start-game">
+            <Box className="container-player">
+                {game.blue &&
+                    game.blue.users.map((player, index) => {
+                    return (
+                        <div key={index} className="player blue">
+                        <p>
+                            {player.userName
+                            ? player.userName
+                            : `Player ${player.playerNumber}`}
+                        </p>
+                        </div>
+                    );
+                })}
+            </Box>
+            <Box className="container-code">
+                <h2>Scanner pour se connecter</h2>
+                <canvas ref={canvasRef} />
+                <p>ou</p>
+                <p className="link-code">
+                    https://babyfoot-app-24750.web.app/signin/{id}
+                </p>
+            </Box>
+            <Box className="container-player red-container">
+                {game.red &&
+                    game.red.users.map((player, index) => {
+                    return (
+                        <div key={index} className="player red">
+                        <p>
+                            {player.userName
+                            ? player.userName
+                            : `Player ${player.playerNumber}`}
+                        </p>
+                        </div>
+                    );
+                })}
+            </Box>
+        </Box>
       <button onClick={handleStartGame}>Play</button>
-    </div>
+    </Box>
   );
 };
 
