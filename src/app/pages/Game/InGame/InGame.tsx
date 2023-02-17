@@ -11,6 +11,8 @@ import Overlay from "../../../components/InGameActions/Overlay";
 import Fouls from "../../../components/InGameActions/Fouls";
 import Technicals from "../../../components/InGameActions/Technicals";
 import { LastActions } from "../../../../db/utils";
+import Modal from "@mui/material/Modal";
+import Box from "@mui/material/Box";
 
 import score from "../../../../assets/inGame/scoreboard.png";
 import logo from "../../../../assets/inGame/logo.png";
@@ -241,24 +243,54 @@ const InGame = () => {
         </div>
       </div>
 
-      <div>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: "10px",
+        }}
+      >
         {isEnded ? (
-          <div>
-            <h2>Fin de la partie</h2>
-            <h2>Équipe bleue : {game.blue.score}</h2>
-            <h2>Équipe rouge : {game.red.score}</h2>
-
-            <button
-              onClick={() => {
-                navigate(`/game/${game.id}/end-game`);
-                setGame({ ...game, isActive: false });
+          <Modal
+            open={isEnded}
+            onClose={() => {
+              setIsEnded(false);
+            }}
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Box
+              sx={{
+                width: "500px",
+                height: "300px",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "10px",
+                backgroundColor: "#04131E",
+                borderRadius: "10px",
               }}
             >
-              Continuer
-            </button>
-          </div>
+              <h2>FIN DE LA PARTIE</h2>
+
+              <p
+                onClick={() => {
+                  navigate(`/game/${game.id}/end-game`);
+                  setGame({ ...game, isActive: false });
+                }}
+                className="leave"
+              >
+                QUITTER LA PARTIE
+              </p>
+            </Box>
+          </Modal>
         ) : null}
-      </div>
+      </Box>
 
       <Overlay />
     </div>
