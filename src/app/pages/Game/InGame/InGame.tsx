@@ -80,6 +80,26 @@ const InGame = () => {
         });
         break;
 
+      case "Gamelle":
+        setAction({
+          ...action,
+          type: type,
+          drawerIsOpen: true,
+          team: team,
+          postOverlay: true,
+        });
+        break;
+
+      case "Techniques":
+        setAction({
+          ...action,
+          type: type,
+          drawerIsOpen: true,
+          team: team,
+          postOverlay: true,
+        });
+        break;
+
       default:
         setAction({
           ...action,
@@ -261,7 +281,7 @@ const InGame = () => {
           gap: "10px",
         }}
       >
-        {isEnded ? (
+        {/* {isEnded ? (
           <Modal
             open={isEnded}
             onClose={() => {
@@ -299,7 +319,7 @@ const InGame = () => {
               </p>
             </Box>
           </Modal>
-        ) : null}
+        ) : null} */}
       </Box>
 
       <Overlay />
