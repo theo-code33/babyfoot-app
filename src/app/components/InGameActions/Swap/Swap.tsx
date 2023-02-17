@@ -12,6 +12,7 @@ const Swap = ({
   setNewAction: (type: ActionType, team: Team) => void;
   team: Team;
 }) => {
+  const { game } = useContext(GameContext);
   const [backgroundUrl, setBackgroundUrl] = useState("");
 
   useEffect(() => {
@@ -21,14 +22,25 @@ const Swap = ({
   }, [team]);
   return (
     <div>
-      <button
-        style={{ backgroundImage: `url(${backgroundUrl})` }}
-        className="swapBtn"
-        onClick={() => setNewAction("Swap", team)}
-      >
-        CHANGER DE <br />
-        POSTE
-      </button>
+      {game[team].users.length > 1 && (
+        <div className="swap">
+          <div>
+            {game[team].users.map((user) => (
+              <p>
+                {user.userName} : {user.playerPoste}
+              </p>
+            ))}
+          </div>
+
+          <button
+            style={{ backgroundImage: `url(${backgroundUrl})` }}
+            className="swapBtn"
+            onClick={() => setNewAction("Swap", team)}
+          >
+            CHANGER DE POSTE
+          </button>
+        </div>
+      )}
     </div>
   );
 };
