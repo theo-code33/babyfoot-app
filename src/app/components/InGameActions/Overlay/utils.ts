@@ -254,14 +254,13 @@ const setTechnicalsDatas = ({
 };
 
 const setButCSCDatas = ({ game, team }: SetDatasProps) => {
-  console.log("ddadedasazdazdaza");
-  console.log(game[team].score);
+  const otherTeam = team === "blue" ? "red" : "blue";
 
   return {
     ...game,
-    [team]: {
-      ...game[team],
-      score: game[team].score - 1,
+    [otherTeam]: {
+      ...game[otherTeam],
+      score: game[otherTeam].score + 1,
     },
     currentPoint: 1,
   };
