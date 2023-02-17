@@ -1,11 +1,11 @@
 import GameStart from "./GameStart";
+import { Box } from "@mui/material"
 
 const Game = () => {
   return (
-    <div>
-      <h1>Game</h1>
+    <Box>
       <GameStart />
-    </div>
+    </Box>
   );
 };
 
