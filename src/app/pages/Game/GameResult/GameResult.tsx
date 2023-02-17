@@ -1,11 +1,18 @@
 import { useContext, useEffect, useState } from "react";
 import { GameContext } from "../../../../context/gameContext";
 import score from "../../../../assets/endGame/scoreboard.png";
+import { useNavigate } from "react-router-dom";
 
 const GameResult = () => {
   const { game, action, setAction } = useContext(GameContext);
   const [topBlueScorer, setTopBlueScorer] = useState<string>("");
   const [topRedScorer, setTopRedScorer] = useState<string>("");
+
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate("/game/create");
+  };
 
   useEffect(() => {
     if (game.id) {
@@ -202,7 +209,9 @@ const GameResult = () => {
           <p className="center">BUT INCROYABLE</p>
           <p>{totalRougeButIncr}</p>
         </div>
-        <button className="recommencer">RECOMMENCER</button>
+        <button onClick={handleClick} className="recommencer">
+          RECOMMENCER
+        </button>
       </div>
     </div>
   );
