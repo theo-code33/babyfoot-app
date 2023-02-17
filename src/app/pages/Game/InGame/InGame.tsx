@@ -26,11 +26,11 @@ const InGame = () => {
 
   const [lastActionsInGame, setLastActionsInGame] = useState<LastActions>([]);
 
-  // useEffect(() => {
-  //   if (id !== game.id) {
-  //     navigate("/game");
-  //   }
-  // }, [id]);
+  useEffect(() => {
+    if (id !== game.id) {
+      navigate("/game");
+    }
+  }, [id]);
 
   useEffect(() => {
     if (game.id) {
@@ -225,7 +225,6 @@ const InGame = () => {
               width: "200px",
               height: "50px",
               marginBottom: "-20px",
-              marginTop: "-20px",
             }}
           >
             <p
