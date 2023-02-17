@@ -20,7 +20,7 @@ const Gamelle = ({
   return (
     <button
       style={{ backgroundImage: `url(${backgroundUrl})` }}
-      className="gamelleBtn"
+      className="inGameBtn"
       onClick={() => setNewAction("Gamelle", team)}
     >
       GAMELLE

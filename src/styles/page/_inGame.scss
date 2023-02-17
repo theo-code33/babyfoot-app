@@ -61,11 +61,11 @@
   padding: 0px 50px;
 }
 
-.butBtn {
-  background-color: $blue_color;
+.inGameButBtn {
   width: 100%;
   font-size: 50px;
   background-size: cover;
+  padding: 40px;
   border: none;
   color: white;
   text-align: left;
@@ -76,47 +76,20 @@
   justify-content: space-between;
   gap: 10px;
 }
-.gamelleBtn {
-  background-color: $blue_color;
+.inGameBtn {
   width: 50%;
   text-align: left;
   font-size: 20px;
   background-size: cover;
   border: none;
+  padding: 40px;
   color: white;
-  background-size: cover;
-}
-.demiBtn {
-  background-color: $blue_color;
-  font-size: 20px;
-  text-align: left;
-  border: none;
-  color: white;
-  width: 50%;
   background-size: cover;
 }
 .techniquesFaute {
   display: flex;
   justify-content: space-between;
   gap: 10px;
-}
-.techniquesBtn {
-  background-color: $blue_color;
-  font-size: 20px;
-  text-align: left;
-  border: none;
-  color: white;
-  width: 50%;
-  background-size: cover;
-}
-.fauteBtn {
-  background-color: $blue_color;
-  width: 50%;
-  text-align: left;
-  font-size: 20px;
-  background-size: cover;
-  border: none;
-  color: white;
 }
 .swapBtn {
   background-color: $blue_color;
@@ -131,6 +104,7 @@
 }
 .swap {
   display: flex;
+  align-items: center;
   gap: 20px;
   margin-top: 20px;
 }

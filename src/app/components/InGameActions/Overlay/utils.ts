@@ -260,7 +260,7 @@ const setButCSCDatas = ({ game, team }: SetDatasProps) => {
     ...game,
     [otherTeam]: {
       ...game[otherTeam],
-      score: game[otherTeam].score + 1,
+      score: game[otherTeam].score + game.currentPoint,
     },
     currentPoint: 1,
   };

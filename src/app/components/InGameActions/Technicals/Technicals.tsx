@@ -20,7 +20,7 @@ const Technicals = ({
   return (
     <button
       style={{ backgroundImage: `url(${backgroundUrl})` }}
-      className="techniquesBtn"
+      className="inGameBtn"
       onClick={() => setNewAction("Techniques", team)}
     >
       GESTE <br />
