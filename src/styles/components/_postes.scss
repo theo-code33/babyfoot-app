@@ -1,0 +1,55 @@
+.postes {
+  display: flex;
+  flex-direction: column;
+  height: 500px;
+  justify-content: space-around;
+  button {
+    background-color: aqua;
+    padding: 30px;
+    box-shadow: none;
+    border: none;
+    border-radius: 7px;
+    font-size: 30px;
+  }
+  .match {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    height: 900px;
+    margin: 40px 0;
+  }
+  .poste-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
+  .demi {
+    height: 100%;
+  }
+  .milieu {
+    height: 100%;
+  }
+
+  .attaque {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .defense {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .gardien {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+  }
+
+  .blue {
+    background-color: $blue_color;
+  }
+  .red {
+    background-color: $red_color;
+  }
+}

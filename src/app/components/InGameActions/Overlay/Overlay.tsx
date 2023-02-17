@@ -132,6 +132,8 @@ const Overlay = () => {
 
       setAction({ ...action, drawerIsOpen: false, postOverlay: false });
       setCurrentPosition("");
+      setGamelle("");
+      setTechnicalName("");
     } else if (
       action.type != "" &&
       foulName != "" &&
@@ -159,6 +161,15 @@ const Overlay = () => {
     }
   }, [currentPosition, foulName, action.type]);
 
+  useEffect(() => {
+    if (!action.drawerIsOpen) {
+      setCurrentPosition("");
+      setGamelle("");
+      setTechnicalName("");
+      setFoulName("");
+    }
+  }, [action.drawerIsOpen]);
+
   return (
     <div>
       <Drawer
@@ -167,117 +178,149 @@ const Overlay = () => {
         onClose={() =>
           setAction({ ...action, drawerIsOpen: false, postOverlay: true })
         }
+        sx={{
+          "& .MuiDrawer-paper": {
+            backgroundColor: "#042E4A",
+            color: "white",
+            width: "100%",
+          },
+        }}
       >
         <div>
           {action.type === "Gamelle" && (
-            <div>
-              <button
-                style={{
-                  backgroundColor: gamelle === "+" ? "green" : "white",
-                }}
-                onClick={() => {
-                  setGamelle("+");
-                  setAction({ ...action, postOverlay: true });
-                }}
-              >
-                +1 pour vous
-              </button>
-              <button
-                style={{
-                  backgroundColor: gamelle === "-" ? "green" : "white",
-                }}
-                onClick={() => {
-                  setGamelle("-");
-                  setAction({ ...action, postOverlay: true });
-                }}
-              >
-                -1 pour l'adversaire
-              </button>
+            <div className="overlay-action">
+              <h2>CHOISISSEZ LA SENTENCE</h2>
+
+              <div className="btn-group">
+                <button
+                  onClick={() => {
+                    setGamelle("+");
+                    setAction({ ...action, postOverlay: true });
+                  }}
+                  className={`${action.team === "blue" ? "blue" : "red"} ${
+                    gamelle === "+" ? "active" : ""
+                  }`}
+                >
+                  +1 pour vous
+                </button>
+                <button
+                  onClick={() => {
+                    setGamelle("-");
+                    setAction({ ...action, postOverlay: true });
+                  }}
+                  className={`${action.team === "blue" ? "blue" : "red"} ${
+                    gamelle === "-" ? "active" : ""
+                  }`}
+                >
+                  -1 pour l'adversaire
+                </button>
+              </div>
             </div>
           )}
         </div>
         <div>
           {action.type === "Techniques" && (
-            <div>
-              <button
-                style={{
-                  backgroundColor:
-                    technicalName === "cendar" ? "blue" : "white",
-                }}
-                onClick={() => {
-                  setTechnicalName("cendar");
-                  setAction({ ...action, postOverlay: true });
-                }}
-              >
-                cendar
-              </button>
-              <button
-                style={{
-                  backgroundColor: technicalName === "lob" ? "blue" : "white",
-                }}
-                onClick={() => {
-                  setTechnicalName("lob");
-                  setAction({ ...action, postOverlay: true });
-                }}
-              >
-                lob
-              </button>
-              <button
-                style={{
-                  backgroundColor:
-                    technicalName === "but incroyable" ? "blue" : "white",
-                }}
-                onClick={() => {
-                  setTechnicalName("but incroyable");
-                  setAction({ ...action, postOverlay: true });
-                }}
-              >
-                but incroyable
-              </button>
+            <div className="overlay-action">
+              <h2>CHOISISSEZ LA TECHNIQUE</h2>
+              <div className="btn-group">
+                <button
+                  onClick={() => {
+                    setTechnicalName("cendar");
+                    setAction({ ...action, postOverlay: true });
+                  }}
+                  className={`${action.team === "blue" ? "blue" : "red"} ${
+                    technicalName === "cendar" ? "active" : ""
+                  }`}
+                >
+                  cendar
+                </button>
+                <button
+                  onClick={() => {
+                    setTechnicalName("lob");
+                    setAction({ ...action, postOverlay: true });
+                  }}
+                  className={`${action.team === "blue" ? "blue" : "red"} ${
+                    technicalName === "lob" ? "active" : ""
+                  }`}
+                >
+                  lob
+                </button>
+                <button
+                  onClick={() => {
+                    setTechnicalName("but incroyable");
+                    setAction({ ...action, postOverlay: true });
+                  }}
+                  className={`${action.team === "blue" ? "blue" : "red"} ${
+                    technicalName === "but incroyable" ? "active" : ""
+                  }`}
+                >
+                  but incroyable
+                </button>
+              </div>
             </div>
           )}
         </div>
 
         <div>
           {action.type === "Faute" && (
-            <div>
-              <button
-                value="Mixte"
-                onClick={(e) => {
-                  setFoulName("roulette");
-                  setAction({ ...action });
-                  if (game[action.team].users.length === 1) {
+            <div className="overlay-action">
+              <div className="btn-group">
+                <button
+                  value="Mixte"
+                  onClick={(e) => {
+                    setFoulName("roulette");
+                    setAction({ ...action });
+                    if (game[action.team].users.length === 1) {
+                      handleClick(e, action.team);
+                    }
+                  }}
+                  className={`${action.team === "blue" ? "blue" : "red"} ${
+                    foulName === "roulette" ? "active" : ""
+                  }`}
+                >
+                  roulette
+                </button>
+                <button
+                  value={game[action.team].users.length === 1 ? "Mixte" : ""}
+                  onClick={(e) => {
+                    setFoulName("pisette");
                     handleClick(e, action.team);
-                  }
-                }}
-              >
-                roulette
-              </button>
-              <button
-                value={game[action.team].users.length === 1 ? "Mixte" : ""}
-                onClick={(e) => {
-                  setFoulName("pisette");
-                  handleClick(e, action.team);
-                }}
-              >
-                pisette
-              </button>
-              <button
-                value={game[action.team].users.length === 1 ? "Mixte" : ""}
-                onClick={(e) => {
-                  setFoulName("rateau");
-                  handleClick(e, action.team);
-                }}
-              >
-                rateau
-              </button>
+                  }}
+                  className={`${action.team === "blue" ? "blue" : "red"} ${
+                    foulName === "pisette" ? "active" : ""
+                  }`}
+                >
+                  pisette
+                </button>
+                <button
+                  value={game[action.team].users.length === 1 ? "Mixte" : ""}
+                  onClick={(e) => {
+                    setFoulName("rateau");
+                    handleClick(e, action.team);
+                  }}
+                  className={`${action.team === "blue" ? "blue" : "red"} ${
+                    foulName === "rateau" ? "active" : ""
+                  }`}
+                >
+                  rateau
+                </button>
+              </div>
             </div>
           )}
         </div>
 
         {action.team && action.postOverlay && (
-          <Postes action={action} handleClick={handleClick} />
+          <Postes
+            action={action}
+            handleClick={handleClick}
+            gamelle={gamelle}
+            technicalName={technicalName}
+          />
         )}
+
+        {/* {action.team && action.type === "Gamelle" && action.postOverlay && (
+          <Postes action={action} handleClick={handleClick} />
+        )} */}
 
         {action.team &&
           action.type === "Faute" &&
@@ -285,10 +328,6 @@ const Overlay = () => {
           game[action.team].users.length > 1 && (
             <Positions action={action} handleClick={handleClick} />
           )}
-
-        <button onClick={() => setAction({ ...action, drawerIsOpen: false })}>
-          Annuler
-        </button>
       </Drawer>
     </div>
   );
