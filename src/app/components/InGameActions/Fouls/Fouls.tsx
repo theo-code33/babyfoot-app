@@ -21,7 +21,7 @@ const Fouls = ({
   return (
     <button
       style={{ backgroundImage: `url(${backgroundUrl})` }}
-      className="fauteBtn"
+      className="inGameBtn"
       onClick={() => setNewAction("Faute", team)}
     >
       FAUTE DE

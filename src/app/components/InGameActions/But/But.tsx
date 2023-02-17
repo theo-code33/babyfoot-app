@@ -23,7 +23,7 @@ const But = ({
   return (
     <button
       style={{ backgroundImage: `url(${backgroundUrl})` }}
-      className="butBtn"
+      className="inGameButBtn"
       onClick={() => setNewAction("But", team)}
     >
       BUT !

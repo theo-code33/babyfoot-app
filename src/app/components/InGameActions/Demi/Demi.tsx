@@ -23,7 +23,7 @@ const Demi = ({
   return (
     <button
       style={{ backgroundImage: `url(${backgroundUrl})` }}
-      className="demiBtn"
+      className="inGameBtn"
       onClick={() => setNewAction("Demi", team)}
     >
       DEMI
