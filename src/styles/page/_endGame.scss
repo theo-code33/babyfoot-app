@@ -1,0 +1,59 @@
+p {
+  margin: 0;
+}
+.end {
+  color: white;
+  height: 100vh;
+  background-image: url("../../assets/endGame/background.png");
+}
+
+.scoreboardImg {
+  height: 75px;
+  padding-top: 45px;
+  position: absolute;
+  left: 50%;
+  z-index: 0;
+  transform: translate(-50%);
+}
+.statistique {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10vh;
+}
+
+.scoreboardEndGame {
+  display: flex;
+  gap: 25px;
+  padding-top: 60px;
+  font-size: 30px;
+  position: relative;
+  justify-content: center;
+}
+.endGameDivs {
+  display: flex;
+  justify-content: center;
+  font-size: 2.8rem;
+  align-items: center;
+  text-align: center;
+}
+.center {
+  width: 30%;
+  color: #949494;
+  font-size: 1.2rem;
+}
+
+.recommencer {
+  background-image: url("../../assets/endGame/RESTART.png");
+  background-size: cover;
+  width: 30%;
+  height: 100px;
+  font-size: 2rem;
+  color: #dcd8d1;
+  border: none;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 5%;
+}

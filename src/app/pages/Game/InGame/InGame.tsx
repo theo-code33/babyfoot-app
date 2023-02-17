@@ -26,11 +26,11 @@ const InGame = () => {
 
   const [lastActionsInGame, setLastActionsInGame] = useState<LastActions>([]);
 
-  useEffect(() => {
-    if (id !== game.id) {
-      navigate("/game");
-    }
-  }, [id]);
+  // useEffect(() => {
+  //   if (id !== game.id) {
+  //     navigate("/game");
+  //   }
+  // }, [id]);
 
   useEffect(() => {
     if (game.id) {
@@ -71,6 +71,26 @@ const InGame = () => {
         break;
 
       case "But":
+        setAction({
+          ...action,
+          type: type,
+          drawerIsOpen: true,
+          team: team,
+          postOverlay: true,
+        });
+        break;
+
+      case "Gamelle":
+        setAction({
+          ...action,
+          type: type,
+          drawerIsOpen: true,
+          team: team,
+          postOverlay: true,
+        });
+        break;
+
+      case "Techniques":
         setAction({
           ...action,
           type: type,
@@ -229,7 +249,7 @@ const InGame = () => {
           gap: "10px",
         }}
       >
-        {isEnded ? (
+        {/* {isEnded ? (
           <Modal
             open={isEnded}
             onClose={() => {
@@ -267,7 +287,7 @@ const InGame = () => {
               </p>
             </Box>
           </Modal>
-        ) : null}
+        ) : null} */}
       </Box>
 
       <Overlay />

@@ -11,10 +11,9 @@ const Positions = ({
   ) => void;
 }) => {
   return (
-    <div>
-      <h1>Positions</h1>
-
-      <div>
+    <div className="overlay-action">
+      <h2>QUI A FAIT LA ROULETTE ?!</h2>
+      <div className="btn-group">
         <button value="Attaquant" onClick={(e) => handleClick(e, action.team)}>
           Attaquant
         </button>
