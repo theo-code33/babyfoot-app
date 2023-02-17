@@ -281,7 +281,9 @@ const Overlay = () => {
                   roulette
                 </button>
                 <button
-                  value={game[action.team].users.length === 1 ? "Mixte" : ""}
+                  value={
+                    game[action.team].users.length === 1 ? "Mixte" : "Attaquant"
+                  }
                   onClick={(e) => {
                     setFoulName("pisette");
                     handleClick(e, action.team);
@@ -293,7 +295,9 @@ const Overlay = () => {
                   pisette
                 </button>
                 <button
-                  value={game[action.team].users.length === 1 ? "Mixte" : ""}
+                  value={
+                    game[action.team].users.length === 1 ? "Mixte" : "Attaquant"
+                  }
                   onClick={(e) => {
                     setFoulName("rateau");
                     handleClick(e, action.team);
