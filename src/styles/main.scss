@@ -3,6 +3,10 @@ body {
   margin: 0;
   color: white;
 }
+* {
+  font-family: "BEBAS", sans-serif !important;
+}
+@import "./fonts";
 @import "base/variables";
 @import "page/inGame";
 @import "page/createGame";

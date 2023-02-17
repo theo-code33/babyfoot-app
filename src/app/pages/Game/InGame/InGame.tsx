@@ -225,7 +225,6 @@ const InGame = () => {
               width: "200px",
               height: "50px",
               marginBottom: "-20px",
-              marginTop: "-20px",
             }}
           >
             <p
