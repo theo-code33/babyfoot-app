@@ -18,52 +18,48 @@ const GameSelectPlayer = () => {
     const {game, setGame} = useContext(GameContext)
     const {id} = useParams()
 
-    const styleCard = {
-        border: '1px solid white',
-        fontWeight: 'bold',
-        width: '49%',
-        height: '50%',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        color: 'white'
-    } as React.CSSProperties
+    // const styleCard = {
+    //     border: '1px solid white',
+    //     fontWeight: 'bold',
+    //     width: '49%',
+    //     height: '50%',
+    //     display: 'flex',
+    //     justifyContent: 'center',
+    //     alignItems: 'center',
+    //     color: 'white'
+    // } as React.CSSProperties
 
-    const styleCardBlue = {
-        ...styleCard,
-        backgroundColor: 'blue',
-        cursor: 'pointer',
-    } as React.CSSProperties
+    // const styleCardBlue = {
+    //     ...styleCard,
+    //     backgroundColor: 'blue',
+    //     cursor: 'pointer',
+    // } as React.CSSProperties
 
-    const styleCardRed = {
-        ...styleCard,
-        backgroundColor: 'red',
-        cursor: 'pointer',
-    } as React.CSSProperties
+    // const styleCardRed = {
+    //     ...styleCard,
+    //     backgroundColor: 'red',
+    //     cursor: 'pointer',
+    // } as React.CSSProperties
 
-    const styleCardBlueDisabled = {
-        ...styleCardBlue,
-        opacity: 0.5
-    } as React.CSSProperties
+    // const styleCardBlueDisabled = {
+    //     ...styleCardBlue,
+    //     opacity: 0.5
+    // } as React.CSSProperties
 
-    const styleCardRedDisabled = {
-        ...styleCardRed,
-        opacity: 0.5
-    } as React.CSSProperties
+    // const styleCardRedDisabled = {
+    //     ...styleCardRed,
+    //     opacity: 0.5
+    // } as React.CSSProperties
 
-    const styleContainer = {
-        display: 'flex',
-        justifyContent: 'space-around',
-        alignItems: 'center',
-        height: '100vh',
-        flexWrap: 'wrap'
-    } as React.CSSProperties
+    // const styleContainer = {
+    //     display: 'flex',
+    //     justifyContent: 'space-around',
+    //     alignItems: 'center',
+    //     height: '100vh',
+    //     flexWrap: 'wrap'
+    // } as React.CSSProperties
 
     useEffect(() => {
-        console.log("game => ", game);
-        console.log("game.blue => ", game.blue.users);
-        console.log("game.red => ", game.red.users);
-
         setAttaquantBlue(null)
         setDefenseurBlue(null)
         setMixteBlue(null)
@@ -148,37 +144,37 @@ const GameSelectPlayer = () => {
     }
 
     return ( 
-        <div style={styleContainer}>
+        <div className="container-choose">
             {
                 game.blue.users && game.blue.users.map((user, index) => {
                     if(game.blue.users?.length === 1){
                         if(mixteBlue === null || mixteBlue.userId === "") {
-                        return( <div key={index} style={styleCardBlue} data-team="blue"  data-position="Mixte" onClick={handleCardClick}>
+                        return( <div key={index} className="choose-player-item blue-player" data-team="blue"  data-position="Mixte" onClick={handleCardClick}>
                             <h1>Mixte</h1>
                         </div>)
                         }else{
-                        return ( <div key={index} style={styleCardBlueDisabled}>
+                        return ( <div key={index} className="choose-player-item blue-player disabled">
                             <h1>Mixte</h1>
                         </div>)
                         }
                     }else{
                         if(index === 0) {
                             if(attaquantBlue === null || attaquantBlue.userId === "") {
-                                return( <div style={styleCardBlue} data-team="blue"  data-position="Attaquant" onClick={handleCardClick}>
+                                return( <div data-team="blue" className="choose-player-item blue-player" data-position="Attaquant" onClick={handleCardClick}>
                                 <h1>Attaquant</h1>
                             </div>)
                             }else{
-                                return (<div style={styleCardBlueDisabled} >
+                                return (<div className="choose-player-item blue-player disabled">
                                     <h1>Attaquant</h1>
                                 </div>)
                             }
                         }else{
                             if(defenseurBlue === null || defenseurBlue.userId === "") {
-                                return( <div style={styleCardBlue} data-team="blue"  data-position="Défenseur" onClick={handleCardClick}>
+                                return( <div data-team="blue" className="choose-player-item blue-player" data-position="Défenseur" onClick={handleCardClick}>
                                 <h1>Défenseur</h1>
                             </div>)
                             }else{
-                                return (<div style={styleCardBlueDisabled} >
+                                return (<div className="choose-player-item blue-player disabled">
                                     <h1>Défenseur</h1>
                                 </div>)
                             }
@@ -190,11 +186,11 @@ const GameSelectPlayer = () => {
                 game.red.users && game.red.users.map((user, index) => {
                     if(game.red.users?.length === 1){
                         if(mixteRed === null || mixteRed.userId === "") {
-                        return( <div key={index} style={styleCardRed} data-team="red"  data-position="Mixte" onClick={handleCardClick}>
+                        return( <div key={index} data-team="red" className="choose-player-item red-player" data-position="Mixte" onClick={handleCardClick}>
                             <h1>Mixte</h1>
                         </div>)
                         }else{
-                        return ( <div key={index} style={styleCardRedDisabled}>
+                        return ( <div key={index} className="choose-player-item red-player disabled">
                             <h1>Mixte</h1>
                         </div>)
                         }
@@ -202,24 +198,24 @@ const GameSelectPlayer = () => {
                         if(index === 0) {
                             if(attaquantRed === null || attaquantRed.userId === "") {
                                 console.log("attaquant red=> ", attaquantRed);
-                                return( <div style={styleCardRed} data-team="red"  data-position="Attaquant" onClick={handleCardClick}>
+                                return( <div data-team="red" className="choose-player-item red-player" data-position="Attaquant" onClick={handleCardClick}>
                                 <h1>Attaquant</h1>
                             </div>)
                             }else{
                                 console.log("attaquant red disabled=> ", attaquantRed);
-                                return (<div style={styleCardRedDisabled} >
+                                return (<div className="choose-player-item red-player disabled">
                                     <h1>Attaquant</h1>
                                 </div>)
                             }
                         }else{
                             if(defenseurRed === null || defenseurRed.userId === "") {
                                 console.log("defenseur red => ", defenseurRed);
-                                return( <div style={styleCardRed} data-team="red"  data-position="Défenseur" onClick={handleCardClick}>
+                                return( <div data-team="red" className="choose-player-item red-player" data-position="Défenseur" onClick={handleCardClick}>
                                 <h1>Défenseur</h1>
                             </div>)
                             }else{
                                 console.log("defenseur red disabled=> ", defenseurRed);
-                                return (<div style={styleCardRedDisabled} >
+                                return (<div className="choose-player-item red-player disabled">
                                     <h1>Défenseur</h1>
                                 </div>)
                             }
