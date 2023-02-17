@@ -13,7 +13,7 @@ export type Game = {
   };
   lastActions: LastActions | never[];
   maxScore: number;
-  time?: number;
+  time: number;
   isActive: boolean;
   isPlaying: boolean;
   currentPoint: number;

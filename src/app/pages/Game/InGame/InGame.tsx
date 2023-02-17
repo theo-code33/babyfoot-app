@@ -34,11 +34,20 @@ const InGame = () => {
 
   useEffect(() => {
     if (game.id) {
-      setInterval(() => setTimer((timer) => timer + 1), 1000);
-      if (game.blue.score >= game.maxScore || game.red.score >= game.maxScore) {
-        setIsEnded(true);
-      }
+      setTimer(game.time);
     }
+    const interval = setInterval(() => {
+      if (game.id) {
+        setTimer((timer) => timer + 1);
+        if (
+          game.blue.score >= game.maxScore ||
+          game.red.score >= game.maxScore
+        ) {
+          setIsEnded(true);
+        }
+      }
+    }, 1000);
+    return () => clearInterval(interval);
   }, [game]);
 
   const setNewAction = (type: ActionType, team: Team) => {
@@ -88,6 +97,7 @@ const InGame = () => {
       newDatas: {
         ...game,
         currentPoint: game.currentPoint + 1,
+        time: timer,
       },
       collectionId: "games",
       docId: game.id,
