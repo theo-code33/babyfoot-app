@@ -18,15 +18,13 @@ const Gamelle = ({
     console.log("newUrl", newUrl);
   }, [team]);
   return (
-    <div>
-      <button
-        style={{ backgroundImage: `url(${backgroundUrl})` }}
-        className="gamelleBtn"
-        onClick={() => setNewAction("Gamelle", team)}
-      >
-        GAMELLE
-      </button>
-    </div>
+    <button
+      style={{ backgroundImage: `url(${backgroundUrl})` }}
+      className="gamelleBtn"
+      onClick={() => setNewAction("Gamelle", team)}
+    >
+      GAMELLE
+    </button>
   );
 };
 

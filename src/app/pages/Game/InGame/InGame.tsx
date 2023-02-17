@@ -186,24 +186,6 @@ const InGame = () => {
           <p className="leave">QUITTER LA PARTIE</p>
         </div>
       </div>
-      {/* <div>
-        <h2>Point Équipe bleue :{game.blue.score}</h2>
-        <h2>{game.blue.users?[0].goals}</h2>
-      </div>
-      <div>
-        <h2>Point Équipe rouge :{game.red.score}</h2>
-      </div>
-      <div>
-        <h2>CurrentPoint :{game.currentPoint}</h2>
-      </div> */}
-
-      {/* <div>
-        {lastActionsInGame.map((action) => (
-          <p>
-            {getUserName(action.playerNumber)} : {action.position}
-          </p>
-        ))}
-      </div> */}
 
       <div
         style={{
@@ -212,34 +194,20 @@ const InGame = () => {
           marginTop: "50px",
         }}
       >
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            gap: "10px",
-          }}
-        >
+        <div className="main-content">
           <But setNewAction={setNewAction} team="blue" />
-          <div style={{ display: "flex", gap: "10px" }}>
+          <div className="demiGamelle">
             <Demi setNewAction={setNewAction} team="blue" />
             <Gamelle setNewAction={setNewAction} team="blue" />
           </div>
-          <div style={{ display: "flex", gap: "10px" }}>
+          <div className="techniquesFaute">
             <Technicals setNewAction={setNewAction} team="blue" />
             <Fouls setNewAction={setNewAction} team="blue" />
           </div>
           <Swap setNewAction={setNewAction} team="blue" />
         </div>
 
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            gap: "10px",
-          }}
-        >
+        <div className="main-content">
           <But setNewAction={setNewAction} team="red" />
           <div style={{ display: "flex", gap: "10px" }}>
             <Demi setNewAction={setNewAction} team="red" />

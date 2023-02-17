@@ -52,48 +52,66 @@
   padding: 18px 20px;
 }
 
+.main-content {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
+  width: 50%;
+  padding: 0px 50px;
+}
+
 .butBtn {
   background-color: $blue_color;
-  padding: 35px 262px 35px 60px;
+  width: 100%;
   font-size: 50px;
   background-size: cover;
   border: none;
   color: white;
+  text-align: left;
+}
+
+.demiGamelle {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
 }
 .gamelleBtn {
   background-color: $blue_color;
-  height: 120px;
-  width: 220px;
+  width: 50%;
   text-align: left;
   font-size: 20px;
   background-size: cover;
   border: none;
   color: white;
+  background-size: cover;
 }
 .demiBtn {
   background-color: $blue_color;
-  height: 120px;
-  width: 220px;
-  text-align: left;
   font-size: 20px;
-  background-size: cover;
+  text-align: left;
   border: none;
   color: white;
+  width: 50%;
+  background-size: cover;
+}
+.techniquesFaute {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
 }
 .techniquesBtn {
   background-color: $blue_color;
-  height: 120px;
-  width: 220px;
-  text-align: left;
   font-size: 20px;
-  background-size: cover;
+  text-align: left;
   border: none;
   color: white;
+  width: 50%;
+  background-size: cover;
 }
 .fauteBtn {
   background-color: $blue_color;
-  height: 120px;
-  width: 220px;
+  width: 50%;
   text-align: left;
   font-size: 20px;
   background-size: cover;
