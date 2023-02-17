@@ -8,7 +8,6 @@
   padding-top: 40px;
   display: flex;
   justify-content: space-between;
-  gap: 200px;
   align-items: center;
 }
 .scoreboard {
@@ -24,8 +23,8 @@
   font-size: 17px;
   align-items: center;
   background-color: #04141f;
+  margin-left: 40px;
   padding: 0px 20px;
-  margin-left: 150px;
 }
 .logo {
   width: 35px;
@@ -43,6 +42,8 @@
 .right-content {
   display: flex;
   align-items: center;
+  margin-right: 40px;
+
   gap: 20px;
 }
 .leave {
@@ -53,69 +54,58 @@
 
 .butBtn {
   background-color: $blue_color;
-  padding: 55px 350px 55px 70px;
+  padding: 35px 262px 35px 60px;
   font-size: 50px;
-  background-size: cover;
-  border: none;
-  color: white;
-}
-
-.demiBtn {
-  background-color: $blue_color;
-  height: 180px;
-  width: 267px;
-  text-align: left;
-  font-size: 30px;
   background-size: cover;
   border: none;
   color: white;
 }
 .gamelleBtn {
   background-color: $blue_color;
-  height: 180px;
-  width: 267px;
+  height: 120px;
+  width: 220px;
   text-align: left;
-  font-size: 30px;
+  font-size: 20px;
   background-size: cover;
   border: none;
   color: white;
 }
 .demiBtn {
   background-color: $blue_color;
-  height: 180px;
-  width: 267px;
+  height: 120px;
+  width: 220px;
   text-align: left;
-  font-size: 30px;
+  font-size: 20px;
   background-size: cover;
   border: none;
   color: white;
 }
 .techniquesBtn {
   background-color: $blue_color;
-  height: 180px;
-  width: 267px;
+  height: 120px;
+  width: 220px;
   text-align: left;
-  font-size: 30px;
+  font-size: 20px;
   background-size: cover;
   border: none;
   color: white;
 }
 .fauteBtn {
   background-color: $blue_color;
-  height: 180px;
-  width: 267px;
+  height: 120px;
+  width: 220px;
   text-align: left;
-  font-size: 30px;
+  font-size: 20px;
   background-size: cover;
   border: none;
   color: white;
 }
 .swapBtn {
   background-color: $blue_color;
-  height: 100px;
+  height: 80px;
   width: 210px;
   text-align: left;
-  font-size: 18px;
+  font-size: 12px;
   background-image: url("../../assets/inGame/blue/bleuFaute.png");
   background-size: cover;
   border: none;
