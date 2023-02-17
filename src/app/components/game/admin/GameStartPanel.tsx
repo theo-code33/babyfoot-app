@@ -23,7 +23,7 @@ const GameStartPanel = () => {
     } else {
       QRCode.toCanvas(
         canvasRef.current,
-        `10.14.72.115:3000/qr-code/${id}`,
+        `https://babyfoot-app-24750.web.app/qr-code/${id}`,
         (error) => error && console.error(error)
       );
     }
