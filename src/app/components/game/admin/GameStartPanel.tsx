@@ -75,7 +75,7 @@ const GameStartPanel = () => {
                 })}
             </Box>
         </Box>
-      <button onClick={handleStartGame} className="">Play</button>
+      <button onClick={handleStartGame} className="button-start">Start !</button>
     </Box>
   );
 };
