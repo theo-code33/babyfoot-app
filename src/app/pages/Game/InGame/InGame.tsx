@@ -26,11 +26,11 @@ const InGame = () => {
 
   const [lastActionsInGame, setLastActionsInGame] = useState<LastActions>([]);
 
-  useEffect(() => {
-    if (id !== game.id) {
-      navigate("/game");
-    }
-  }, [id]);
+  // useEffect(() => {
+  //   if (id !== game.id) {
+  //     navigate("/game");
+  //   }
+  // }, [id]);
 
   useEffect(() => {
     if (game.id) {
@@ -205,6 +205,41 @@ const InGame = () => {
           <p>pause</p>
           <p className="leave">QUITTER LA PARTIE</p>
         </div>
+      </div>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          width: "100%",
+          height: "50px",
+        }}
+      >
+        {game.currentPoint > 1 && (
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              backgroundColor: "#FC7443",
+              flexDirection: "column",
+              alignItems: "center",
+              width: "200px",
+              height: "50px",
+              marginBottom: "-20px",
+              marginTop: "-20px",
+            }}
+          >
+            <p
+              style={{
+                color: "white",
+                fontSize: "20px",
+                fontWeight: "bold",
+                margin: "2px",
+              }}
+            >
+              Demi en cours : {game.currentPoint}
+            </p>
+          </div>
+        )}
       </div>
 
       <div

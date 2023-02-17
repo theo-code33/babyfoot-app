@@ -10,6 +10,7 @@
     border: none;
     border-radius: 7px;
     min-width: 100px;
+    color: white;
     &.blue {
       background-color: $blue_color;
     }
@@ -18,6 +19,8 @@
     }
     &.active {
       background-color: #43fca3;
+      color: #23714c;
+      opacity: 0.7;
     }
   }
 }
