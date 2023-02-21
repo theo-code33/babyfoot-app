@@ -6,12 +6,22 @@ body {
 * {
   font-family: "BEBAS", sans-serif !important;
 }
+// Font
 @import "./fonts";
+
+// Base
 @import "base/variables";
+
+// Components
+@import "components/postes";
+@import "components/overlay";
+@import "components/sign-in-form";
+@import "components/user-game-connect";
+
+// Pages
 @import "page/inGame";
 @import "page/createGame";
 @import "page/startGame";
 @import "page/endGame";
-@import "components/postes";
-@import "components/overlay";
 @import "page/choosePlayer";
+@import "page/signIn";
