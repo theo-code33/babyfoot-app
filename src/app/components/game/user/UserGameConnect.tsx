@@ -31,13 +31,6 @@ const UserGameConnect = () => {
         background: `url(${backgroundUser})`
     }
 
-    const styleError = {
-        fontFamily: "Poppins",
-        textAlign: "center",
-        color: "red",
-        margin: 0,
-    } as React.CSSProperties
-
     return ( 
         <Box sx={style} className="user-game-connect_container">
             <Box component="form" onSubmit={handleSubmit} className="user-game-connect_form">

@@ -1,8 +1,12 @@
 import { useState } from "react";
-import { createGame } from "../../../../db/game/createGames";
 import { useNavigate } from "react-router-dom";
+import { Box, InputLabel } from "@mui/material";
+
+import { createGame } from "../../../../db/game/createGames";
+
 import { GameMember } from "../../../../db/utils";
-import { Box, FormControl, InputLabel, FormLabel, RadioGroup, FormControlLabel, Radio } from "@mui/material";
+import { CreateGame } from "./utils";
+
 import background1v1 from "../../../../assets/background-1V1.svg";
 import background2v2 from "../../../../assets/background-2V2.svg";
 import background1v2 from "../../../../assets/background-1V2.svg";
@@ -14,14 +18,14 @@ import backgroundBut10 from "../../../../assets/background-but-10.svg";
 import backgroundBtn from "../../../../assets/background-button-create.svg";
 
 const GameFormCreate = () => {
-    const [credentials, setCredentials] = useState({
-        maxScore: 3 as number,
-        member: '1v1' as GameMember
+    const [credentials, setCredentials] = useState<CreateGame>({
+        maxScore: 3,
+        member: '1v1'
     })
 
     const navigate = useNavigate();
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) : void => {
         if(e.currentTarget.name === 'maxScore'){
             setCredentials({
                 ...credentials,
@@ -33,11 +37,9 @@ const GameFormCreate = () => {
                 [e.currentTarget.name]: e.currentTarget.value,
             })
         }
-        console.log(credentials);
-        
     }
 
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) : Promise<void> => {
         e.preventDefault();
         try {
             const newGame = await createGame(credentials.maxScore, credentials.member);
