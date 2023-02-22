@@ -3,8 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { Box, InputLabel } from "@mui/material";
 
 import { createGame } from "../../../../db/game/createGames";
-
-import { GameMember } from "../../../../db/utils";
 import { CreateGame } from "./utils";
 
 import background1v1 from "../../../../assets/background-1V1.svg";
@@ -15,7 +13,7 @@ import checkmark from "../../../../assets/checkmark.svg";
 import backgroundBut3 from "../../../../assets/background-but-3.svg";
 import backgroundBut5 from "../../../../assets/background-but-5.svg";
 import backgroundBut10 from "../../../../assets/background-but-10.svg";
-import backgroundBtn from "../../../../assets/background-button-create.svg";
+import backgroundBtn from "../../../../assets/background-btn-create.svg";
 
 const GameFormCreate = () => {
     const [credentials, setCredentials] = useState<CreateGame>({
@@ -51,116 +49,82 @@ const GameFormCreate = () => {
         }
     }
 
-    const styleForm = {
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "flex-start",
-        width: "90%",
-    } as React.CSSProperties
-
-    const styleInput = {
-        visibility: "hidden",
-        width: "0",
-        margin: "0",
-    } as React.CSSProperties
-
-    const styleInputLabel = {
-        width: "24%",
-        height: "150px",
-        textAlign: "center",
-        backgroundPosition: "center !important",
-        backgroundSize: "cover !important",
-        backgroundRepeat: "no-repeat",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        color: "white",
-        fontSize: "60px",
-        textTransform: "uppercase",
-        border: "3px solid transparent",
-        margin: "0 10px",
-        "&:first-of-type": {
-            margin: "0 10px 0 0",
-        }
-    } as React.CSSProperties
-
-    const styleContainer = {
-        width: "100%",
-        display: "flex",
-        justifyContent: "flex-start",
-        alignItems: "center",
-    } as React.CSSProperties
-
     const styleButton = {
         background: `url(${backgroundBtn})`,
     } as React.CSSProperties
 
     return ( 
-        <Box component="form" onSubmit={handleSubmit} sx={styleForm}>
+        <Box component="form" onSubmit={handleSubmit} className="game-create-form_container">
             <h2>Nombre de joueurs :</h2>
-            <Box sx={styleContainer}>
-                <input type="radio" name="member" className="create-input" id="member1v1" value="1v1" defaultChecked onChange={handleChange} style={styleInput}/>
+            <Box className="game-create-form_row">
+                <input type="radio" name="member" className="game-create-form_input" id="member1v1" value="1v1" defaultChecked onChange={handleChange}/>
                 <InputLabel 
                 htmlFor="member1v1"
-                sx={{...styleInputLabel, background: `url(${background1v1})`}}
+                className="game-create-form_label"
+                sx={{background: `url(${background1v1})`}}
                 >
                     <span className="checkmark" style={{background: `url(${checkmark})`}}></span>
                     1v1
                 </InputLabel>
-                <input type="radio" name="member" className="create-input" id="member2v2" value="2v2" onChange={handleChange} style={styleInput}/>
+                <input type="radio" name="member" className="game-create-form_input" id="member2v2" value="2v2" onChange={handleChange}/>
                 <InputLabel
                 htmlFor="member2v2"
-                sx={{...styleInputLabel, background: `url(${background2v2})`}}
+                className="game-create-form_label"
+                sx={{background: `url(${background2v2})`}}
                 >
                     <span className="checkmark" style={{background: `url(${checkmark})`}}></span>
                     2v2
                 </InputLabel>
-                <input type="radio" name="member" className="create-input" id="member1v2" value="1v2" onChange={handleChange} style={styleInput}/>
+                <input type="radio" name="member" className="game-create-form_input" id="member1v2" value="1v2" onChange={handleChange}/>
                 <InputLabel
                 htmlFor="member1v2"
-                sx={{...styleInputLabel, background: `url(${background1v2})`}}
+                className="game-create-form_label"
+                sx={{background: `url(${background1v2})`}}
                 >
                     <span className="checkmark" style={{background: `url(${checkmark})`}}></span>
                     1v2
                 </InputLabel>
-                <input type="radio" name="member" className="create-input" id="member2v1" value="2v1" onChange={handleChange} style={styleInput}/>
+                <input type="radio" name="member" className="game-create-form_input" id="member2v1" value="2v1" onChange={handleChange}/>
                 <InputLabel
                 htmlFor="member2v1"
-                sx={{...styleInputLabel, background: `url(${background2v1})`}}
+                className="game-create-form_label"
+                sx={{background: `url(${background2v1})`}}
                 >
                     <span className="checkmark" style={{background: `url(${checkmark})`}}></span>
                     2v1
                 </InputLabel>
             </Box>
             <h2>Nombre de joueurs :</h2>
-            <Box sx={styleContainer}>
-                <input type="radio" name="maxScore" id="maxScore3" className="create-input" value="3" defaultChecked onChange={handleChange} style={styleInput}/>
+            <Box className="game-create-form_row">
+                <input type="radio" name="maxScore" id="maxScore3" className="game-create-form_input" value="3" defaultChecked onChange={handleChange}/>
                 <InputLabel
                 htmlFor="maxScore3"
-                sx={{...styleInputLabel, background: `url(${backgroundBut3})`}}
+                className="game-create-form_label"
+                sx={{background: `url(${backgroundBut3})`}}
                 >
                     <span className="checkmark" style={{background: `url(${checkmark})`}}></span>
                     3 Buts
                 </InputLabel>
-                <input type="radio" name="maxScore" id="maxScore5" className="create-input" value="5" onChange={handleChange} style={styleInput}/>
+                <input type="radio" name="maxScore" id="maxScore5" className="game-create-form_input" value="5" onChange={handleChange}/>
                 <InputLabel
                 htmlFor="maxScore5"
-                sx={{...styleInputLabel, background: `url(${backgroundBut5})`}}
+                className="game-create-form_label"
+                sx={{background: `url(${backgroundBut5})`}}
                 >
                     <span className="checkmark" style={{background: `url(${checkmark})`}}></span>
                     5 Buts
                 </InputLabel>
-                <input type="radio" name="maxScore" id="maxScore10" className="create-input" value="10" onChange={handleChange} style={styleInput}/>
+                <input type="radio" name="maxScore" id="maxScore10" className="game-create-form_input" value="10" onChange={handleChange}/>
                 <InputLabel
                 htmlFor="maxScore10"
-                sx={{...styleInputLabel, background: `url(${backgroundBut10})`}}
+                className="game-create-form_label"
+                sx={{background: `url(${backgroundBut10})`}}
                 >
                     <span className="checkmark" style={{background: `url(${checkmark})`}}></span>
                     10 Buts
                 </InputLabel>
             </Box>
-            <button type="submit" className="create-btn" style={styleButton}>Créer la partie</button>
+            <button type="submit" className="game-create-form_button" style={styleButton}>Créer la partie</button>
         </Box>
      );
 }

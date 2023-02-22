@@ -17,10 +17,10 @@ body {
 @import "components/overlay";
 @import "components/sign-in-form";
 @import "components/user-game-connect";
+@import "components/game-create-form";
 
 // Pages
 @import "page/inGame";
-@import "page/createGame";
 @import "page/startGame";
 @import "page/endGame";
 @import "page/choosePlayer";
