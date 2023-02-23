@@ -39,13 +39,9 @@ const InGame = () => {
     const interval = setInterval(() => {
       if (game.id) {
         setTimer((timer) => timer + 1);
-
       }
     }, 1000);
-    if (
-      game.blue.score >= game.maxScore ||
-      game.red.score >= game.maxScore
-    ) {
+    if (game.blue.score >= game.maxScore || game.red.score >= game.maxScore) {
       setIsEnded(true);
     }
     return () => clearInterval(interval);
