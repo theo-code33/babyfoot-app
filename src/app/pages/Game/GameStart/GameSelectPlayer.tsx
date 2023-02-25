@@ -7,6 +7,12 @@ import { UserContext } from "../../../../context/userContext"
 import { updateGamePlayer } from "../../../../db/game/updateGame"
 import { Position, Team, UpdatedUser, } from "../../../../db/utils"
 
+import attaquantBlueCover from "../../../../assets/attaquant-blue.png"
+import defenseurBlueCover from "../../../../assets/defenseur-blue.png"
+import attaquantRedCover from "../../../../assets/attaquant-red.png"
+import defenseurRedCover from "../../../../assets/defenseur-red.png"
+import checkmark from "../../../../assets/checkmark.svg";
+
 const GameSelectPlayer = () => {
     const [attaquantBlue, setAttaquantBlue] = useState< UpdatedUser | null>(null)
     const [defenseurBlue, setDefenseurBlue] = useState< UpdatedUser | null>(null)
@@ -129,32 +135,32 @@ const GameSelectPlayer = () => {
                 game.blue.users && game.blue.users.map((user, index) => {
                     if(game.blue.users?.length === 1){
                         if(mixteBlue === null || mixteBlue.userId === "") {
-                        return( <div key={index} className="choose-player-item blue-player" data-team="blue"  data-position="Mixte" onClick={handleCardClick}>
+                        return( <div key={index} className="choose-player-item blue-player" data-team="blue"  data-position="Mixte" onClick={handleCardClick} style={{background: `url(${attaquantBlueCover})`}}>
                             <h1>Mixte</h1>
                         </div>)
                         }else{
-                        return ( <div key={index} className="choose-player-item blue-player disabled">
+                        return ( <div key={index} className="choose-player-item blue-player disabled" style={{background: `url(${attaquantBlueCover})`}}>
                             <h1>Mixte</h1>
                         </div>)
                         }
                     }else{
                         if(index === 0) {
                             if(attaquantBlue === null || attaquantBlue.userId === "") {
-                                return( <div data-team="blue" className="choose-player-item blue-player" data-position="Attaquant" onClick={handleCardClick}>
+                                return( <div data-team="blue" className="choose-player-item blue-player" data-position="Attaquant" onClick={handleCardClick} style={{background: `url(${attaquantBlueCover})`}}>
                                 <h1>Attaquant</h1>
                             </div>)
                             }else{
-                                return (<div className="choose-player-item blue-player disabled">
+                                return (<div className="choose-player-item blue-player disabled" style={{background: `url(${attaquantBlueCover})`}}>
                                     <h1>Attaquant</h1>
                                 </div>)
                             }
                         }else{
                             if(defenseurBlue === null || defenseurBlue.userId === "") {
-                                return( <div data-team="blue" className="choose-player-item blue-player" data-position="Défenseur" onClick={handleCardClick}>
+                                return( <div data-team="blue" className="choose-player-item blue-player" data-position="Défenseur" onClick={handleCardClick} style={{background: `url(${defenseurBlueCover})`}}>
                                 <h1>Défenseur</h1>
                             </div>)
                             }else{
-                                return (<div className="choose-player-item blue-player disabled">
+                                return (<div className="choose-player-item blue-player disabled" style={{background: `url(${defenseurBlueCover})`}}>
                                     <h1>Défenseur</h1>
                                 </div>)
                             }
@@ -166,32 +172,32 @@ const GameSelectPlayer = () => {
                 game.red.users && game.red.users.map((user, index) => {
                     if(game.red.users?.length === 1){
                         if(mixteRed === null || mixteRed.userId === "") {
-                        return( <div key={index} data-team="red" className="choose-player-item red-player" data-position="Mixte" onClick={handleCardClick}>
+                        return( <div key={index} data-team="red" className="choose-player-item red-player" data-position="Mixte" onClick={handleCardClick} style={{background: `url(${attaquantRedCover})`}}>
                             <h1>Mixte</h1>
                         </div>)
                         }else{
-                        return ( <div key={index} className="choose-player-item red-player disabled">
+                        return ( <div key={index} className="choose-player-item red-player disabled" style={{background: `url(${attaquantRedCover})`}}>
                             <h1>Mixte</h1>
                         </div>)
                         }
                     }else{
                         if(index === 0) {
                             if(attaquantRed === null || attaquantRed.userId === "") {
-                                return( <div data-team="red" className="choose-player-item red-player" data-position="Attaquant" onClick={handleCardClick}>
+                                return( <div data-team="red" className="choose-player-item red-player" data-position="Attaquant" onClick={handleCardClick} style={{background: `url(${attaquantRedCover})`}}>
                                 <h1>Attaquant</h1>
                             </div>)
                             }else{
-                                return (<div className="choose-player-item red-player disabled">
+                                return (<div className="choose-player-item red-player disabled" style={{background: `url(${attaquantRedCover})`}}>
                                     <h1>Attaquant</h1>
                                 </div>)
                             }
                         }else{
                             if(defenseurRed === null || defenseurRed.userId === "") {
-                                return( <div data-team="red" className="choose-player-item red-player" data-position="Défenseur" onClick={handleCardClick}>
+                                return( <div data-team="red" className="choose-player-item red-player" data-position="Défenseur" onClick={handleCardClick} style={{background: `url(${defenseurRedCover})`}}>
                                 <h1>Défenseur</h1>
                             </div>)
                             }else{
-                                return (<div className="choose-player-item red-player disabled">
+                                return (<div className="choose-player-item red-player disabled" style={{background: `url(${defenseurRedCover})`}}>
                                     <h1>Défenseur</h1>
                                 </div>)
                             }
