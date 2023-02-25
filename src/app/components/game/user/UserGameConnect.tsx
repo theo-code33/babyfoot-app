@@ -8,6 +8,7 @@ import backgroundUser from "../../../../assets/background-user.svg"
 
 const UserGameConnect = () => {
     const [error, setError] = useState<boolean>(false);
+    const [isPlaying, setIsPlaying] = useState<boolean>(false);
     const [code, setCode] = useState<number>(0);
 
     const { game } = useContext(GameContext);
@@ -21,7 +22,11 @@ const UserGameConnect = () => {
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) : void => {
         e.preventDefault();
         if(code === +game.id){
-            navigate(`/game/${game.id}/select-player`);
+            if(game.isPlaying === true){
+                setIsPlaying(true);
+            }else{
+                navigate(`/game/${game.id}/select-player`);
+            }
         }else{
             setError(true);
         }
@@ -43,6 +48,7 @@ const UserGameConnect = () => {
                 onChange={handleChange}
                 className="user-game-connect_input"
                 />
+                {isPlaying && <p className="user-game-connect_error">La partie est déjà en cours</p>}
                 {error && <p className="user-game-connect_error">Code invalide</p>}
                 <Button type="submit" variant="contained" className="user-game-connect_button">Rejoindre</Button>
             </Box>
