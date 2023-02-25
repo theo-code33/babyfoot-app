@@ -181,6 +181,7 @@ export const createGame = async (maxScore: number, gameMember: GameMember) => {
     },
     maxScore: maxScore,
     isActive: true,
+    isPlaying: false,
     code: [+id],
     gameMember: gameMember,
     currentPoint: 1,
