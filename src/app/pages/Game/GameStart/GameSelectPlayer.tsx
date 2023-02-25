@@ -1,10 +1,11 @@
 import { useContext, useEffect, useState } from "react"
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
+
 import { GameContext } from "../../../../context/gameContext"
 import { UserContext } from "../../../../context/userContext"
+
 import { updateGamePlayer } from "../../../../db/game/updateGame"
-import { Team, UpdatedUser, UserGame } from "../../../../db/utils"
-import { User } from "../../../../utils"
+import { Position, Team, UpdatedUser, } from "../../../../db/utils"
 
 const GameSelectPlayer = () => {
     const [attaquantBlue, setAttaquantBlue] = useState< UpdatedUser | null>(null)
@@ -13,53 +14,17 @@ const GameSelectPlayer = () => {
     const [defenseurRed, setDefenseurRed] = useState< UpdatedUser | null>(null)
     const [mixteBlue, setMixteBlue] = useState< UpdatedUser | null>(null)
     const [mixteRed, setMixteRed] = useState< UpdatedUser | null>(null)
+    const [isPlaying, setIsPlaying] = useState<boolean>(false)
+    const [timeLeftRedirection, setTimeLeftRedirection] = useState<number>(5)
 
     const {user: userContext} = useContext(UserContext)
-    const {game, setGame} = useContext(GameContext)
-    const {id} = useParams()
-
-    // const styleCard = {
-    //     border: '1px solid white',
-    //     fontWeight: 'bold',
-    //     width: '49%',
-    //     height: '50%',
-    //     display: 'flex',
-    //     justifyContent: 'center',
-    //     alignItems: 'center',
-    //     color: 'white'
-    // } as React.CSSProperties
-
-    // const styleCardBlue = {
-    //     ...styleCard,
-    //     backgroundColor: 'blue',
-    //     cursor: 'pointer',
-    // } as React.CSSProperties
-
-    // const styleCardRed = {
-    //     ...styleCard,
-    //     backgroundColor: 'red',
-    //     cursor: 'pointer',
-    // } as React.CSSProperties
-
-    // const styleCardBlueDisabled = {
-    //     ...styleCardBlue,
-    //     opacity: 0.5
-    // } as React.CSSProperties
-
-    // const styleCardRedDisabled = {
-    //     ...styleCardRed,
-    //     opacity: 0.5
-    // } as React.CSSProperties
-
-    // const styleContainer = {
-    //     display: 'flex',
-    //     justifyContent: 'space-around',
-    //     alignItems: 'center',
-    //     height: '100vh',
-    //     flexWrap: 'wrap'
-    // } as React.CSSProperties
+    const {game} = useContext(GameContext)
+    const {id} = useParams<{id: string}>()
+    const navigate = useNavigate()
 
     useEffect(() => {
+        setIsPlaying(game.isPlaying)
+
         setAttaquantBlue(null)
         setDefenseurBlue(null)
         setMixteBlue(null)
@@ -83,31 +48,45 @@ const GameSelectPlayer = () => {
         if(game.red.users) {
             game.red.users.map(user => {
                 if(user.playerPoste === 'Attaquant') {
-                    console.log("user attaquant => ", user.playerNumber);
-                    
                     setAttaquantRed(user)
                 }
                 if(user.playerPoste === 'Défenseur') {
-                    console.log("user defenseur => ", user.playerNumber);
                     setDefenseurRed(user)
                 }
                 if(user.playerPoste === 'Mixte') {
-                    console.log("user mixte => ", user.playerNumber);
                     setMixteRed(user)
                 }
             })
         }
     }, [game])
 
-    const handleCardClick = async (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    useEffect(() => {
+        if(isPlaying === true) {
+            const timer = setInterval(() => {
+                if(timeLeftRedirection === 0) {
+                    navigate('/game')
+                }else{
+                    setTimeLeftRedirection((timeLeftRedirection) => timeLeftRedirection - 1)
+                }
+            }, 1000)
+            return () => {
+                clearInterval(timer)
+            }
+        }
+    }, [isPlaying, timeLeftRedirection])
+
+    const handleCardClick = async (e: React.MouseEvent<HTMLDivElement, MouseEvent>) : Promise<void> => {
 
         const team = e.currentTarget.dataset.team as Team
-        const position = e.currentTarget.dataset.position
+        let position: Position | null = null
+        if(e.currentTarget.dataset.position === 'Mixte' || e.currentTarget.dataset.position === 'Défenseur' || e.currentTarget.dataset.position === 'Attaquant'){
+            position = e.currentTarget.dataset.position
+        }
 
         const userGame: UpdatedUser = {
             userName: userContext.username,
             userId: userContext.uid as string,
-            playerPoste: position as string,
+            playerPoste: position as Position,
         }
         
         if(team && position && id) {
@@ -144,7 +123,8 @@ const GameSelectPlayer = () => {
     }
 
     return ( 
-        <div className="container-choose">
+        <>
+        <div className={isPlaying === true ? "container-choose disabled" : "container-choose"}>
             {
                 game.blue.users && game.blue.users.map((user, index) => {
                     if(game.blue.users?.length === 1){
@@ -197,33 +177,37 @@ const GameSelectPlayer = () => {
                     }else{
                         if(index === 0) {
                             if(attaquantRed === null || attaquantRed.userId === "") {
-                                console.log("attaquant red=> ", attaquantRed);
                                 return( <div data-team="red" className="choose-player-item red-player" data-position="Attaquant" onClick={handleCardClick}>
                                 <h1>Attaquant</h1>
                             </div>)
                             }else{
-                                console.log("attaquant red disabled=> ", attaquantRed);
                                 return (<div className="choose-player-item red-player disabled">
                                     <h1>Attaquant</h1>
                                 </div>)
                             }
                         }else{
                             if(defenseurRed === null || defenseurRed.userId === "") {
-                                console.log("defenseur red => ", defenseurRed);
                                 return( <div data-team="red" className="choose-player-item red-player" data-position="Défenseur" onClick={handleCardClick}>
                                 <h1>Défenseur</h1>
                             </div>)
                             }else{
-                                console.log("defenseur red disabled=> ", defenseurRed);
                                 return (<div className="choose-player-item red-player disabled">
                                     <h1>Défenseur</h1>
                                 </div>)
                             }
                         }
                     }
-                    })
+                })
             }
         </div>
+        {isPlaying == true
+            && <div className="popup-game-is-playing">
+                <h1>La Partie est lancée</h1>
+                <h1>Que la force soit avec toi !</h1>
+                <span>Redirection dans {timeLeftRedirection}</span>
+            </div>
+        }
+        </>
      );
 }
  

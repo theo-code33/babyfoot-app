@@ -26,7 +26,7 @@ export type Team = "blue" | "red";
 export type UsersGames = UserGame[];
 
 export type UserGame = {
-  playerPoste: string;
+  playerPoste: Position;
   userName: "Player1" | "Player2" | string;
   playerNumber?: 1 | 2 | 3 | 4;
   userId: string;
@@ -39,7 +39,7 @@ export type UserGame = {
 export type UpdatedUser = {
   userId: string;
   userName: string;
-  playerPoste: string;
+  playerPoste: Position;
 };
 
 export type Position = "Attaquant" | "Défenseur" | "Mixte" | "";
