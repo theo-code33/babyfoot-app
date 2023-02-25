@@ -1,3 +1,5 @@
+import { Position } from "./db/utils";
+
 export type Games = Game[];
 
 export type Game = {
@@ -16,4 +18,5 @@ export type User = {
   cover?: any;
   games?: Games;
   goals?: number;
+  playerPoste?: Position;
 };

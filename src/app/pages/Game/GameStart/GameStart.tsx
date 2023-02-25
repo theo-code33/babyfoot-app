@@ -1,6 +1,5 @@
 import { useContext } from "react";
 import { UserContext } from "../../../../context/userContext";
-import AdminGameStart from "../../../components/game/admin/AdminGameStart";
 import UserGameConnect from "../../../components/game/user/UserGameConnect";
 import GameCreate from "../GameCreate/GameCreate";
 
@@ -9,7 +8,7 @@ const GameStart = () => {
 
   return (
     <>
-      {user.email == "admin@admin.com"
+      {user.email === "admin@admin.com"
       ? <GameCreate />
       : <UserGameConnect />
       }

@@ -5,7 +5,7 @@ import { GameContext } from "../../../../context/gameContext"
 import { UserContext } from "../../../../context/userContext"
 
 import { updateGamePlayer } from "../../../../db/game/updateGame"
-import { Team, UpdatedUser, } from "../../../../db/utils"
+import { Position, Team, UpdatedUser, } from "../../../../db/utils"
 
 const GameSelectPlayer = () => {
     const [attaquantBlue, setAttaquantBlue] = useState< UpdatedUser | null>(null)
@@ -78,12 +78,15 @@ const GameSelectPlayer = () => {
     const handleCardClick = async (e: React.MouseEvent<HTMLDivElement, MouseEvent>) : Promise<void> => {
 
         const team = e.currentTarget.dataset.team as Team
-        const position = e.currentTarget.dataset.position
+        let position: Position | null = null
+        if(e.currentTarget.dataset.position === 'Mixte' || e.currentTarget.dataset.position === 'Défenseur' || e.currentTarget.dataset.position === 'Attaquant'){
+            position = e.currentTarget.dataset.position
+        }
 
         const userGame: UpdatedUser = {
             userName: userContext.username,
             userId: userContext.uid as string,
-            playerPoste: position as string,
+            playerPoste: position as Position,
         }
         
         if(team && position && id) {
