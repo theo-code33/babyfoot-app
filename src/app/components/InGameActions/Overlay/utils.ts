@@ -87,8 +87,7 @@ const setButDatas = ({
       ...game[team],
       score: game[team].score + game.currentPoint,
       users: game[team].users?.map((user: UserGame) => {
-        console.log(currentPoste);
-
+        
         if (
           user.playerPoste === currentPosition ||
           user.playerPoste === "Mixte"

@@ -6,7 +6,6 @@ import { User } from "../../../../utils";
 
 const UserProfile = () => {
   const navigate = useNavigate();
-  console.log("dazdazda");
 
   //   const { user } = useContext(UserContext);
 

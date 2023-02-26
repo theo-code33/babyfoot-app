@@ -13,8 +13,6 @@ const SignInPage = () => {
   };
   const { user } = useContext(UserContext);
 
-  console.log("user", user);
-
   return (
     <Box sx={style} className="sign-in_page">
       <Box className="sign-in_content">
