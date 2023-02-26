@@ -220,10 +220,7 @@ const InGame = () => {
           <div className="pause">I&nbsp;I</div>
           <div
             className="leave"
-            onClick={() => {
-              navigate(`/game/${game.id}/end-game`);
-              setGame({ ...game, isActive: false });
-            }}
+            onClick={handleClick}
           >
             QUITTER LA PARTIE
           </div>
