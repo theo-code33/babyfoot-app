@@ -1,17 +1,17 @@
-import { useContext, useEffect, useState } from "react";
+import { SetStateAction, useContext, useEffect, useState } from "react";
 import { GameContext } from "../../../../context/gameContext";
 import score from "../../../../assets/endGame/scoreboard.png";
 import { useNavigate } from "react-router-dom";
 import { getUserByUid } from "../../../../db/users/read.users";
 import { updateUser } from "../../../../db/users/update.users";
-import { UpdatedUser, User } from "../../../../db/utils";
-import { log } from "console";
+import { UpdatedUser, User, UserGame } from "../../../../db/utils";
+import { Team } from "../../../../context/utils";
 
 const GameResult = () => {
-  const { game, action, setAction } = useContext(GameContext);
+  const { game } = useContext(GameContext);
   const [topBlueScorer, setTopBlueScorer] = useState<string>("");
   const [topRedScorer, setTopRedScorer] = useState<string>("");
-  const [realUserList, setRealUserList] = useState<any[]>([]);
+  const [realUserList, setRealUserList] = useState<UserGame[]>([]);
 
   const navigate = useNavigate();
 
@@ -19,58 +19,35 @@ const GameResult = () => {
     navigate("/game/create");
   };
 
-  useEffect(() => {
-    if (game.id) {
-      const topScorerBleu = game.blue.users.reduce((previous, current) => {
-        return previous.goals > current.goals ? previous : current;
-      });
-      if (topScorerBleu.userName === "") {
-        setTopBlueScorer(`Player : ${topScorerBleu.playerNumber}`);
-      } else {
-        setTopBlueScorer(topScorerBleu.userName);
-      }
-      console.log("topScorerBleu", topScorerBleu);
-
-      const topScorerRouge = game.red.users.reduce((previous, current) => {
-        return previous.goals > current.goals ? previous : current;
-      });
-      if (topScorerRouge.userName === "") {
-        setTopRedScorer(`Player : ${topScorerRouge.playerNumber}`);
-      } else {
-        setTopRedScorer(topScorerRouge.userName);
-      }
-      console.log("topScorerRouge", topScorerRouge);
+  const setBestScorer = (color: Team) : void => {
+    const topScorer = game[color].users.reduce((previous, current) => {
+      return previous.goals > current.goals ? previous : current;
+    });
+    const playerName = topScorer.userName === "" ? `Player : ${topScorer.playerNumber}` : topScorer.userName;
+    if(color === "blue"){
+      setTopBlueScorer(playerName);
+    }else{
+      setTopRedScorer(playerName);
     }
-  }, [game]);
+  }
+
+  const getConnectedUser = (color: Team) : void => {
+    const usersConnected = game[color].users.filter((user) => user.userId !== "")
+    setRealUserList((realUserList) => [...realUserList, ...usersConnected]);
+  }
 
   useEffect(() => {
     if (game.id) {
-      game.blue.users.forEach((player) => {
-        if (player.userId !== "") {
-          //set l'objet player en entier
-          setRealUserList((realUserList) => [...realUserList, player]);
-        } else {
-          console.log("non");
-        }
-      });
-      game.red.users.forEach((player) => {
-        if (player.userId !== "") {
-          setRealUserList((realUserList) => [...realUserList, player]);
-        } else {
-          console.log("non");
-        }
-      });
+      setBestScorer("blue");
+      setBestScorer("red");
+      getConnectedUser("blue");
+      getConnectedUser("red");
     }
   }, [game]);
-
-  useEffect(() => {
-    console.log("realUserList", realUserList);
-  }, [realUserList]);
 
   useEffect(() => {
     realUserList.forEach(async (user: any) => {
       let userDb = (await getUserByUid(user.userId)) as User;
-      console.log("userDb", userDb.goals);
 
       if (userDb) {
         const goals = userDb.goals + user.goals;
@@ -107,13 +84,8 @@ const GameResult = () => {
         });
 
         userDb.technicals = allTechnicals;
-
-        console.log("userDb.fouls", userDb.technicals);
-        console.log("user.fouls", user.technicals);
-
-        console.log("Goals ", userDb.goals + user.goals);
+        
         const newGoals = user.goals;
-        console.log("newGoals", newGoals);
 
         const userUpdated = {
           ...userDb,

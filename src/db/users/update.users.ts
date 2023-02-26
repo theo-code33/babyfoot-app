@@ -2,6 +2,10 @@ import { doc, setDoc } from "firebase/firestore";
 import { db } from "../../services/config/firebase";
 import { User } from "../utils";
 
+// export const pushDateGame = async (uid: string, date: string) => {
+
+// }
+
 export const updateUser = async (user: User) => {
   try {
     const userRef = doc(db, "users", user.uid);

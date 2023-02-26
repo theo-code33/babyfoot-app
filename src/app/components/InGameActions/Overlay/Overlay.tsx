@@ -7,10 +7,8 @@ import { Drawer } from "@mui/material";
 import {
   FoulName,
   Position,
-  Poste,
   PostesName,
   TechnicalName,
-  UserGame,
 } from "../../../../db/utils";
 import {
   setButDatas,
@@ -86,38 +84,25 @@ const Overlay = () => {
   let newDatas = {};
 
   useEffect(() => {
+    const data = {
+      game,
+      team: action.team,
+      currentPoste,
+      currentPosition,
+      time: timer,
+    }
     if (action.type != "" && currentPosition != "" && action.type != "Faute") {
       switch (action.type) {
         case "But":
-          newDatas = setButDatas({
-            game,
-            team: action.team,
-            currentPoste,
-            currentPosition,
-            time: timer,
-          });
+          newDatas = setButDatas(data);
 
           break;
 
         case "Gamelle":
-          newDatas = setGamelleDatas({
-            game,
-            team: action.team,
-            currentPoste,
-            currentPosition,
-            gamelle,
-            time: timer,
-          });
+          newDatas = setGamelleDatas({...data, gamelle});
           break;
         case "Techniques":
-          newDatas = setTechnicalsDatas({
-            game,
-            team: action.team,
-            currentPoste,
-            currentPosition,
-            technicalName,
-            time: timer,
-          });
+          newDatas = setTechnicalsDatas({...data, technicalName});
           break;
 
         default:
