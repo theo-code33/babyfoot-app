@@ -175,8 +175,15 @@ const Overlay = () => {
       <Drawer
         anchor="bottom"
         open={action.drawerIsOpen}
-        onClose={() =>
-          setAction({ ...action, drawerIsOpen: false, postOverlay: true })
+        onClose={
+          () => {
+            setAction({ ...action, drawerIsOpen: false, postOverlay: false });
+            setCurrentPosition("");
+            setGamelle("");
+            setTechnicalName("");
+            setFoulName("");
+          }
+          // setAction({ ...action, drawerIsOpen: false, postOverlay: true })
         }
         sx={{
           "& .MuiDrawer-paper": {
@@ -232,7 +239,7 @@ const Overlay = () => {
                     technicalName === "cendar" ? "active" : ""
                   }`}
                 >
-                  cendar
+                  Cendar
                 </button>
                 <button
                   onClick={() => {
@@ -243,7 +250,7 @@ const Overlay = () => {
                     technicalName === "lob" ? "active" : ""
                   }`}
                 >
-                  lob
+                  Lob
                 </button>
                 <button
                   onClick={() => {
@@ -254,7 +261,7 @@ const Overlay = () => {
                     technicalName === "but incroyable" ? "active" : ""
                   }`}
                 >
-                  but incroyable
+                  But Incroyable
                 </button>
               </div>
             </div>
@@ -278,7 +285,7 @@ const Overlay = () => {
                     foulName === "roulette" ? "active" : ""
                   }`}
                 >
-                  roulette
+                  Roulette
                 </button>
                 <button
                   value={
@@ -292,7 +299,7 @@ const Overlay = () => {
                     foulName === "pisette" ? "active" : ""
                   }`}
                 >
-                  pisette
+                  Pisette
                 </button>
                 <button
                   value={
@@ -306,7 +313,7 @@ const Overlay = () => {
                     foulName === "rateau" ? "active" : ""
                   }`}
                 >
-                  rateau
+                  Rateau
                 </button>
               </div>
             </div>
@@ -317,14 +324,10 @@ const Overlay = () => {
           <Postes
             action={action}
             handleClick={handleClick}
-            gamelle={gamelle}
+            gamelle={action.type === "Gamelle" ? gamelle : "but"}
             technicalName={technicalName}
           />
         )}
-
-        {/* {action.team && action.type === "Gamelle" && action.postOverlay && (
-          <Postes action={action} handleClick={handleClick} />
-        )} */}
 
         {action.team &&
           action.type === "Faute" &&

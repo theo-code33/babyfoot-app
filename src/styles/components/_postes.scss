@@ -5,7 +5,7 @@
   justify-content: space-around;
   button {
     background-color: aqua;
-    padding: 30px;
+    padding: 25px;
     box-shadow: none;
     border: none;
     border-radius: 7px;
@@ -16,35 +16,62 @@
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-    height: 50%;
+    height: 70%;
     margin: 40px 0;
+    width: 60%;
+    background-image: url("../../assets/terrain.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin: 0 auto;
   }
   .poste-header {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
+    width: 60%;
+    margin: 0 auto;
+    h2 {
+      text-align: center;
+      font-size: 40px;
+      margin: 0;
+    }
   }
   .demi {
     height: 100%;
   }
   .milieu {
     height: 100%;
+    height: 90%;
+    margin: auto 0;
   }
 
   .attaque {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    height: 90%;
+    margin: auto 0;
   }
   .defense {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    height: 90%;
+    margin: auto 0;
   }
   .gardien {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
+    height: 90%;
+    margin: auto 0;
+  }
+
+  .csc {
+    padding: 10px 60px;
+    max-width: 150px;
+    align-self: flex-end;
   }
 
   .blue {
