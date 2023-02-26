@@ -19,29 +19,104 @@ const GameResult = () => {
     navigate("/game/create");
   };
 
-  const setBestScorer = (color: Team) : void => {
+  const setBestScorer = (color: Team): void => {
     const topScorer = game[color].users.reduce((previous, current) => {
       return previous.goals > current.goals ? previous : current;
     });
-    const playerName = topScorer.userName === "" ? `Player : ${topScorer.playerNumber}` : topScorer.userName;
-    if(color === "blue"){
+    const playerName =
+      topScorer.userName === ""
+        ? `Player : ${topScorer.playerNumber}`
+        : topScorer.userName;
+    if (color === "blue") {
       setTopBlueScorer(playerName);
-    }else{
+    } else {
       setTopRedScorer(playerName);
     }
-  }
+  };
 
-  const getConnectedUser = (color: Team) : void => {
-    const usersConnected = game[color].users.filter((user) => user.userId !== "")
+  const getConnectedUser = (color: Team): void => {
+    const usersConnected = game[color].users.filter(
+      (user) => user.userId !== ""
+    );
     setRealUserList((realUserList) => [...realUserList, ...usersConnected]);
-  }
+  };
+
+  const totalGoals = (color: Team): number => {
+    return game[color].users.reduce((previous, current) => {
+      return previous + current.goals;
+    }, 0);
+  };
+
+  const colorPisettes = (color: Team): number => {
+    return game[color].users.reduce((previous, current) => {
+      const pisettes = current.fouls.find((foul) => foul.name === "pisette");
+      if (pisettes) {
+        return previous + pisettes.count;
+      } else {
+        return previous;
+      }
+    }, 0);
+  };
+
+  const colorRoulettes = (color: Team): number => {
+    return game[color].users.reduce((previous, current) => {
+      const roulettes = current.fouls.find((foul) => foul.name === "roulette");
+      if (roulettes) {
+        return previous + roulettes.count;
+      } else {
+        return previous;
+      }
+    }, 0);
+  };
+
+  const colorLob = (color: Team): number => {
+    return game[color].users.reduce((previous, current) => {
+      const lob = current.technicals.find(
+        (technical) => technical.name === "lob"
+      );
+      if (lob) {
+        return previous + lob.count;
+      } else {
+        return previous;
+      }
+    }, 0);
+  };
+
+  const colorButIncroyable = (color: Team): number => {
+    return game[color].users.reduce((previous, current) => {
+      const butIncroyable = current.technicals.find(
+        (technical) => technical.name === "but incroyable"
+      );
+      if (butIncroyable) {
+        return previous + butIncroyable.count;
+      } else {
+        return previous;
+      }
+    }, 0);
+  };
 
   useEffect(() => {
     if (game.id) {
       setBestScorer("blue");
       setBestScorer("red");
+
       getConnectedUser("blue");
       getConnectedUser("red");
+
+      totalGoals("red");
+      totalGoals("blue");
+
+      colorPisettes("red");
+      colorPisettes("blue");
+
+      colorRoulettes("red");
+      colorRoulettes("blue");
+
+      colorLob("red");
+      colorLob("blue");
+
+      colorButIncroyable("red");
+      colorButIncroyable("blue");
     }
   }, [game]);
 
@@ -84,7 +159,7 @@ const GameResult = () => {
         });
 
         userDb.technicals = allTechnicals;
-        
+
         const newGoals = user.goals;
 
         const userUpdated = {
@@ -101,138 +176,6 @@ const GameResult = () => {
     });
   }, [realUserList]);
 
-  const blueGoals = game.blue.users.map((user) => ({
-    totalGoals: user.goals,
-  }));
-
-  const totalBlueGoals = game.blue.users.reduce(
-    (sum, user) => sum + user.goals,
-    0
-  );
-
-  const redGoals = game.red.users.map((user) => ({
-    totalGoals: user.goals,
-  }));
-
-  const totalRedGoals = game.red.users.reduce(
-    (sum, user) => sum + user.goals,
-    0
-  );
-  const bleuPisettes = game.blue.users.map((user) => ({
-    totalPisettes: user.fouls.map((foul) => {
-      if (foul.name === "pisette") {
-        return foul.count;
-      } else {
-        return 0;
-      }
-    }),
-  }));
-
-  const totalBleu = bleuPisettes.reduce((accumulator, currentValue) => {
-    return accumulator + currentValue.totalPisettes.reduce((a, b) => a + b, 0);
-  }, 0);
-
-  const rougePisettes = game.red.users.map((user) => ({
-    totalPisettes: user.fouls.map((foul) => {
-      if (foul.name === "pisette") {
-        return foul.count;
-      } else {
-        return 0;
-      }
-    }),
-  }));
-
-  const totalRouge = rougePisettes.reduce((accumulator, currentValue) => {
-    return accumulator + currentValue.totalPisettes.reduce((a, b) => a + b, 0);
-  }, 0);
-
-  const bleuRoulette = game.blue.users.map((user) => ({
-    totalRoulettes: user.fouls.map((foul) => {
-      if (foul.name === "roulette") {
-        return foul.count;
-      } else {
-        return 0;
-      }
-    }),
-  }));
-
-  const totalBleuRoulette = bleuRoulette.reduce((accumulator, currentValue) => {
-    return accumulator + currentValue.totalRoulettes.reduce((a, b) => a + b, 0);
-  }, 0);
-
-  const rougeRoulette = game.red.users.map((user) => ({
-    totalRoulettes: user.fouls.map((foul) => {
-      if (foul.name === "roulette") {
-        return foul.count;
-      } else {
-        return 0;
-      }
-    }),
-  }));
-
-  const totalRougeRoulette = rougeRoulette.reduce(
-    (accumulator, currentValue) => {
-      return (
-        accumulator + currentValue.totalRoulettes.reduce((a, b) => a + b, 0)
-      );
-    },
-    0
-  );
-  const bleuLob = game.blue.users.map((user) => ({
-    totalLob: user.technicals.map((technical) => {
-      if (technical.name === "lob") {
-        return technical.count;
-      } else {
-        return 0;
-      }
-    }),
-  }));
-
-  const totalBleueLob = bleuLob.reduce((accumulator, currentValue) => {
-    return accumulator + currentValue.totalLob.reduce((a, b) => a + b, 0);
-  }, 0);
-  const rougeLob = game.blue.users.map((user) => ({
-    totalLob: user.technicals.map((technical) => {
-      if (technical.name === "lob") {
-        return technical.count;
-      } else {
-        return 0;
-      }
-    }),
-  }));
-
-  const totalRougeLob = rougeLob.reduce((accumulator, currentValue) => {
-    return accumulator + currentValue.totalLob.reduce((a, b) => a + b, 0);
-  }, 0);
-
-  const bleueButIncr = game.blue.users.map((user) => ({
-    totalButIncr: user.technicals.map((technical) => {
-      if (technical.name === "lob") {
-        return technical.count;
-      } else {
-        return 0;
-      }
-    }),
-  }));
-
-  const totalBleuButIncr = bleueButIncr.reduce((accumulator, currentValue) => {
-    return accumulator + currentValue.totalButIncr.reduce((a, b) => a + b, 0);
-  }, 0);
-
-  const RougeButIncr = game.blue.users.map((user) => ({
-    totalButIncr: user.technicals.map((technical) => {
-      if (technical.name === "lob") {
-        return technical.count;
-      } else {
-        return 0;
-      }
-    }),
-  }));
-
-  const totalRougeButIncr = RougeButIncr.reduce((accumulator, currentValue) => {
-    return accumulator + currentValue.totalButIncr.reduce((a, b) => a + b, 0);
-  }, 0);
-
   return (
     <div className="end">
       <img className="scoreboardImg" src={score} alt="" />
@@ -243,19 +186,19 @@ const GameResult = () => {
       <div className="statistique">
         <h2 style={{ textAlign: "center" }}>STATISTIQUES DU MATCH</h2>
         <div className="endGameDivs">
-          <p>{totalBlueGoals}</p>
+          {/* <p>{totalBlueGoals}</p> */}
           <p className="center">BUT</p>
-          <p>{totalRedGoals}</p>
+          {/* <p>{totalRedGoals}</p> */}
         </div>
         <div className="endGameDivs">
-          <p>{totalBleu}</p>
+          {/* <p>{totalBleu}</p> */}
           <p className="center">PISETTE</p>
-          <p>{totalRouge}</p>
+          {/* <p>{totalRouge}</p> */}
         </div>
         <div className="endGameDivs">
-          <p>{totalBleuRoulette}</p>
+          {/* <p>{totalBleuRoulette}</p> */}
           <p className="center">ROULETTE</p>
-          <p>{totalRougeRoulette}</p>
+          {/* <p>{totalRougeRoulette}</p> */}
         </div>
         <div className="endGameDivs">
           <p>{topBlueScorer}</p>
@@ -263,14 +206,14 @@ const GameResult = () => {
           <p>{topRedScorer}</p>
         </div>
         <div className="endGameDivs">
-          <p>{totalBleueLob}</p>
+          {/* <p>{totalBleueLob}</p> */}
           <p className="center">LOB</p>
-          <p>{totalRougeLob}</p>
+          {/* <p>{totalRougeLob}</p> */}
         </div>
         <div className="endGameDivs">
-          <p>{totalBleuButIncr}</p>
+          {/* <p>{totalBleuButIncr}</p> */}
           <p className="center">BUT INCROYABLE</p>
-          <p>{totalRougeButIncr}</p>
+          {/* <p>{totalRougeButIncr}</p> */}
         </div>
         <button onClick={handleClick} className="recommencer">
           RECOMMENCER
