@@ -21,16 +21,16 @@ const InGame = () => {
   const [isEnded, setIsEnded] = useState<boolean>(false);
   const { game, setGame, action, setAction, timer, setTimer } =
     useContext(GameContext);
-  const { id } = useParams();
+  const { id } = useParams<{id: string}>();
   const navigate = useNavigate();
 
   const [lastActionsInGame, setLastActionsInGame] = useState<LastActions>([]);
 
-  // useEffect(() => {
-  //   if (id !== game.id) {
-  //     navigate("/game");
-  //   }
-  // }, [id]);
+  useEffect(() => {
+    if (id !== game.id) {
+      navigate("/game");
+    }
+  }, [id]);
 
   useEffect(() => {
     if (game.id) {
@@ -184,6 +184,24 @@ const InGame = () => {
     return `${minutes}:${seconds.toString().padStart(2, "0")}`;
   }
 
+  const handleClick = async () => {
+    try {
+      await updateDoc({
+        newDatas: {
+          ...game,
+          isActive: false,
+          isPlaying: false
+        },
+        collectionId: "games",
+        docId: game.id,
+      })
+      navigate(`/game/${game.id}/end-game`);
+      setGame({ ...game, isActive: false });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   const time = formatTime(timer);
 
   return (
@@ -316,10 +334,7 @@ const InGame = () => {
               <h2>FIN DE LA PARTIE</h2>
 
               <p
-                onClick={() => {
-                  navigate(`/game/${game.id}/end-game`);
-                  setGame({ ...game, isActive: false });
-                }}
+                onClick={handleClick}
                 className="leave"
               >
                 QUITTER LA PARTIE
