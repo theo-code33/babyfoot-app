@@ -175,8 +175,15 @@ const Overlay = () => {
       <Drawer
         anchor="bottom"
         open={action.drawerIsOpen}
-        onClose={() =>
-          setAction({ ...action, drawerIsOpen: false, postOverlay: true })
+        onClose={
+          () => {
+            setAction({ ...action, drawerIsOpen: false, postOverlay: false });
+            setCurrentPosition("");
+            setGamelle("");
+            setTechnicalName("");
+            setFoulName("");
+          }
+          // setAction({ ...action, drawerIsOpen: false, postOverlay: true })
         }
         sx={{
           "& .MuiDrawer-paper": {
@@ -317,7 +324,7 @@ const Overlay = () => {
           <Postes
             action={action}
             handleClick={handleClick}
-            gamelle={gamelle}
+            gamelle={action.type === "Gamelle" ? gamelle : "but"}
             technicalName={technicalName}
           />
         )}

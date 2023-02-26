@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Action, Team } from "../../../../context/utils";
 
 const Postes = ({
@@ -39,7 +40,17 @@ const Postes = ({
           </button>
         ) : null}
       </div>
-      <div className="match">
+      <div
+        className="match"
+        style={{
+          filter:
+            gamelle != ""
+              ? "none"
+              : "grayscale(100%)" || action.type === "Gamelle"
+              ? "grayscale(100%)"
+              : "none",
+        }}
+      >
         <div className="gardien">
           <button
             onClick={(e) => handleClick(e, action.team)}
