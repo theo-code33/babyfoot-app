@@ -99,24 +99,6 @@ const GameResult = () => {
     if (game.id) {
       setBestScorer("blue");
       setBestScorer("red");
-
-      getConnectedUser("blue");
-      getConnectedUser("red");
-
-      totalGoals("red");
-      totalGoals("blue");
-
-      colorPisettes("red");
-      colorPisettes("blue");
-
-      colorRoulettes("red");
-      colorRoulettes("blue");
-
-      colorLob("red");
-      colorLob("blue");
-
-      colorButIncroyable("red");
-      colorButIncroyable("blue");
     }
   }, [game]);
 
@@ -186,19 +168,19 @@ const GameResult = () => {
       <div className="statistique">
         <h2 style={{ textAlign: "center" }}>STATISTIQUES DU MATCH</h2>
         <div className="endGameDivs">
-          {/* <p>{totalBlueGoals}</p> */}
+          <p>{totalGoals("blue")}</p>
           <p className="center">BUT</p>
-          {/* <p>{totalRedGoals}</p> */}
+          <p>{totalGoals("red")}</p>
         </div>
         <div className="endGameDivs">
-          {/* <p>{totalBleu}</p> */}
+          <p>{colorPisettes("blue")}</p>
           <p className="center">PISETTE</p>
-          {/* <p>{totalRouge}</p> */}
+          <p>{colorPisettes("red")}</p>
         </div>
         <div className="endGameDivs">
-          {/* <p>{totalBleuRoulette}</p> */}
+          <p>{colorRoulettes("blue")}</p>
           <p className="center">ROULETTE</p>
-          {/* <p>{totalRougeRoulette}</p> */}
+          <p>{colorRoulettes("red")}</p>
         </div>
         <div className="endGameDivs">
           <p>{topBlueScorer}</p>
@@ -206,14 +188,14 @@ const GameResult = () => {
           <p>{topRedScorer}</p>
         </div>
         <div className="endGameDivs">
-          {/* <p>{totalBleueLob}</p> */}
+          <p>{colorLob("blue")}</p>
           <p className="center">LOB</p>
-          {/* <p>{totalRougeLob}</p> */}
+          <p>{colorLob("red")}</p>
         </div>
         <div className="endGameDivs">
-          {/* <p>{totalBleuButIncr}</p> */}
+          <p>{colorButIncroyable("blue")}</p>
           <p className="center">BUT INCROYABLE</p>
-          {/* <p>{totalRougeButIncr}</p> */}
+          <p>{colorButIncroyable("red")}</p>
         </div>
         <button onClick={handleClick} className="recommencer">
           RECOMMENCER
