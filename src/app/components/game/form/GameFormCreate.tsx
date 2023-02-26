@@ -9,7 +9,7 @@ import background1v1 from "../../../../assets/background-1V1.svg";
 import background2v2 from "../../../../assets/background-2V2.svg";
 import background1v2 from "../../../../assets/background-1V2.svg";
 import background2v1 from "../../../../assets/background-2V1.svg";
-import checkmark from "../../../../assets/checkmark.svg";""
+import checkmark from "../../../../assets/checkmark.svg";
 import backgroundBut3 from "../../../../assets/background-but-3.svg";
 import backgroundBut5 from "../../../../assets/background-but-5.svg";
 import backgroundBut10 from "../../../../assets/background-but-10.svg";
