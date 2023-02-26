@@ -1,5 +1,4 @@
-import { useContext, useEffect, useState } from "react";
-import { GameContext } from "../../../../context/gameContext";
+import { useEffect, useState } from "react";
 import { ActionType, Team } from "../../../../context/utils";
 import blue from "../../../../assets/inGame/blue/bleuFaute.png";
 import red from "../../../../assets/inGame/red/rougeFaute.png";
@@ -16,7 +15,6 @@ const Fouls = ({
   useEffect(() => {
     const newUrl = team === "red" ? red : blue;
     setBackgroundUrl(newUrl);
-    console.log("newUrl", newUrl);
   }, [team]);
   return (
     <button

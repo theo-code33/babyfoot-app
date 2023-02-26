@@ -14,10 +14,8 @@ export const updateDoc = async ({
     return docRef.id;
   } else {
     const docRef = doc(db, collectionId, docId);
-    console.log(newDatas);
     await setDoc(docRef, newDatas, { merge: true })
       .then(() => {
-        console.log("Document successfully updated!");
         callback && callback();
       })
       .catch((err) => console.log(err));

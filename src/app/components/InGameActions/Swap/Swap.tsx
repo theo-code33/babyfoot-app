@@ -1,7 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { GameContext } from "../../../../context/gameContext";
 import { ActionType, Team } from "../../../../context/utils";
-import { updateDoc } from "../../../../db/game/setGame";
 import blue from "../../../../assets/inGame/blue/bleuSwap.png";
 import red from "../../../../assets/inGame/red/rougeSwap.png";
 
@@ -18,7 +17,6 @@ const Swap = ({
   useEffect(() => {
     const newUrl = team === "red" ? red : blue;
     setBackgroundUrl(newUrl);
-    console.log("newUrl", newUrl);
   }, [team]);
   return (
     <div>

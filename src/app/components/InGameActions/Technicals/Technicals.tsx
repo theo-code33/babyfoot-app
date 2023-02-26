@@ -15,7 +15,6 @@ const Technicals = ({
   useEffect(() => {
     const newUrl = team === "red" ? red : blue;
     setBackgroundUrl(newUrl);
-    console.log("newUrl", newUrl);
   }, [team]);
   return (
     <button

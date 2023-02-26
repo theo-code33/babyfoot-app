@@ -103,46 +103,58 @@ const GameResult = () => {
   }, [game]);
 
   useEffect(() => {
-    realUserList.forEach(async (user: any) => {
-      let userDb = (await getUserByUid(user.userId)) as User;
+    realUserList.forEach(async (userPlayer: any) => {
+      let userDb = (await getUserByUid(userPlayer.userId)) as User;
 
       if (userDb) {
-        const goals = userDb.goals + user.goals;
+        const goals = userDb.goals + userPlayer.goals;
 
-        const allFouls = userDb.fouls.map((a) => {
-          const b = user.fouls.find((b: any) => b.name === a.name);
-          if (b) {
-            return { name: a.name, count: a.count + b.count };
+        const allFouls = userDb.fouls.map((foulDb) => {
+          const userFouls = userPlayer.fouls.find(
+            (foul: any) => foul.name === foulDb.name
+          );
+          if (userFouls) {
+            return { name: foulDb.name, count: foulDb.count + userFouls.count };
           } else {
-            return { name: a.name, count: a.count };
+            return { name: foulDb.name, count: foulDb.count };
           }
         });
 
         userDb.fouls = allFouls;
 
-        const allPostes = userDb.postes.map((a) => {
-          const b = user.postes.find((b: any) => b.name === a.name);
-          if (b) {
-            return { name: a.name, goals: a.goals + b.goals };
+        const allPostes = userDb.postes.map((posteDb) => {
+          const userPostes = userPlayer.postes.find(
+            (poste: any) => poste.name === posteDb.name
+          );
+          if (userPostes) {
+            return {
+              name: posteDb.name,
+              goals: posteDb.goals + userPostes.goals,
+            };
           } else {
-            return { name: a.name, goals: a.goals };
+            return { name: posteDb.name, goals: posteDb.goals };
           }
         });
 
         userDb.postes = allPostes;
 
-        const allTechnicals = userDb.technicals.map((a) => {
-          const b = user.technicals.find((b: any) => b.name === a.name);
-          if (b) {
-            return { name: a.name, count: a.count + b.count };
+        const allTechnicals = userDb.technicals.map((technicalDb) => {
+          const userTechnicals = userPlayer.technicals.find(
+            (technical: any) => technical.name === technicalDb.name
+          );
+          if (userTechnicals) {
+            return {
+              name: technicalDb.name,
+              count: technicalDb.count + userTechnicals.count,
+            };
           } else {
-            return { name: a.name, count: a.count };
+            return { name: technicalDb.name, count: technicalDb.count };
           }
         });
 
         userDb.technicals = allTechnicals;
 
-        const newGoals = user.goals;
+        const newGoals = userPlayer.goals;
 
         const userUpdated = {
           ...userDb,

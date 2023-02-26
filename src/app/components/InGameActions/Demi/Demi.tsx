@@ -1,7 +1,5 @@
-import { useContext, useEffect, useState } from "react";
-import { GameContext } from "../../../../context/gameContext";
+import { useEffect, useState } from "react";
 import { ActionType, Team } from "../../../../context/utils";
-import { updateDoc } from "../../../../db/game/setGame";
 import blue from "../../../../assets/inGame/blue/bleuDemi.png";
 import red from "../../../../assets/inGame/red/rougeDemi.png";
 
@@ -17,7 +15,6 @@ const Demi = ({
   useEffect(() => {
     const newUrl = team === "red" ? red : blue;
     setBackgroundUrl(newUrl);
-    console.log("newUrl", newUrl);
   }, [team]);
 
   return (
