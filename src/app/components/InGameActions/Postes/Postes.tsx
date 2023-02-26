@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { Action, Team } from "../../../../context/utils";
 
 const Postes = ({
@@ -42,14 +41,7 @@ const Postes = ({
       </div>
       <div
         className="match"
-        style={{
-          filter:
-            gamelle != ""
-              ? "none"
-              : "grayscale(100%)" || action.type === "Gamelle"
-              ? "grayscale(100%)"
-              : "none",
-        }}
+        style={gamelle != "" ? { filter: "none" } : { filter: "grayscale(100%)" }}
       >
         <div className="gardien">
           <button
