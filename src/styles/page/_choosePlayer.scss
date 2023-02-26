@@ -10,6 +10,10 @@
     background-repeat: no-repeat !important;
     background: url("../../assets/background-user.svg");
 
+    &.disabled{
+        overflow: hidden;
+    }
+
     .choose-player-item{
         width: 90%;
         padding: 20px 0;
@@ -21,10 +25,26 @@
             background-color: red;
         }
         &.blue-player{
+            background-position: center;
+            background-size: cover;
+            background-repeat: no-repeat;
             background-color: blue;
         }
         &.disabled{
             filter: grayscale(100%);
         }
     }
+}
+.popup-game-is-playing{
+    width: 100%;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0,0,0,0.8);
+    z-index: 1000;
 }
