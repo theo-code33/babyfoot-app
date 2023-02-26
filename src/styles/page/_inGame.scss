@@ -30,6 +30,18 @@
   width: 35px;
 }
 
+.pause {
+  width: 40px;
+  height: 40px;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  color: #dcd8d1;
+}
+
 .score {
   gap: 32px;
   display: flex;
@@ -50,6 +62,7 @@
   background-color: $red_color;
   text-align: center;
   padding: 18px 20px;
+  background: rgba(252, 67, 79, 0.5);
 }
 
 .main-content {
