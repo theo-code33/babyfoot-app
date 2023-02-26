@@ -29,9 +29,9 @@ const Postes = ({
             value="CSC"
             className={
               action.team === "blue"
-                ? "blue"
+                ? "blue csc"
                 : action.team === "red"
-                ? "red"
+                ? "red csc"
                 : ""
             }
           >

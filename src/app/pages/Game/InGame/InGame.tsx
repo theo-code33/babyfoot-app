@@ -26,11 +26,11 @@ const InGame = () => {
 
   const [lastActionsInGame, setLastActionsInGame] = useState<LastActions>([]);
 
-  useEffect(() => {
-    if (id !== game.id) {
-      navigate("/game");
-    }
-  }, [id]);
+  // useEffect(() => {
+  //   if (id !== game.id) {
+  //     navigate("/game");
+  //   }
+  // }, [id]);
 
   useEffect(() => {
     if (game.id) {
@@ -199,8 +199,16 @@ const InGame = () => {
           <p>{game.red.score}</p>
         </div>
         <div className="right-content">
-          <p>pause</p>
-          <p className="leave">QUITTER LA PARTIE</p>
+          <div className="pause">I&nbsp;I</div>
+          <div
+            className="leave"
+            onClick={() => {
+              navigate(`/game/${game.id}/end-game`);
+              setGame({ ...game, isActive: false });
+            }}
+          >
+            QUITTER LA PARTIE
+          </div>
         </div>
       </div>
       <div

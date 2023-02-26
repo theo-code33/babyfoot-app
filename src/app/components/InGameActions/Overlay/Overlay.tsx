@@ -232,7 +232,7 @@ const Overlay = () => {
                     technicalName === "cendar" ? "active" : ""
                   }`}
                 >
-                  cendar
+                  Cendar
                 </button>
                 <button
                   onClick={() => {
@@ -243,7 +243,7 @@ const Overlay = () => {
                     technicalName === "lob" ? "active" : ""
                   }`}
                 >
-                  lob
+                  Lob
                 </button>
                 <button
                   onClick={() => {
@@ -254,7 +254,7 @@ const Overlay = () => {
                     technicalName === "but incroyable" ? "active" : ""
                   }`}
                 >
-                  but incroyable
+                  But Incroyable
                 </button>
               </div>
             </div>
@@ -278,7 +278,7 @@ const Overlay = () => {
                     foulName === "roulette" ? "active" : ""
                   }`}
                 >
-                  roulette
+                  Roulette
                 </button>
                 <button
                   value={
@@ -292,7 +292,7 @@ const Overlay = () => {
                     foulName === "pisette" ? "active" : ""
                   }`}
                 >
-                  pisette
+                  Pisette
                 </button>
                 <button
                   value={
@@ -306,7 +306,7 @@ const Overlay = () => {
                     foulName === "rateau" ? "active" : ""
                   }`}
                 >
-                  rateau
+                  Rateau
                 </button>
               </div>
             </div>
@@ -321,10 +321,6 @@ const Overlay = () => {
             technicalName={technicalName}
           />
         )}
-
-        {/* {action.team && action.type === "Gamelle" && action.postOverlay && (
-          <Postes action={action} handleClick={handleClick} />
-        )} */}
 
         {action.team &&
           action.type === "Faute" &&
