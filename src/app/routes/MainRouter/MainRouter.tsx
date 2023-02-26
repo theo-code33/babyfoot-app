@@ -9,7 +9,6 @@ import GameSelectPlayer from "../../pages/Game/GameStart/GameSelectPlayer";
 import GameStartPanel from "../../components/game/admin/GameStartPanel";
 import Qrcode from "../../components/Qrcode/Qrcode";
 import GameResult from "../../pages/Game/GameResult";
-import UserProfile from "../../pages/user/UserProfile";
 
 const MainRouter = () => {
   return (
@@ -27,7 +26,6 @@ const MainRouter = () => {
         <Route path="/game/:id" element={<InGame />} />
         <Route path="/game/:id/select-player" element={<GameSelectPlayer />} />
         <Route path="/qr-code/:id" element={<Qrcode />} />
-        <Route path="/user/profile" element={<UserProfile />} />
       </Routes>
     </>
   );
