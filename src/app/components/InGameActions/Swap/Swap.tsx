@@ -1,18 +1,18 @@
 import { useContext, useEffect, useState } from "react";
+
 import { GameContext } from "../../../../context/gameContext";
-import { ActionType, Team } from "../../../../context/utils";
+
+import { Props } from "../utils";
+
 import blue from "../../../../assets/inGame/blue/bleuSwap.png";
 import red from "../../../../assets/inGame/red/rougeSwap.png";
 
-const Swap = ({
+const Swap: React.FC<Props> = ({
   setNewAction,
   team,
-}: {
-  setNewAction: (type: ActionType, team: Team) => void;
-  team: Team;
 }) => {
   const { game } = useContext(GameContext);
-  const [backgroundUrl, setBackgroundUrl] = useState("");
+  const [backgroundUrl, setBackgroundUrl] = useState<string>("");
 
   useEffect(() => {
     const newUrl = team === "red" ? red : blue;
