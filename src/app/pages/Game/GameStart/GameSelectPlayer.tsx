@@ -11,7 +11,6 @@ import attaquantBlueCover from "../../../../assets/attaquant-blue.png"
 import defenseurBlueCover from "../../../../assets/defenseur-blue.png"
 import attaquantRedCover from "../../../../assets/attaquant-red.png"
 import defenseurRedCover from "../../../../assets/defenseur-red.png"
-import checkmark from "../../../../assets/checkmark.svg";
 
 const GameSelectPlayer = () => {
     const [attaquantBlue, setAttaquantBlue] = useState< UpdatedUser | null>(null)
