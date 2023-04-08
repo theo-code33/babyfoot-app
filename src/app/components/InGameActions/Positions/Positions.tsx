@@ -1,14 +1,8 @@
-import { Action, Team } from "../../../../context/utils";
+import { Props } from "./utils";
 
-const Positions = ({
+const Positions: React.FC<Props> = ({
   action,
   handleClick,
-}: {
-  action: Action;
-  handleClick: (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-    team: Team
-  ) => void;
 }) => {
   return (
     <div className="overlay-action">
