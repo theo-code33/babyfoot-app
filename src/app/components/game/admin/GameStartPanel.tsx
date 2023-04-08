@@ -1,20 +1,24 @@
 import { useContext, useEffect, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { Box } from "@mui/material";
+
 import { GameContext } from "../../../../context/gameContext";
 import { UserContext } from "../../../../context/userContext";
+
 import { updateGameStatus } from "../../../../db/game/updateGame";
-import { Box } from "@mui/material";
+
 import QRCode from "qrcode";
+
 import backgroundGameStartPanel from "../../../../assets/background-start-game.svg";
 
 const GameStartPanel = () => {
-  const { id } = useParams();
+  const { id } = useParams<{id: string}>();
   const { game } = useContext(GameContext);
   const { user } = useContext(UserContext);
   const navigate = useNavigate();
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  const handleStartGame = async () => {
+  const handleStartGame = async (): Promise<void> => {
     await updateGameStatus(game, true);
     navigate(`/game/${id}`);
   };
@@ -31,7 +35,7 @@ const GameStartPanel = () => {
     }
   }, []);
 
-  const style = {
+  const style: React.CSSProperties = {
     background: `url(${backgroundGameStartPanel})`,
   }
 
