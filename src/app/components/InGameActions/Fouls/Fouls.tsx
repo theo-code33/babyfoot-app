@@ -1,14 +1,13 @@
 import { useEffect, useState } from "react";
-import { ActionType, Team } from "../../../../context/utils";
+
+import { Props } from "../utils";
+
 import blue from "../../../../assets/inGame/blue/bleuFaute.png";
 import red from "../../../../assets/inGame/red/rougeFaute.png";
 
-const Fouls = ({
+const Fouls: React.FC<Props> = ({
   setNewAction,
   team,
-}: {
-  setNewAction: (type: ActionType, team: Team) => void;
-  team: Team;
 }) => {
   const [backgroundUrl, setBackgroundUrl] = useState("");
 
