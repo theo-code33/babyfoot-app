@@ -4,9 +4,8 @@ import { db, storage } from "../../services/config/firebase";
 import { User } from "../../utils";
 
 
-export const createUser = async (datas: User, uid: string) => {
+export const createUser = async (datas: User, uid: string): Promise<void> => {
     try {
-
         if(datas.cover !== ''){
             const coverRef = ref(storage, `covers/users/${uid}`)
             const uploadCover = await uploadBytes(coverRef, datas.cover) as any
@@ -14,7 +13,6 @@ export const createUser = async (datas: User, uid: string) => {
                 datas.cover = downloadURL
             });
         }
-
         const docRef = doc(db, 'users', uid)
         datas.uid = uid
         const userResponse = await setDoc(docRef, datas)
