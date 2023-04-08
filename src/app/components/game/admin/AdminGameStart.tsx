@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 const AdminGameStart = () => {
     const navigate = useNavigate();
 
-    const handleNavigate = () => {
+    const handleNavigate = (): void => {
         navigate("/game/create");
     }
     return ( 
