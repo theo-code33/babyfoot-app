@@ -1,9 +1,12 @@
-import { useParams } from "react-router-dom";
-import SignIn from "../../../components/auth/SignIn";
-import { Box } from "@mui/material";
-import backgroundUser from "../../../../assets/background-user.svg";
-import { UserContext } from "../../../../context/userContext";
 import { useContext } from "react";
+import { useParams } from "react-router-dom";
+import { Box } from "@mui/material";
+
+import { UserContext } from "../../../../context/userContext";
+
+import SignIn from "../../../components/auth/SignIn";
+
+import backgroundUser from "../../../../assets/background-user.svg";
 
 const SignInPage = () => {
   const { id } = useParams<{ id: string }>();
