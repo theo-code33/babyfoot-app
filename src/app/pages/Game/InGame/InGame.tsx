@@ -1,8 +1,14 @@
 import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import Modal from "@mui/material/Modal";
+import Box from "@mui/material/Box";
+
 import { GameContext } from "../../../../context/gameContext";
 import { ActionType, Team } from "../../../../context/utils";
+
 import { updateDoc } from "../../../../db/game/setGame";
+import { LastActions } from "../../../../db/utils";
+
 import But from "../../../components/InGameActions/But";
 import Demi from "../../../components/InGameActions/Demi";
 import Gamelle from "../../../components/InGameActions/Gamelle";
@@ -10,9 +16,6 @@ import Swap from "../../../components/InGameActions/Swap/Swap";
 import Overlay from "../../../components/InGameActions/Overlay";
 import Fouls from "../../../components/InGameActions/Fouls";
 import Technicals from "../../../components/InGameActions/Technicals";
-import { LastActions } from "../../../../db/utils";
-import Modal from "@mui/material/Modal";
-import Box from "@mui/material/Box";
 
 import score from "../../../../assets/inGame/scoreboard.png";
 import logo from "../../../../assets/inGame/logo.png";
