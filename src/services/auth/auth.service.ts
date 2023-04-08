@@ -9,12 +9,11 @@ import {
 } from "firebase/auth";
 import { collection, doc, getDoc, getDocs, query, where } from "firebase/firestore";
 import { createUser } from "../../db/users/create.users";
-import { Game, User } from "../../utils";
 import { db } from "../config/firebase";
 import { removeToken, addToken } from "../token/token.service";
 import { Sign, DefaultUser } from "./utils";
 
-export const signUp = async (userDatas: DefaultUser, setUser: Function) => {
+export const signUp = async (userDatas: DefaultUser, setUser: Function): Promise<React.SetStateAction<void>> => {
   const auth = getAuth();
   try {
     if(userDatas.password !== undefined){
@@ -41,7 +40,7 @@ export const signInWithGoogle = async (
   setError: React.Dispatch<React.SetStateAction<boolean>>,
   navigate: Function,
   id: string | undefined,
-  ): Promise<void> => {
+  ): Promise<React.SetStateAction<void>> => {
   const auth = getAuth();
   const provider = new GoogleAuthProvider();
 
@@ -139,7 +138,7 @@ export const signInWithGoogle = async (
 
 }
 
-export const signIn = async (datas: Sign, setUser: Function) => {
+export const signIn = async (datas: Sign, setUser: Function): Promise<React.SetStateAction<void>> => {
   const auth = getAuth();
   try {
     const userCredential = await signInWithEmailAndPassword(
@@ -159,7 +158,7 @@ export const signIn = async (datas: Sign, setUser: Function) => {
   }
 };
 
-export const logOut = async (setUser: Function) => {
+export const logOut = async (setUser: Function): Promise<React.SetStateAction<void>> => {
   const auth = getAuth();
   try {
     await signOut(auth);
@@ -170,7 +169,7 @@ export const logOut = async (setUser: Function) => {
   }
 };
 
-export const resetPassword = async (email: string) => {
+export const resetPassword = async (email: string): Promise<void> => {
   const auth = getAuth();
 
   try {
