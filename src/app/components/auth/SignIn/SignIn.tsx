@@ -9,8 +9,9 @@ import { signIn, signInWithGoogle } from "../../../../services/auth/auth.service
 import { Sign } from "../../../../services/auth/utils";
 
 import logoGoogle from "../../../../assets/logo-google.png"
+import { Props } from "./utils";
 
-const SignIn = ({id}:{id?:string}) => {
+const SignIn: React.FC<Props> = ({id}) => {
   const [user, setUser] = useState<Sign>({
     email: "",
     password: "",
