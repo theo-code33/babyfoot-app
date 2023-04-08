@@ -2,7 +2,7 @@ import { doc, setDoc } from "firebase/firestore";
 import { db } from "../../services/config/firebase";
 import { Game, GameMember, UserGame, UsersGames } from "../utils";
 
-export const createGame = async (maxScore: number, gameMember: GameMember) => {
+export const createGame = async (maxScore: number, gameMember: GameMember): Promise<Game> => {
   const id : string = Math.floor(Math.random() * 10000).toString();
 
   const userBlue: UsersGames = [];
