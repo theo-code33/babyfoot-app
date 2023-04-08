@@ -1,6 +1,9 @@
-import GameFormCreate from "../../../components/game/form/GameFormCreate";
 import { Box } from "@mui/material";
+
+import GameFormCreate from "../../../components/game/form/GameFormCreate";
+
 import backgroundRules from "../../../../assets/background-rules.svg"
+
 const GameCreate = () => {
     const style : React.CSSProperties = {
         background: `url(${backgroundRules})`
