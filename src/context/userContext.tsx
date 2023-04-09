@@ -12,10 +12,7 @@ export const userDefault: User = {
     cover: '',
 }
 
-export const UserContext = createContext<UserContextType>({
-    user: userDefault,
-    setUser: () => {}
-})
+export const UserContext = createContext<UserContextType | null>(null)
 
 export const UserContextProvider : FC<Props> = ({children}) => {
     const [user, setUser] = useState<User>(userDefault)
