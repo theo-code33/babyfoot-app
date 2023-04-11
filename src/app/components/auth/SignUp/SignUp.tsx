@@ -4,6 +4,7 @@ import { Button, Box, InputLabel, TextField, OutlinedInput, InputAdornment, Icon
 import { VisibilityOff, Visibility } from '@mui/icons-material'
 
 import { UserContext } from "../../../../context/userContext";
+import { UserContextType } from "../../../../context/utils";
 
 import { signUp, signInWithGoogle } from "../../../../services/auth/auth.service";
 import { DefaultUser } from "../../../../services/auth/utils";
@@ -82,7 +83,7 @@ const SignUp: React.FC<Props> = ({id}) => {
   const [error, setError] = useState<boolean>(false);
   const [success, setSuccess] = useState<boolean>(false);
 
-  const { setUser: setGlobalUser } = useContext(UserContext);
+  const { setUser: setGlobalUser } = useContext(UserContext) as UserContextType;
 
   const navigate = useNavigate()
 
