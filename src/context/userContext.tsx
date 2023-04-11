@@ -15,7 +15,7 @@ export const userDefault: User = {
 export const UserContext = createContext<UserContextType | null>(null)
 
 export const UserContextProvider : FC<Props> = ({children}) => {
-    const [user, setUser] = useState<User>(userDefault)
+    const [user, setUser] = useState<User | undefined>(undefined)
     const fetchUser = async () => {
         const user = localStorage.getItem('token')
         if (user) {

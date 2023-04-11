@@ -61,8 +61,8 @@ export type GameContextType = {
 };
 
 export type UserContextType = {
-  user: User;
-  setUser: Dispatch<SetStateAction<User>>;
+  user: User | undefined;
+  setUser: Dispatch<SetStateAction<User | undefined>>;
 };
 
 export type Props = {
