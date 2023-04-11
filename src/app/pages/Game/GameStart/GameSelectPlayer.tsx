@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom"
 
 import { GameContext } from "../../../../context/gameContext"
 import { UserContext } from "../../../../context/userContext"
+import { UserContextType } from "../../../../context/utils"
 
 import { updateGamePlayer } from "../../../../db/game/updateGame"
 import { Position, Team, UpdatedUser, } from "../../../../db/utils"
@@ -22,7 +23,7 @@ const GameSelectPlayer = () => {
     const [isPlaying, setIsPlaying] = useState<boolean>(false)
     const [timeLeftRedirection, setTimeLeftRedirection] = useState<number>(5)
 
-    const {user: userContext} = useContext(UserContext)
+    const {user: userContext} = useContext(UserContext) as UserContextType
     const {game} = useContext(GameContext)
     const {id} = useParams<{id: string}>()
     const navigate = useNavigate()
@@ -87,14 +88,16 @@ const GameSelectPlayer = () => {
         if(e.currentTarget.dataset.position === 'Mixte' || e.currentTarget.dataset.position === 'Défenseur' || e.currentTarget.dataset.position === 'Attaquant'){
             position = e.currentTarget.dataset.position
         }
-
-        const userGame: UpdatedUser = {
-            userName: userContext.username,
-            userId: userContext.uid as string,
-            playerPoste: position as Position,
+        let userGame: UpdatedUser | null = null
+        if(userContext){
+            userGame = {
+                userName: userContext.username,
+                userId: userContext.uid as string,
+                playerPoste: position as Position,
+            }
         }
         
-        if(team && position && id) {
+        if(team && position && id && userGame) {
             if(team === 'blue') {
                 if(position === 'Attaquant') {
                     userGame.playerPoste = 'Attaquant'
