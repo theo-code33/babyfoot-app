@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { Box } from "@mui/material";
 
 import { UserContext } from "../../../../context/userContext";
+import { UserContextType } from "../../../../context/utils";
 
 import SignIn from "../../../components/auth/SignIn";
 
@@ -14,7 +15,7 @@ const SignInPage = () => {
   const style: React.CSSProperties = {
     background: `url(${backgroundUser})`,
   };
-  const { user } = useContext(UserContext);
+  const { user } = useContext(UserContext) as UserContextType;
 
   return (
     <Box sx={style} className="sign-in_page">
