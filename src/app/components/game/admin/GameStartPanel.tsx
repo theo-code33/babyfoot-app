@@ -4,6 +4,7 @@ import { Box } from "@mui/material";
 
 import { GameContext } from "../../../../context/gameContext";
 import { UserContext } from "../../../../context/userContext";
+import { UserContextType } from "../../../../context/utils";
 
 import { updateGameStatus } from "../../../../db/game/updateGame";
 
@@ -14,7 +15,7 @@ import backgroundGameStartPanel from "../../../../assets/background-start-game.s
 const GameStartPanel = () => {
   const { id } = useParams<{id: string}>();
   const { game } = useContext(GameContext);
-  const { user } = useContext(UserContext);
+  const { user } = useContext(UserContext) as UserContextType;
   const navigate = useNavigate();
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -24,7 +25,7 @@ const GameStartPanel = () => {
   };
 
   useEffect(() => {
-    if (user.email !== "admin@admin.com") {
+    if (user && user.email !== "admin@admin.com") {
       navigate("/game");
     } else {
       QRCode.toCanvas(
