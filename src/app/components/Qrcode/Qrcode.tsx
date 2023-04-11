@@ -2,9 +2,10 @@ import { useContext, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import { UserContext } from "../../../context/userContext";
+import { UserContextType } from "../../../context/utils";
 
 const Qrcode = () => {
-    const {user} = useContext(UserContext)
+    const { user } = useContext(UserContext) as UserContextType;
     const {id} = useParams<{id: string}>();
     const token : string | null = localStorage.getItem("babytoken");
     const navigate = useNavigate();
