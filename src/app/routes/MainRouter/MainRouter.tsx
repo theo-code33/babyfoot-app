@@ -26,16 +26,16 @@ const MainRouter = () => {
         <Route path="/game" element={<ProtectedRoute user={userContext?.user}>
           <Game />
         </ProtectedRoute>} />
-        <Route path="/game/create" element={<ProtectedRoute user={userContext?.user}>
+        <Route path="/game/create" element={<ProtectedRoute user={userContext?.user} onlyAdmin={true}>
           <GameCreate />
         </ProtectedRoute>} />
-        <Route path="/game/:id/start-game" element={<ProtectedRoute user={userContext?.user}>
+        <Route path="/game/:id/start-game" element={<ProtectedRoute user={userContext?.user} onlyAdmin={true}>
           <GameStartPanel />
         </ProtectedRoute>} />
-        <Route path="/game/:id/end-game/" element={<ProtectedRoute user={userContext?.user}>
+        <Route path="/game/:id/end-game/" element={<ProtectedRoute user={userContext?.user} onlyAdmin={true}>
           <GameResult />
         </ProtectedRoute>} />
-        <Route path="/game/:id" element={<ProtectedRoute user={userContext?.user}>
+        <Route path="/game/:id" element={<ProtectedRoute user={userContext?.user} onlyAdmin={true}>
           <InGame />
         </ProtectedRoute>} />
         <Route path="/game/:id/select-player" element={<ProtectedRoute user={userContext?.user}>
