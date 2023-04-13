@@ -95,6 +95,7 @@ export type User = {
   technicals: Technicals;
   wins: number;
   startedGames: number;
+  isAdmin: boolean;
 };
 
 export type GameMember = "1v1" | "2v2" | "1v2" | "2v1";
