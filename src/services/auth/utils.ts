@@ -14,4 +14,5 @@ export type DefaultUser = {
   technicals: Technicals;
   wins: number;
   startedGames: number;
+  isAdmin: boolean;
 };
