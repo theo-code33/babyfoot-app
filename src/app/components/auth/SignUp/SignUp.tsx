@@ -78,6 +78,7 @@ const SignUp: React.FC<Props> = ({id}) => {
     ],
     wins: 0,
     startedGames: 0,
+    isAdmin: false,
   });
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
