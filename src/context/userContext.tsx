@@ -10,6 +10,7 @@ export const userDefault: User = {
     goals: 0,
     games: [],
     cover: '',
+    isAdmin: false,
 }
 
 export const UserContext = createContext<UserContextType | null>(null)
