@@ -12,6 +12,7 @@ import { createUser } from "../../db/users/create.users";
 import { db } from "../config/firebase";
 import { removeToken, addToken } from "../token/token.service";
 import { Sign, DefaultUser } from "./utils";
+import { User } from "../../db/utils";
 
 export const signUp = async (userDatas: DefaultUser, setUser: Function): Promise<React.SetStateAction<void>> => {
   const auth = getAuth();
@@ -47,9 +48,8 @@ export const signInWithGoogle = async (
   signInWithPopup(auth, provider)
   .then(async (result) => {
     const credential = GoogleAuthProvider.credentialFromResult(result);
-    const token = credential?.accessToken;
+    const token = await result.user.getIdToken(true)
     const user = result.user;
-    console.log(user);
     
     const queryUserDb = query(collection(db, "users"), where("email", "==", user.email));
     const userDb = await getDocs(queryUserDb);
@@ -123,7 +123,7 @@ export const signInWithGoogle = async (
         }
         await createUser(newUser, user.uid);
     }
-    addToken(user.uid);
+    addToken(token);
     if(id !== undefined){
       navigate(`/game/${id}/select-player`);
     }else{
@@ -150,10 +150,9 @@ export const signIn = async (datas: Sign, setUser: Function): Promise<React.SetS
     const userSnap = await getDoc(doc(db, "users", userCredential.user.uid));
     if (!userSnap.exists()) throw new Error("User not found");
     const user = userSnap.data();
-
-    
+    const token = await userCredential.user.getIdToken(true)
     setUser(user);
-    addToken(user.uid);
+    addToken(token);
   } catch (error: any) {
     throw new Error(error.message);
   }
@@ -179,3 +178,16 @@ export const resetPassword = async (email: string): Promise<void> => {
     throw new Error(error.message);
   }
 };
+
+export const checkUser = async (setUser: Function): Promise<React.SetStateAction<void>> => {
+  getAuth().onIdTokenChanged(async (user) => {
+    if (user) {
+      const userSnap = await getDoc(doc(db, "users", user.uid));
+      if (!userSnap.exists()) throw new Error("User not found");
+      const userDb = userSnap.data();
+      setUser(userDb);
+    } else {
+      setUser(null);
+    }
+  })
+}
