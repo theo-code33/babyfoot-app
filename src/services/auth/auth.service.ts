@@ -119,6 +119,7 @@ export const signInWithGoogle = async (
           ],
           wins: 0,
           startedGames: 0,
+          isAdmin: false,
         }
         await createUser(newUser, user.uid);
     }
