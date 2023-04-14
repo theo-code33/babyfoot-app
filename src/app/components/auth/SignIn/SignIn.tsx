@@ -9,15 +9,17 @@ import { signIn, signInWithGoogle } from "../../../../services/auth/auth.service
 import { Sign } from "../../../../services/auth/utils";
 
 import logoGoogle from "../../../../assets/logo-google.png"
+import { Props } from "./utils";
+import { UserContextType } from "../../../../context/utils";
 
-const SignIn = ({id}:{id?:string}) => {
+const SignIn: React.FC<Props> = ({id}) => {
   const [user, setUser] = useState<Sign>({
     email: "",
     password: "",
   });
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
-  const { setUser: setGlobalUser } = useContext(UserContext);
+  const { setUser: setGlobalUser } = useContext(UserContext) as UserContextType;
   const navigate = useNavigate();
 
   const handleClickShowPassword = () : void => setShowPassword((show) => !show);

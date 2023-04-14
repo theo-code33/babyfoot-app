@@ -1,7 +1,7 @@
 import { createContext, FC, useEffect, useState } from "react";
 import { getGames } from "../db/game/readGames";
 import { updateGame } from "../db/game/updateGame";
-import { Game, Games } from "../db/utils";
+import { Game } from "../db/utils";
 import {
   actionDefault,
   GameContextType,

@@ -1,18 +1,10 @@
-import { Action, Team } from "../../../../context/utils";
+import { Props } from "./utils";
 
-const Postes = ({
+const Postes: React.FC<Props> = ({
   action,
   handleClick,
   gamelle,
   technicalName,
-}: {
-  action: Action;
-  handleClick: (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-    team: Team
-  ) => void;
-  gamelle: string;
-  technicalName: string;
 }) => {
   return (
     <div

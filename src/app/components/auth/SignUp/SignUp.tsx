@@ -4,13 +4,15 @@ import { Button, Box, InputLabel, TextField, OutlinedInput, InputAdornment, Icon
 import { VisibilityOff, Visibility } from '@mui/icons-material'
 
 import { UserContext } from "../../../../context/userContext";
+import { UserContextType } from "../../../../context/utils";
 
 import { signUp, signInWithGoogle } from "../../../../services/auth/auth.service";
 import { DefaultUser } from "../../../../services/auth/utils";
 
 import logoGoogle from "../../../../assets/logo-google.png"
+import { Props } from "./utils";
 
-const SignUp = ({id}: {id?: string}) => {
+const SignUp: React.FC<Props> = ({id}) => {
   const [user, setUser] = useState<DefaultUser>({
     email: "",
     username: "",
@@ -76,12 +78,13 @@ const SignUp = ({id}: {id?: string}) => {
     ],
     wins: 0,
     startedGames: 0,
+    isAdmin: false,
   });
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
   const [success, setSuccess] = useState<boolean>(false);
 
-  const { setUser: setGlobalUser } = useContext(UserContext);
+  const { setUser: setGlobalUser } = useContext(UserContext) as UserContextType;
 
   const navigate = useNavigate()
 
@@ -90,7 +93,7 @@ const SignUp = ({id}: {id?: string}) => {
     e.preventDefault();
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) : void => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) : React.SetStateAction<void> => {
     setError(false);
     setSuccess(false);
     setUser({ ...user, [e.target.name]: e.target.value });

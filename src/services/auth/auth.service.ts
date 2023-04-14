@@ -9,12 +9,12 @@ import {
 } from "firebase/auth";
 import { collection, doc, getDoc, getDocs, query, where } from "firebase/firestore";
 import { createUser } from "../../db/users/create.users";
-import { Game, User } from "../../utils";
 import { db } from "../config/firebase";
 import { removeToken, addToken } from "../token/token.service";
 import { Sign, DefaultUser } from "./utils";
+import { User } from "../../db/utils";
 
-export const signUp = async (userDatas: DefaultUser, setUser: Function) => {
+export const signUp = async (userDatas: DefaultUser, setUser: Function): Promise<React.SetStateAction<void>> => {
   const auth = getAuth();
   try {
     if(userDatas.password !== undefined){
@@ -41,16 +41,15 @@ export const signInWithGoogle = async (
   setError: React.Dispatch<React.SetStateAction<boolean>>,
   navigate: Function,
   id: string | undefined,
-  ): Promise<void> => {
+  ): Promise<React.SetStateAction<void>> => {
   const auth = getAuth();
   const provider = new GoogleAuthProvider();
 
   signInWithPopup(auth, provider)
   .then(async (result) => {
     const credential = GoogleAuthProvider.credentialFromResult(result);
-    const token = credential?.accessToken;
+    const token = await result.user.getIdToken(true)
     const user = result.user;
-    console.log(user);
     
     const queryUserDb = query(collection(db, "users"), where("email", "==", user.email));
     const userDb = await getDocs(queryUserDb);
@@ -120,10 +119,11 @@ export const signInWithGoogle = async (
           ],
           wins: 0,
           startedGames: 0,
+          isAdmin: false,
         }
         await createUser(newUser, user.uid);
     }
-    addToken(user.uid);
+    addToken(token);
     if(id !== undefined){
       navigate(`/game/${id}/select-player`);
     }else{
@@ -139,7 +139,7 @@ export const signInWithGoogle = async (
 
 }
 
-export const signIn = async (datas: Sign, setUser: Function) => {
+export const signIn = async (datas: Sign, setUser: Function): Promise<React.SetStateAction<void>> => {
   const auth = getAuth();
   try {
     const userCredential = await signInWithEmailAndPassword(
@@ -150,16 +150,15 @@ export const signIn = async (datas: Sign, setUser: Function) => {
     const userSnap = await getDoc(doc(db, "users", userCredential.user.uid));
     if (!userSnap.exists()) throw new Error("User not found");
     const user = userSnap.data();
-
-    
+    const token = await userCredential.user.getIdToken(true)
     setUser(user);
-    addToken(user.uid);
+    addToken(token);
   } catch (error: any) {
     throw new Error(error.message);
   }
 };
 
-export const logOut = async (setUser: Function) => {
+export const logOut = async (setUser: Function): Promise<React.SetStateAction<void>> => {
   const auth = getAuth();
   try {
     await signOut(auth);
@@ -170,7 +169,7 @@ export const logOut = async (setUser: Function) => {
   }
 };
 
-export const resetPassword = async (email: string) => {
+export const resetPassword = async (email: string): Promise<void> => {
   const auth = getAuth();
 
   try {
@@ -179,3 +178,16 @@ export const resetPassword = async (email: string) => {
     throw new Error(error.message);
   }
 };
+
+export const checkUser = async (setUser: Function): Promise<React.SetStateAction<void>> => {
+  getAuth().onIdTokenChanged(async (user) => {
+    if (user) {
+      const userSnap = await getDoc(doc(db, "users", user.uid));
+      if (!userSnap.exists()) throw new Error("User not found");
+      const userDb = userSnap.data();
+      setUser(userDb);
+    } else {
+      setUser(null);
+    }
+  })
+}

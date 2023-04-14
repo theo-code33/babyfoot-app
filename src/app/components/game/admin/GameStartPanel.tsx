@@ -1,26 +1,31 @@
 import { useContext, useEffect, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { Box } from "@mui/material";
+
 import { GameContext } from "../../../../context/gameContext";
 import { UserContext } from "../../../../context/userContext";
+import { UserContextType } from "../../../../context/utils";
+
 import { updateGameStatus } from "../../../../db/game/updateGame";
-import { Box } from "@mui/material";
+
 import QRCode from "qrcode";
+
 import backgroundGameStartPanel from "../../../../assets/background-start-game.svg";
 
 const GameStartPanel = () => {
-  const { id } = useParams();
+  const { id } = useParams<{id: string}>();
   const { game } = useContext(GameContext);
-  const { user } = useContext(UserContext);
+  const { user } = useContext(UserContext) as UserContextType;
   const navigate = useNavigate();
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  const handleStartGame = async () => {
+  const handleStartGame = async (): Promise<void> => {
     await updateGameStatus(game, true);
     navigate(`/game/${id}`);
   };
 
   useEffect(() => {
-    if (user.email !== "admin@admin.com") {
+    if (user && user.email !== "admin@admin.com") {
       navigate("/game");
     } else {
       QRCode.toCanvas(
@@ -31,7 +36,7 @@ const GameStartPanel = () => {
     }
   }, []);
 
-  const style = {
+  const style: React.CSSProperties = {
     background: `url(${backgroundGameStartPanel})`,
   }
 

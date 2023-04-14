@@ -7,7 +7,7 @@ export const updateDoc = async ({
   collectionId,
   callback,
   docId,
-}: SetDoc) => {
+}: SetDoc): Promise<string|void> => {
   if (!docId) {
     const docRef = await addDoc(collection(db, collectionId), newDatas);
 

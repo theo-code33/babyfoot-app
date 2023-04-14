@@ -1,11 +1,14 @@
-import { SetStateAction, useContext, useEffect, useState } from "react";
-import { GameContext } from "../../../../context/gameContext";
-import score from "../../../../assets/endGame/scoreboard.png";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+
+import { GameContext } from "../../../../context/gameContext";
+import { Team } from "../../../../context/utils";
+
 import { getUserByUid } from "../../../../db/users/read.users";
 import { updateUser } from "../../../../db/users/update.users";
-import { UpdatedUser, User, UserGame } from "../../../../db/utils";
-import { Team } from "../../../../context/utils";
+import { User, UserGame } from "../../../../db/utils";
+
+import score from "../../../../assets/endGame/scoreboard.png";
 
 const GameResult = () => {
   const { game } = useContext(GameContext);

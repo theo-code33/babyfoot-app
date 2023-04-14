@@ -19,4 +19,5 @@ export type User = {
   games?: Games;
   goals?: number;
   playerPoste?: Position;
+  isAdmin: boolean;
 };

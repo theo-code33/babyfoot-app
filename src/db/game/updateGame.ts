@@ -1,11 +1,8 @@
-import { collection, doc, onSnapshot, setDoc } from "firebase/firestore";
-import { useContext } from "react";
-import { GameContext } from "../../context/gameContext";
+import { doc, onSnapshot, setDoc } from "firebase/firestore";
 import { db } from "../../services/config/firebase";
-import { User } from "../../utils";
-import { Game, Team, UpdatedUser, UserGame } from "../utils";
+import { Game, Team, UpdatedUser } from "../utils";
 
-export const updateGamePlayer = async (user: UpdatedUser, position: string, team: Team, gameId: number, game: Game) => {
+export const updateGamePlayer = async (user: UpdatedUser, position: string, team: Team, gameId: number, game: Game): Promise<void> => {
     try {
         const updateGame = {
             ...game
@@ -101,7 +98,7 @@ export const updateGamePlayer = async (user: UpdatedUser, position: string, team
     }
 };
 
-export const updateGame = async (game: Game, setGame: React.Dispatch<React.SetStateAction<Game>>) => {
+export const updateGame = async (game: Game, setGame: React.Dispatch<React.SetStateAction<Game>>): Promise<React.SetStateAction<void>> => {
     const snapRef = doc(db, 'games', game.id.toString())
     
     await onSnapshot(snapRef, async (doc) => {
@@ -109,7 +106,7 @@ export const updateGame = async (game: Game, setGame: React.Dispatch<React.SetSt
     })
 }
 
-export const updateGameStatus = async (game: Game, status: boolean) => {
+export const updateGameStatus = async (game: Game, status: boolean): Promise<void> => {
     try {
         const gameRef = doc(db, 'games', game.id.toString())
         await setDoc(gameRef, {

@@ -1,7 +1,7 @@
 import { createContext, FC, useEffect, useState } from 'react';
-import { getUserByUid } from '../db/users/read.users';
 import { User } from '../utils';
 import {Props, UserContextType} from './utils'
+import { checkUser } from '../services/auth/auth.service';
 
 export const userDefault: User = {
     uid: '',
@@ -10,31 +10,16 @@ export const userDefault: User = {
     goals: 0,
     games: [],
     cover: '',
+    isAdmin: false,
 }
 
-export const UserContext = createContext<UserContextType>({
-    user: userDefault,
-    setUser: () => {}
-})
+export const UserContext = createContext<UserContextType | null>(null)
 
 export const UserContextProvider : FC<Props> = ({children}) => {
-    const [user, setUser] = useState<User>(userDefault)
-    const fetchUser = async () => {
-        const user = localStorage.getItem('token')
-        if (user) {
-            try {
-                const userDb = await getUserByUid(user)
-                if(userDb !== false && userDb !== true){
-                    setUser(userDb)
-                }
-            } catch (error) {
-                console.log(error);
-            }
-        }
-    }
+    const [user, setUser] = useState<User | undefined>(undefined)
 
     useEffect(() => {
-        fetchUser()
+        checkUser(setUser)
     }, [])
 
     return (

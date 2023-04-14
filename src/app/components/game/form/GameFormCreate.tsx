@@ -23,7 +23,7 @@ const GameFormCreate = () => {
 
     const navigate = useNavigate();
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) : void => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>): React.SetStateAction<void>  => {
         if(e.currentTarget.name === 'maxScore'){
             setCredentials({
                 ...credentials,
@@ -49,9 +49,9 @@ const GameFormCreate = () => {
         }
     }
 
-    const styleButton = {
+    const styleButton: React.CSSProperties = {
         background: `url(${backgroundBtn})`,
-    } as React.CSSProperties
+    } 
 
     return ( 
         <Box component="form" onSubmit={handleSubmit} className="game-create-form_container">
