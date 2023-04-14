@@ -1,5 +1,4 @@
 import { createContext, FC, useEffect, useState } from 'react';
-import { getUserByUid } from '../db/users/read.users';
 import { User } from '../utils';
 import {Props, UserContextType} from './utils'
 import { checkUser } from '../services/auth/auth.service';
