@@ -2,20 +2,18 @@ import { useContext, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import { UserContext } from "../../../context/userContext";
-import { UserContextType } from "../../../context/utils";
 
 const Qrcode = () => {
-    const { user } = useContext(UserContext) as UserContextType;
+    const userContext = useContext(UserContext);
     const {id} = useParams<{id: string}>();
-    const token : string | null = localStorage.getItem("babytoken");
     const navigate = useNavigate();
     useEffect(() => {
-        if (token) {
+        if (userContext?.user !== undefined || userContext?.user !== null) {
             navigate(`/game/${id}/select-player`)
         }else{
             navigate(`/signin/${id}`)
         }
-    },[user])
+    },[userContext?.user])
     return ( 
         <>
         </>
