@@ -102,12 +102,14 @@ const GameResult = () => {
     if (game.id) {
       setBestScorer("blue");
       setBestScorer("red");
+      getConnectedUser("blue");
+      getConnectedUser("red");
     }
   }, [game]);
 
   useEffect(() => {
     realUserList.forEach(async (userPlayer: any) => {
-      let userDb = (await getUserByUid(userPlayer.userId)) as User;
+      let userDb = await getUserByUid(userPlayer.userId) as User;
 
       if (userDb) {
         const goals = userDb.goals + userPlayer.goals;
