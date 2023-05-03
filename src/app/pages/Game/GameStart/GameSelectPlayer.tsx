@@ -29,6 +29,7 @@ const GameSelectPlayer = () => {
     const navigate = useNavigate()
 
     useEffect(() => {
+        if(game === undefined) return
         setIsPlaying(game.isPlaying)
 
         setAttaquantBlue(null)
@@ -82,7 +83,7 @@ const GameSelectPlayer = () => {
     }, [isPlaying, timeLeftRedirection])
 
     const handleCardClick = async (e: React.MouseEvent<HTMLDivElement, MouseEvent>) : Promise<void> => {
-
+        if(game === undefined) return
         const team = e.currentTarget.dataset.team as Team
         let position: Position | null = null
         if(e.currentTarget.dataset.position === 'Mixte' || e.currentTarget.dataset.position === 'Défenseur' || e.currentTarget.dataset.position === 'Attaquant'){
@@ -134,7 +135,7 @@ const GameSelectPlayer = () => {
         <>
         <div className={isPlaying === true ? "container-choose disabled" : "container-choose"}>
             {
-                game.blue.users && game.blue.users.map((user, index) => {
+                game !== undefined && game.blue.users && game.blue.users.map((user, index) => {
                     if(game.blue.users?.length === 1){
                         if(mixteBlue === null || mixteBlue.userId === "") {
                         return( <div key={index} className="choose-player-item blue-player" data-team="blue"  data-position="Mixte" onClick={handleCardClick} style={{background: `url(${attaquantBlueCover})`}}>
@@ -171,7 +172,7 @@ const GameSelectPlayer = () => {
                     })
             }
             {
-                game.red.users && game.red.users.map((user, index) => {
+                game !== undefined && game.red.users && game.red.users.map((user, index) => {
                     if(game.red.users?.length === 1){
                         if(mixteRed === null || mixteRed.userId === "") {
                         return( <div key={index} data-team="red" className="choose-player-item red-player" data-position="Mixte" onClick={handleCardClick} style={{background: `url(${attaquantRedCover})`}}>

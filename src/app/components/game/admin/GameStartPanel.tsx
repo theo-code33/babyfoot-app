@@ -20,6 +20,7 @@ const GameStartPanel = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   const handleStartGame = async (): Promise<void> => {
+    if(game === undefined) return;
     await updateGameStatus(game, true);
     navigate(`/game/${id}`);
   };
@@ -44,7 +45,7 @@ const GameStartPanel = () => {
     <Box sx={style} className="container-start-game">
         <Box className="content-start-game">
             <Box className="container-player">
-                {game.blue &&
+                {game !== undefined && game.blue &&
                     game.blue.users.map((player, index) => {
                     return (
                         <div key={index} className="player blue">
@@ -66,7 +67,7 @@ const GameStartPanel = () => {
                 </p>
             </Box>
             <Box className="container-player red-container">
-                {game.red &&
+                {game !== undefined && game.red &&
                     game.red.users.map((player, index) => {
                     return (
                         <div key={index} className="player red">

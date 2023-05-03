@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Box, InputLabel } from "@mui/material";
 
@@ -14,6 +14,7 @@ import backgroundBut3 from "../../../../assets/background-but-3.svg";
 import backgroundBut5 from "../../../../assets/background-but-5.svg";
 import backgroundBut10 from "../../../../assets/background-but-10.svg";
 import backgroundBtn from "../../../../assets/background-btn-create.svg";
+import { GameContext } from "../../../../context/gameContext";
 
 const GameFormCreate = () => {
     const [credentials, setCredentials] = useState<CreateGame>({
@@ -22,6 +23,7 @@ const GameFormCreate = () => {
     })
 
     const navigate = useNavigate();
+    const { setGameId } = useContext(GameContext);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>): React.SetStateAction<void>  => {
         if(e.currentTarget.name === 'maxScore'){
@@ -42,6 +44,7 @@ const GameFormCreate = () => {
         try {
             const newGame = await createGame(credentials.maxScore, credentials.member);
             const { id } = newGame;
+            setGameId(parseInt(id));
             navigate(`/game/${id}/start-game`);
             
         } catch (error) {

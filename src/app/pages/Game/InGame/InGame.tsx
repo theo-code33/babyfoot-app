@@ -30,12 +30,14 @@ const InGame = () => {
   const [lastActionsInGame, setLastActionsInGame] = useState<LastActions>([]);
 
   useEffect(() => {
+    if(game === undefined) return;
     if (id !== game.id) {
       navigate("/game");
     }
   }, [id]);
 
   useEffect(() => {
+    if(game === undefined) return;
     if (game.id) {
       setTimer(game.time);
     }
@@ -113,6 +115,7 @@ const InGame = () => {
   };
 
   const setDemi = () => {
+    if(game === undefined) return;
     updateDoc({
       newDatas: {
         ...game,
@@ -125,6 +128,7 @@ const InGame = () => {
   };
 
   const setSwap = (team: Team) => {
+    if(game === undefined) return;
     updateDoc({
       newDatas: {
         ...game,
@@ -152,6 +156,7 @@ const InGame = () => {
   };
 
   const lastActions = () => {
+    if(game === undefined) return;
     const lastActions = game.lastActions;
     if (lastActions) {
       const lastActionsInGame = lastActions.sort(
@@ -162,6 +167,7 @@ const InGame = () => {
   };
 
   const getUserName = (playerNumber: number) => {
+    if(game === undefined) return;
     const user = game.blue.users?.find(
       (user) => user.playerNumber === playerNumber
     );
@@ -188,6 +194,7 @@ const InGame = () => {
   }
 
   const handleClick = async () => {
+    if(game === undefined) return;
     try {
       await updateDoc({
         newDatas: {
@@ -209,142 +216,148 @@ const InGame = () => {
 
   return (
     <div className="inGame">
-      <img className="scoreboard" src={score} alt="" />
-      <div className="header">
-        <div className="left-content">
-          <img className="logo" src={logo} alt="" />
-          <h2>{time}</h2>
-        </div>
-        <div className="score">
-          <p>{game.blue.score}</p>
-          <p>{game.red.score}</p>
-        </div>
-        <div className="right-content">
-          <div className="pause">I&nbsp;I</div>
-          <div
-            className="leave"
-            onClick={handleClick}
-          >
-            QUITTER LA PARTIE
-          </div>
-        </div>
-      </div>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          width: "100%",
-          height: "50px",
-        }}
-      >
-        {game.currentPoint > 1 && (
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              backgroundColor: "#FC7443",
-              flexDirection: "column",
-              alignItems: "center",
-              width: "200px",
-              height: "50px",
-              marginBottom: "-20px",
-            }}
-          >
-            <p
+      {
+        game && (
+          <>
+            <img className="scoreboard" src={score} alt="" />
+            <div className="header">
+              <div className="left-content">
+                <img className="logo" src={logo} alt="" />
+                <h2>{time}</h2>
+              </div>
+              <div className="score">
+                <p>{game.blue.score}</p>
+                <p>{game.red.score}</p>
+              </div>
+              <div className="right-content">
+                <div className="pause">I&nbsp;I</div>
+                <div
+                  className="leave"
+                  onClick={handleClick}
+                >
+                  QUITTER LA PARTIE
+                </div>
+              </div>
+            </div>
+            <div
               style={{
-                color: "white",
-                fontSize: "20px",
-                fontWeight: "bold",
-                margin: "2px",
+                display: "flex",
+                justifyContent: "center",
+                width: "100%",
+                height: "50px",
               }}
             >
-              Demi en cours : {game.currentPoint}
-            </p>
-          </div>
-        )}
-      </div>
-
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-around",
-          marginTop: "50px",
-        }}
-      >
-        <div className="main-content">
-          <But setNewAction={setNewAction} team="blue" />
-          <div className="demiGamelle">
-            <Demi setNewAction={setNewAction} team="blue" />
-            <Gamelle setNewAction={setNewAction} team="blue" />
-          </div>
-          <div className="techniquesFaute">
-            <Technicals setNewAction={setNewAction} team="blue" />
-            <Fouls setNewAction={setNewAction} team="blue" />
-          </div>
-          <Swap setNewAction={setNewAction} team="blue" />
-        </div>
-
-        <div className="main-content">
-          <But setNewAction={setNewAction} team="red" />
-          <div style={{ display: "flex", gap: "10px" }}>
-            <Demi setNewAction={setNewAction} team="red" />
-            <Gamelle setNewAction={setNewAction} team="red" />
-          </div>
-          <div style={{ display: "flex", gap: "10px" }}>
-            <Technicals setNewAction={setNewAction} team="red" />
-            <Fouls setNewAction={setNewAction} team="red" />
-          </div>
-          <Swap setNewAction={setNewAction} team="red" />
-        </div>
-      </div>
-
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          gap: "10px",
-        }}
-      >
-        {isEnded ? (
-          <Modal
-            open={isEnded}
-            onClose={() => {
-              setIsEnded(false);
-            }}
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
+              {game.currentPoint > 1 && (
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    backgroundColor: "#FC7443",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    width: "200px",
+                    height: "50px",
+                    marginBottom: "-20px",
+                  }}
+                >
+                  <p
+                    style={{
+                      color: "white",
+                      fontSize: "20px",
+                      fontWeight: "bold",
+                      margin: "2px",
+                    }}
+                  >
+                    Demi en cours : {game.currentPoint}
+                  </p>
+                </div>
+              )}
+            </div>
+      
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-around",
+                marginTop: "50px",
+              }}
+            >
+              <div className="main-content">
+                <But setNewAction={setNewAction} team="blue" />
+                <div className="demiGamelle">
+                  <Demi setNewAction={setNewAction} team="blue" />
+                  <Gamelle setNewAction={setNewAction} team="blue" />
+                </div>
+                <div className="techniquesFaute">
+                  <Technicals setNewAction={setNewAction} team="blue" />
+                  <Fouls setNewAction={setNewAction} team="blue" />
+                </div>
+                <Swap setNewAction={setNewAction} team="blue" />
+              </div>
+      
+              <div className="main-content">
+                <But setNewAction={setNewAction} team="red" />
+                <div style={{ display: "flex", gap: "10px" }}>
+                  <Demi setNewAction={setNewAction} team="red" />
+                  <Gamelle setNewAction={setNewAction} team="red" />
+                </div>
+                <div style={{ display: "flex", gap: "10px" }}>
+                  <Technicals setNewAction={setNewAction} team="red" />
+                  <Fouls setNewAction={setNewAction} team="red" />
+                </div>
+                <Swap setNewAction={setNewAction} team="red" />
+              </div>
+            </div>
+      
             <Box
               sx={{
-                width: "500px",
-                height: "300px",
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
-                justifyContent: "center",
                 gap: "10px",
-                backgroundColor: "#04131E",
-                borderRadius: "10px",
               }}
             >
-              <h2>FIN DE LA PARTIE</h2>
-
-              <p
-                onClick={handleClick}
-                className="leave"
-              >
-                QUITTER LA PARTIE
-              </p>
+              {isEnded ? (
+                <Modal
+                  open={isEnded}
+                  onClose={() => {
+                    setIsEnded(false);
+                  }}
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <Box
+                    sx={{
+                      width: "500px",
+                      height: "300px",
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      gap: "10px",
+                      backgroundColor: "#04131E",
+                      borderRadius: "10px",
+                    }}
+                  >
+                    <h2>FIN DE LA PARTIE</h2>
+      
+                    <p
+                      onClick={handleClick}
+                      className="leave"
+                    >
+                      QUITTER LA PARTIE
+                    </p>
+                  </Box>
+                </Modal>
+              ) : null}
             </Box>
-          </Modal>
-        ) : null}
-      </Box>
-
-      <Overlay />
+      
+            <Overlay />
+          </>
+        )
+      }
     </div>
   );
 };

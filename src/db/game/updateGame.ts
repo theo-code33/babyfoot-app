@@ -98,7 +98,7 @@ export const updateGamePlayer = async (user: UpdatedUser, position: string, team
     }
 };
 
-export const updateGame = async (game: Game, setGame: React.Dispatch<React.SetStateAction<Game>>): Promise<React.SetStateAction<void>> => {
+export const updateGame = async (game: Game, setGame: React.Dispatch<React.SetStateAction<Game | undefined>>): Promise<React.SetStateAction<void>> => {
     const snapRef = doc(db, 'games', game.id.toString())
     
     await onSnapshot(snapRef, async (doc) => {
@@ -108,7 +108,7 @@ export const updateGame = async (game: Game, setGame: React.Dispatch<React.SetSt
 
 export const updateGameStatus = async (game: Game, status: boolean): Promise<void> => {
     try {
-        const gameRef = doc(db, 'games', game.id.toString())
+        const gameRef = doc(db, 'games', game.id)
         await setDoc(gameRef, {
             ...game,
             isPlaying: status

@@ -3,7 +3,8 @@ import { db } from "../../services/config/firebase";
 import { Game, Games } from "../utils";
 
 export const getGames = async (
-  setGames: React.Dispatch<React.SetStateAction<Game>>
+  setGames: React.Dispatch<React.SetStateAction<Game | undefined>>,
+  gameId: number
 ): Promise<boolean> => {
   const collectionRef = collection(db, "games");
 
@@ -13,12 +14,14 @@ export const getGames = async (
       dbGames.push({ ...doc.data(), id: doc.id } as Game);
     });
 
-    const gameActive = await dbGames.find((game) => game.isActive)
-    if(!gameActive) return false
-
-    setGames(gameActive);
+    const currentGame = await dbGames.find((game) => game.id === gameId.toString())
+    if(!currentGame){
+      setGames(undefined)
+      return false
+    }
+    if(currentGame.isPlaying) setGames(undefined)
+    else setGames(currentGame)
     return true;
   })
-
   return false
 };

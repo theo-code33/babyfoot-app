@@ -52,8 +52,10 @@ export type ActionType =
 
 // CONTEXT TYPE
 export type GameContextType = {
-  game: Game;
-  setGame: Dispatch<SetStateAction<Game>>;
+  game: Game | undefined;
+  setGame: Dispatch<SetStateAction<Game | undefined>>;
+  gameId: number;
+  setGameId: Dispatch<SetStateAction<number>>;
   action: Action;
   setAction: Dispatch<SetStateAction<Action>>;
   timer: number;

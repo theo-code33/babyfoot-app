@@ -42,6 +42,7 @@ const Overlay = () => {
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
     team: Team
   ) => {
+    if(game === undefined) return;
     let position: Position = "";
     if (
       e.currentTarget.value === "Attaquant" ||
@@ -84,6 +85,7 @@ const Overlay = () => {
   let newDatas = {};
 
   useEffect(() => {
+    if(game === undefined) return;
     const data = {
       game,
       team: action.team,
@@ -254,7 +256,7 @@ const Overlay = () => {
         </div>
 
         <div>
-          {action.type === "Faute" && (
+          {game !== undefined && action.type === "Faute" && (
             <div className="overlay-action">
               <div className="btn-group">
                 <button
@@ -314,7 +316,7 @@ const Overlay = () => {
           />
         )}
 
-        {action.team &&
+        {game !== undefined && action.team &&
           action.type === "Faute" &&
           foulName === "roulette" &&
           game[action.team].users.length > 1 && (
