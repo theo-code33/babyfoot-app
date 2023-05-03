@@ -14,14 +14,16 @@ import backgroundGameStartPanel from "../../../../assets/background-start-game.s
 
 const GameStartPanel = () => {
   const { id } = useParams<{id: string}>();
-  const { game } = useContext(GameContext);
+  const { game, setGame } = useContext(GameContext);
   const { user } = useContext(UserContext) as UserContextType;
   const navigate = useNavigate();
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   const handleStartGame = async (): Promise<void> => {
     if(game === undefined) return;
-    await updateGameStatus(game, true);
+    const updatedGame = await updateGameStatus(game, true);
+    const { id } = updatedGame;
+    setGame(updatedGame)
     navigate(`/game/${id}`);
   };
 

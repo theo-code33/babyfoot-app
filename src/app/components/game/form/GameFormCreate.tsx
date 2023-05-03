@@ -23,7 +23,7 @@ const GameFormCreate = () => {
     })
 
     const navigate = useNavigate();
-    const { setGameId } = useContext(GameContext);
+    const { setGame } = useContext(GameContext);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>): React.SetStateAction<void>  => {
         if(e.currentTarget.name === 'maxScore'){
@@ -44,7 +44,7 @@ const GameFormCreate = () => {
         try {
             const newGame = await createGame(credentials.maxScore, credentials.member);
             const { id } = newGame;
-            setGameId(parseInt(id));
+            setGame(newGame);
             navigate(`/game/${id}/start-game`);
             
         } catch (error) {
