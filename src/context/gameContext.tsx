@@ -30,7 +30,7 @@ export const GameContextProvider: FC<Props> = ({ children }) => {
   useEffect(() => {
     if (game === undefined) return;
     updateGame(game, setGame);
-  }, []);
+  }, [game]);
 
   useEffect(() => {
     getGames(setGame, gameId);
