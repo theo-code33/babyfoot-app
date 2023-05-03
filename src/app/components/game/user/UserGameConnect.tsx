@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Box, TextField, Button } from "@mui/material"
 
@@ -11,30 +11,40 @@ const UserGameConnect = () => {
     const [isPlaying, setIsPlaying] = useState<boolean>(false);
     const [code, setCode] = useState<number>(0);
 
-    const { game } = useContext(GameContext);
+    const { game, setGame, gameId, setGameId } = useContext(GameContext);
     const navigate = useNavigate();
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) : void => {
         setError(false);
+        setIsPlaying(false);
         setCode(parseInt(e.currentTarget.value));
     }
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) : void => {
         e.preventDefault();
-        if(code === +game.id){
-            if(game.isPlaying === true){
-                setIsPlaying(true);
-            }else{
-                navigate(`/game/${game.id}/select-player`);
-            }
-        }else{
-            setError(true);
-        }
+        setError(false);
+        setIsPlaying(false);
+        setGameId(code);
     }
 
     const style : React.CSSProperties = {
         background: `url(${backgroundUser})`
     }
+
+    useEffect(() => {
+        if(game !== undefined){
+            if(game.isPlaying === true){
+                setIsPlaying(true);
+                setError(false);
+                setGame(undefined)
+            }else{
+                navigate(`/game/${game.id}/select-player`);
+                console.log("game is not playing: ", game);
+            }
+        }else if(gameId !== 0){
+            setError(true);
+        }
+    }, [gameId, game])
 
     return ( 
         <Box sx={style} className="user-game-connect_container">
