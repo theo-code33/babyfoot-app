@@ -106,13 +106,15 @@ export const updateGame = async (game: Game, setGame: React.Dispatch<React.SetSt
     })
 }
 
-export const updateGameStatus = async (game: Game, status: boolean): Promise<void> => {
+export const updateGameStatus = async (game: Game, status: boolean): Promise<Game> => {
     try {
         const gameRef = doc(db, 'games', game.id)
-        await setDoc(gameRef, {
+        const updatedGame = {
             ...game,
             isPlaying: status
-        }, { merge: true })
+        }
+        await setDoc(gameRef, updatedGame, { merge: true })
+        return updatedGame
     } catch (error: any) {
         throw new Error(error.message)
     }
