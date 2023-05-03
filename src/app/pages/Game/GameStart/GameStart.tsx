@@ -9,7 +9,7 @@ const GameStart = () => {
 
   return (
     <>
-      {user && user.email === "admin@admin.com"
+      {user && user.isAdmin === true
       ? <GameCreate />
       : <UserGameConnect />
       }
