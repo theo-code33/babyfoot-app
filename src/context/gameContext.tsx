@@ -11,8 +11,10 @@ import {
 } from "./utils";
 
 export const GameContext = createContext<GameContextType>({
-  game: gameDefault,
+  game: undefined,
   setGame: () => {},
+  gameId: 0,
+  setGameId: () => {},
   action: actionDefault,
   setAction: () => {},
   timer: 0,
@@ -20,17 +22,22 @@ export const GameContext = createContext<GameContextType>({
 });
 
 export const GameContextProvider: FC<Props> = ({ children }) => {
-  const [game, setGame] = useState<Game>(gameDefault);
+  const [game, setGame] = useState<Game | undefined>(undefined);
   const [action, setAction] = useState<Action>(actionDefault);
   const [timer, setTimer] = useState<number>(0);
+  const [gameId, setGameId] = useState<number>(0);
 
   useEffect(() => {
-    getGames(setGame);
+    if (game === undefined) return;
     updateGame(game, setGame);
   }, []);
+
+  useEffect(() => {
+    getGames(setGame, gameId);
+  }, [gameId])
   return (
     <GameContext.Provider
-      value={{ game, setGame, action, setAction, timer, setTimer }}
+      value={{ game, setGame, action, setAction, timer, setTimer, gameId, setGameId }}
     >
       {children}
     </GameContext.Provider>
