@@ -20,7 +20,7 @@ const Swap: React.FC<Props> = ({
   }, [team]);
   return (
     <div>
-      {game[team].users.length > 1 && (
+      {game !== undefined && game[team].users.length > 1 && (
         <div className="swap">
           <div>
             {game[team].users.map((user) => (

@@ -23,6 +23,7 @@ const GameResult = () => {
   };
 
   const setBestScorer = (color: Team): void => {
+    if(game === undefined) return;
     const topScorer = game[color].users.reduce((previous, current) => {
       return previous.goals > current.goals ? previous : current;
     });
@@ -38,6 +39,7 @@ const GameResult = () => {
   };
 
   const getConnectedUser = (color: Team): void => {
+    if(game === undefined) return;
     const usersConnected = game[color].users.filter(
       (user) => user.userId !== ""
     );
@@ -45,12 +47,14 @@ const GameResult = () => {
   };
 
   const totalGoals = (color: Team): number => {
+    if(game === undefined) return 0;
     return game[color].users.reduce((previous, current) => {
       return previous + current.goals;
     }, 0);
   };
 
   const colorPisettes = (color: Team): number => {
+    if(game === undefined) return 0;
     return game[color].users.reduce((previous, current) => {
       const pisettes = current.fouls.find((foul) => foul.name === "pisette");
       if (pisettes) {
@@ -62,6 +66,7 @@ const GameResult = () => {
   };
 
   const colorRoulettes = (color: Team): number => {
+    if(game === undefined) return 0;
     return game[color].users.reduce((previous, current) => {
       const roulettes = current.fouls.find((foul) => foul.name === "roulette");
       if (roulettes) {
@@ -73,6 +78,7 @@ const GameResult = () => {
   };
 
   const colorLob = (color: Team): number => {
+    if(game === undefined) return 0;
     return game[color].users.reduce((previous, current) => {
       const lob = current.technicals.find(
         (technical) => technical.name === "lob"
@@ -86,6 +92,7 @@ const GameResult = () => {
   };
 
   const colorButIncroyable = (color: Team): number => {
+    if(game === undefined) return 0;
     return game[color].users.reduce((previous, current) => {
       const butIncroyable = current.technicals.find(
         (technical) => technical.name === "but incroyable"
@@ -99,7 +106,7 @@ const GameResult = () => {
   };
 
   useEffect(() => {
-    if (game.id) {
+    if (game !== undefined && game.id) {
       setBestScorer("blue");
       setBestScorer("red");
       getConnectedUser("blue");
@@ -179,8 +186,14 @@ const GameResult = () => {
     <div className="end">
       <img className="scoreboardImg" src={score} alt="" />
       <div className="scoreboardEndGame">
-        <p>{game.blue.score}</p>
-        <p>{game.red.score}</p>
+        {
+          game !== undefined && (
+            <>
+              <p>{game.blue.score}</p>
+              <p>{game.red.score}</p>
+            </>
+          )
+        }
       </div>
       <div className="statistique">
         <h2 style={{ textAlign: "center" }}>STATISTIQUES DU MATCH</h2>
