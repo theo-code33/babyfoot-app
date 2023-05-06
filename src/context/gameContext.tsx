@@ -30,14 +30,23 @@ export const GameContextProvider: FC<Props> = ({ children }) => {
   useEffect(() => {
     if (game === undefined) return;
     updateGame(game, setGame);
-  }, [game]);
+  }, [game?.id]);
 
   useEffect(() => {
     getGames(setGame, gameId);
-  }, [gameId])
+  }, [gameId]);
   return (
     <GameContext.Provider
-      value={{ game, setGame, action, setAction, timer, setTimer, gameId, setGameId }}
+      value={{
+        game,
+        setGame,
+        action,
+        setAction,
+        timer,
+        setTimer,
+        gameId,
+        setGameId,
+      }}
     >
       {children}
     </GameContext.Provider>
