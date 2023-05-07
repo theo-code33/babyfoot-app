@@ -65,7 +65,7 @@ const GameStartPanel = () => {
                 <canvas ref={canvasRef} />
                 <p>ou</p>
                 <p className="link-code">
-                    https://babyfoot-app-24750.web.app/signin/{id}
+                    https://babyfoot-app-24750.web.app/signin/<span style={{fontWeight: "bold", fontSize: "18px"}}>{id}</span>
                 </p>
             </Box>
             <Box className="container-player red-container">
