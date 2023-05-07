@@ -3,6 +3,7 @@
   background-size: cover;
   height: 100vh;
 }
+
 .header {
   width: 100%;
   padding-top: 40px;
@@ -10,6 +11,7 @@
   justify-content: space-between;
   align-items: center;
 }
+
 .scoreboard {
   height: 75px;
   padding-top: 45px;
@@ -17,6 +19,7 @@
   left: 50%;
   transform: translate(-50%);
 }
+
 .left-content {
   display: flex;
   gap: 20px;
@@ -26,6 +29,7 @@
   margin-left: 40px;
   padding: 0px 20px;
 }
+
 .logo {
   width: 35px;
 }
@@ -51,6 +55,7 @@
   transform: translate(-50%);
   font-size: 40px;
 }
+
 .right-content {
   display: flex;
   align-items: center;
@@ -58,11 +63,14 @@
 
   gap: 20px;
 }
+
 .leave {
-  background-color: $red_color;
   text-align: center;
   padding: 18px 20px;
   background: rgba(252, 67, 79, 0.5);
+  border: none;
+  color: #FFF;
+  font-size: 16px;
 }
 
 .main-content {
@@ -89,6 +97,7 @@
   justify-content: space-between;
   gap: 10px;
 }
+
 .inGameBtn {
   width: 50%;
   text-align: left;
@@ -99,11 +108,13 @@
   color: white;
   background-size: cover;
 }
+
 .techniquesFaute {
   display: flex;
   justify-content: space-between;
   gap: 10px;
 }
+
 .swapBtn {
   background-color: $blue_color;
   height: 80px;
@@ -115,6 +126,7 @@
   border: none;
   color: white;
 }
+
 .swap {
   display: flex;
   align-items: center;

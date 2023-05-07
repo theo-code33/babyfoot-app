@@ -1,16 +1,17 @@
 import { useContext, useEffect, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Box } from "@mui/material";
+import { Box, Button } from "@mui/material";
 
 import { GameContext } from "../../../../context/gameContext";
 import { UserContext } from "../../../../context/userContext";
 import { UserContextType } from "../../../../context/utils";
 
-import { updateGameStatus } from "../../../../db/game/updateGame";
+import { closeGame, updateGameStatus } from "../../../../db/game/updateGame";
 
 import QRCode from "qrcode";
 
 import backgroundGameStartPanel from "../../../../assets/background-start-game.svg";
+import { updateDoc } from "firebase/firestore";
 
 const GameStartPanel = () => {
   const { id } = useParams<{id: string}>();
@@ -26,6 +27,13 @@ const GameStartPanel = () => {
     setGame(updatedGame)
     navigate(`/game/${id}`);
   };
+
+  const handleCloseGame = async (): Promise<void> => {
+    if(game === undefined) return;
+    await closeGame(game);
+    setGame(undefined)
+    navigate(`/game/create`);
+  }
 
   useEffect(() => {
     if (user && user.email !== "admin@admin.com") {
@@ -45,6 +53,7 @@ const GameStartPanel = () => {
 
   return (
     <Box sx={style} className="container-start-game">
+        <button onClick={handleCloseGame} className="leave" style={{position: "absolute", top: "50px", right: "50px"}}>Quitter la partie</button>
         <Box className="content-start-game">
             <Box className="container-player">
                 {game !== undefined && game.blue &&

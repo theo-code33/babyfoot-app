@@ -119,3 +119,17 @@ export const updateGameStatus = async (game: Game, status: boolean): Promise<Gam
         throw new Error(error.message)
     }
 }
+
+export const closeGame = async (game: Game): Promise<void> => {
+    try {
+        const gameRef = doc(db, 'games', game.id)
+        const updatedGame = {
+            ...game,
+            isActive: false,
+            isPlaying: false
+        }
+        await setDoc(gameRef, updatedGame, { merge: true })
+    } catch (error: any) {
+        throw new Error(error.message)
+    }
+}
