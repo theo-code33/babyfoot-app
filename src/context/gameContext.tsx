@@ -5,7 +5,6 @@ import { Game } from "../db/utils";
 import {
   actionDefault,
   GameContextType,
-  gameDefault,
   Props,
   Action,
 } from "./utils";
