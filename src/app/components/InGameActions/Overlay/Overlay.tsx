@@ -63,9 +63,9 @@ const Overlay = () => {
       setCurrentPosition(position);
     }
 
-    const otherTeam: Team = team === "blue" ? "blue" : "red";
+    // const otherTeam: Team = team === "blue" ? "blue" : "red";
 
-    const points = game.blue.score + game.currentPoint;
+    // const points = game.blue.score + game.currentPoint;
 
     if (e.currentTarget.value === "CSC") {
       const newDatas = setButCSCDatas({
@@ -93,7 +93,7 @@ const Overlay = () => {
       currentPosition,
       time: timer,
     }
-    if (action.type != "" && currentPosition != "" && action.type != "Faute") {
+    if (action.type !== "" && currentPosition !== "" && action.type !== "Faute") {
       switch (action.type) {
         case "But":
           newDatas = setButDatas(data);
@@ -122,9 +122,9 @@ const Overlay = () => {
       setGamelle("");
       setTechnicalName("");
     } else if (
-      action.type != "" &&
-      foulName != "" &&
-      currentPosition != "" &&
+      action.type !== "" &&
+      foulName !== "" &&
+      currentPosition !== "" &&
       action.type === "Faute"
     ) {
       newDatas = setFoulsDatas({
