@@ -3,12 +3,17 @@ import { db } from "../../services/config/firebase";
 import { Game, GameMember, UserGame, UsersGames } from "../utils";
 
 export const createGame = async (maxScore: number, gameMember: GameMember): Promise<Game> => {
-  const id : string = Math.floor(Math.random() * 10000).toString();
+  const idNumber1: string = Math.floor(Math.random() * 10).toString();
+  const idNumber2: string = Math.floor(Math.random() * 10).toString();
+  const idNumber3: string = Math.floor(Math.random() * 10).toString();
+  const idNumber4: string = Math.floor(Math.random() * 10).toString();
+
+  const id: string = `${idNumber1}${idNumber2}${idNumber3}${idNumber4}`;
 
   const userBlue: UsersGames = [];
   const userRed: UsersGames = [];
 
-  const defaultUser : UserGame = {
+  const defaultUser: UserGame = {
     playerPoste: "",
     userName: "",
     playerNumber: 1,
@@ -74,28 +79,28 @@ export const createGame = async (maxScore: number, gameMember: GameMember): Prom
     ],
   }
 
-  const user1 : UserGame = {
+  const user1: UserGame = {
     ...defaultUser,
-    playerNumber : 1,
-    userName : "Player1"
+    playerNumber: 1,
+    userName: "Player1"
   }
 
-  const user2 : UserGame = {
+  const user2: UserGame = {
     ...defaultUser,
-    playerNumber : 2,
-    userName : "Player2"
+    playerNumber: 2,
+    userName: "Player2"
   }
 
-  const user3 : UserGame = {
+  const user3: UserGame = {
     ...defaultUser,
-    playerNumber : 3,
-    userName : "Player3"
+    playerNumber: 3,
+    userName: "Player3"
   }
 
-  const user4 : UserGame = {
+  const user4: UserGame = {
     ...defaultUser,
-    playerNumber : 4,
-    userName : "Player4"
+    playerNumber: 4,
+    userName: "Player4"
   }
 
   if (gameMember === "1v1") {
@@ -139,7 +144,7 @@ export const createGame = async (maxScore: number, gameMember: GameMember): Prom
     userRed.push(user3);
   }
 
-  const newGame : Game = {
+  const newGame: Game = {
     id,
     name: `game#${id}`,
     blue: {
