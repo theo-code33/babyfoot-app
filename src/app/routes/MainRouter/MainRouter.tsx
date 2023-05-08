@@ -11,6 +11,7 @@ import GameResult from "../../pages/Game/GameResult";
 import ProtectedRoute from "./ProtectedRoute";
 import { useContext } from "react";
 import { UserContext } from "../../../context/userContext";
+import UserLayout from "../../layout/UserLayout";
 // import UserProfile from "../../pages/user/UserProfile";
 
 const MainRouter = () => {
@@ -24,7 +25,9 @@ const MainRouter = () => {
         <Route path="/signin" element={<SignInPage />} />
         <Route path="/signin/:id" element={<SignInPage />} />
         <Route path="/game" element={<ProtectedRoute user={userContext?.user}>
-          <Game />
+          <UserLayout>
+            <Game />
+          </UserLayout>
         </ProtectedRoute>} />
         <Route path="/game/create" element={<ProtectedRoute user={userContext?.user} onlyAdmin={true}>
           <GameCreate />

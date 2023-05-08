@@ -12,25 +12,25 @@ import { createUser } from "../../db/users/create.users";
 import { db } from "../config/firebase";
 import { removeToken, addToken } from "../token/token.service";
 import { Sign, DefaultUser } from "./utils";
-import { User } from "../../db/utils";
+import { User } from "../../utils";
 
 export const signUp = async (userDatas: DefaultUser, setUser: Function): Promise<React.SetStateAction<void>> => {
   const auth = getAuth();
   try {
-    if(userDatas.password !== undefined){
-        const userCredential = await createUserWithEmailAndPassword(
-          auth,
-          userDatas.email,
-          userDatas.password,
-        );
-        const { user } = userCredential;
-        delete userDatas.password;
-        await createUser(userDatas, user.uid);
-        const userDb = await getDoc(doc(db, "users", user.uid));
-        if (!userDb.exists()) throw new Error("User not found");
-        const userSnap = userDb.data()
-        setUser(userSnap);
-        addToken(user.uid);
+    if (userDatas.password !== undefined) {
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        userDatas.email,
+        userDatas.password,
+      );
+      const { user } = userCredential;
+      delete userDatas.password;
+      await createUser(userDatas, user.uid);
+      const userDb = await getDoc(doc(db, "users", user.uid));
+      if (!userDb.exists()) throw new Error("User not found");
+      const userSnap = userDb.data()
+      setUser(userSnap);
+      addToken(user.uid);
     }
   } catch (error: any) {
     throw new Error(error.message);
@@ -41,20 +41,20 @@ export const signInWithGoogle = async (
   setError: React.Dispatch<React.SetStateAction<boolean>>,
   navigate: Function,
   id: string | undefined,
-  ): Promise<React.SetStateAction<void>> => {
+): Promise<React.SetStateAction<void>> => {
   const auth = getAuth();
   const provider = new GoogleAuthProvider();
 
   signInWithPopup(auth, provider)
-  .then(async (result) => {
-    const credential = GoogleAuthProvider.credentialFromResult(result);
-    const token = await result.user.getIdToken(true)
-    const user = result.user;
-    
-    const queryUserDb = query(collection(db, "users"), where("email", "==", user.email));
-    const userDb = await getDocs(queryUserDb);
-    
-    if(userDb.docs.length === 0 && user.displayName !== null && user.email !== null){
+    .then(async (result) => {
+      const credential = GoogleAuthProvider.credentialFromResult(result);
+      const token = await result.user.getIdToken(true)
+      const user = result.user;
+
+      const queryUserDb = query(collection(db, "users"), where("email", "==", user.email));
+      const userDb = await getDocs(queryUserDb);
+
+      if (userDb.docs.length === 0 && user.displayName !== null && user.email !== null) {
         const newUser = {
           email: user.email,
           username: user.displayName,
@@ -122,20 +122,20 @@ export const signInWithGoogle = async (
           isAdmin: false,
         }
         await createUser(newUser, user.uid);
-    }
-    addToken(token);
-    if(id !== undefined){
-      navigate(`/game/${id}/select-player`);
-    }else{
-      navigate("/game");
-    }
-    
-  }).catch((error) => {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    const credential = GoogleAuthProvider.credentialFromError(error);
-    setError(true)
-  });
+      }
+      addToken(token);
+      if (id !== undefined) {
+        navigate(`/game/${id}/select-player`);
+      } else {
+        navigate("/game");
+      }
+
+    }).catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      const credential = GoogleAuthProvider.credentialFromError(error);
+      setError(true)
+    });
 
 }
 
@@ -158,11 +158,11 @@ export const signIn = async (datas: Sign, setUser: Function): Promise<React.SetS
   }
 };
 
-export const logOut = async (setUser: Function): Promise<React.SetStateAction<void>> => {
+export const logOut = async (setUser: React.Dispatch<React.SetStateAction<User | undefined>>): Promise<React.SetStateAction<void>> => {
   const auth = getAuth();
   try {
     await signOut(auth);
-    setUser(null);
+    setUser(undefined);
     removeToken();
   } catch (error: any) {
     throw new Error(error.message);
