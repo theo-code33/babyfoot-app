@@ -12,6 +12,7 @@ import ProtectedRoute from "./ProtectedRoute";
 import { useContext } from "react";
 import { UserContext } from "../../../context/userContext";
 import UserLayout from "../../layout/UserLayout";
+import QrCodeReader from "../../components/Qrcode/QrCodeReader";
 // import UserProfile from "../../pages/user/UserProfile";
 
 const MainRouter = () => {
@@ -24,26 +25,57 @@ const MainRouter = () => {
         <Route path="/signup/:id" element={<SignUpPage />} />
         <Route path="/signin" element={<SignInPage />} />
         <Route path="/signin/:id" element={<SignInPage />} />
-        <Route path="/game" element={<ProtectedRoute user={userContext?.user}>
-          <UserLayout>
-            <Game />
-          </UserLayout>
-        </ProtectedRoute>} />
-        <Route path="/game/create" element={<ProtectedRoute user={userContext?.user} onlyAdmin={true}>
-          <GameCreate />
-        </ProtectedRoute>} />
-        <Route path="/game/:id/start-game" element={<ProtectedRoute user={userContext?.user} onlyAdmin={true}>
-          <GameStartPanel />
-        </ProtectedRoute>} />
-        <Route path="/game/:id/end-game/" element={<ProtectedRoute user={userContext?.user} onlyAdmin={true}>
-          <GameResult />
-        </ProtectedRoute>} />
-        <Route path="/game/:id" element={<ProtectedRoute user={userContext?.user} onlyAdmin={true}>
-          <InGame />
-        </ProtectedRoute>} />
-        <Route path="/game/:id/select-player" element={<ProtectedRoute user={userContext?.user}>
-          <GameSelectPlayer />
-        </ProtectedRoute>} />
+        <Route
+          path="/game"
+          element={
+            <ProtectedRoute user={userContext?.user}>
+              <UserLayout>
+                <Game />
+              </UserLayout>
+            </ProtectedRoute>
+          }
+        />
+        <Route path="/read-qr-code" element={<QrCodeReader />} />
+        <Route
+          path="/game/create"
+          element={
+            <ProtectedRoute user={userContext?.user} onlyAdmin={true}>
+              <GameCreate />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/game/:id/start-game"
+          element={
+            <ProtectedRoute user={userContext?.user} onlyAdmin={true}>
+              <GameStartPanel />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/game/:id/end-game/"
+          element={
+            <ProtectedRoute user={userContext?.user} onlyAdmin={true}>
+              <GameResult />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/game/:id"
+          element={
+            <ProtectedRoute user={userContext?.user} onlyAdmin={true}>
+              <InGame />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/game/:id/select-player"
+          element={
+            <ProtectedRoute user={userContext?.user}>
+              <GameSelectPlayer />
+            </ProtectedRoute>
+          }
+        />
         <Route path="/qr-code/:id" element={<Qrcode />} />
         {/* <Route path="/user/profile" element={<UserProfile />} /> */}
       </Routes>
