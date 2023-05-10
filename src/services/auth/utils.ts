@@ -13,6 +13,6 @@ export type DefaultUser = {
   fouls: Fouls;
   technicals: Technicals;
   wins: number;
-  startedGames: number;
+  playedGames: number;
   isAdmin: boolean;
 };
