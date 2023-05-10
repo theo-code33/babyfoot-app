@@ -175,7 +175,7 @@ const GameResult = () => {
           fouls: userDb.fouls,
           postes: userDb.postes,
           technicals: userDb.technicals,
-          playedGame: userDb.playedGames + 1,
+          playedGames: userDb.playedGames + 1,
         };
 
         updateUser(userUpdated);
