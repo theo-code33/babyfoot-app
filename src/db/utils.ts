@@ -94,7 +94,7 @@ export type User = {
   fouls: Fouls;
   technicals: Technicals;
   wins: number;
-  startedGames: number;
+  playedGames: number;
   isAdmin: boolean;
 };
 
