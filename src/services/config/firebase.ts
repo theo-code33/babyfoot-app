@@ -4,6 +4,9 @@ import { getStorage } from "firebase/storage";
 
 const isProd = process.env.REACT_APP_PROD === "production";
 
+console.log("isProd", isProd);
+
+
 const firebaseConfig = {
   apiKey: isProd ? process.env.REACT_APP_API_KEY_PROD : process.env.REACT_APP_API_KEY,
   authDomain: isProd ? process.env.REACT_APP_AUTH_DOMAIN_PROD : process.env.REACT_APP_AUTH_DOMAIN,
