@@ -80,7 +80,9 @@ const MainRouter = () => {
           path="/user/profile"
           element={
             <ProtectedRoute user={userContext?.user}>
-              <UserProfile />
+              <UserLayout>
+                <UserProfile />
+              </UserLayout>
             </ProtectedRoute>
           }
         />
