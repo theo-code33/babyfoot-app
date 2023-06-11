@@ -3,13 +3,14 @@ import { UserLayoutProps } from "./utils";
 import { useContext, useState } from "react";
 import { UserContext } from "../../../context/userContext";
 import { logOut } from "../../../services/auth/auth.service";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const UserLayout: React.FC<UserLayoutProps> = ({ children }) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const userContext = useContext(UserContext);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -28,6 +29,10 @@ const UserLayout: React.FC<UserLayoutProps> = ({ children }) => {
   const handleProfile = () => {
     handleClose();
     navigate("/user/profile");
+  };
+  const handlePlay = () => {
+    handleClose();
+    navigate("/game");
   };
   return (
     <>
@@ -65,7 +70,11 @@ const UserLayout: React.FC<UserLayoutProps> = ({ children }) => {
                 "aria-labelledby": "basic-button",
               }}
             >
-              <MenuItem onClick={handleProfile}>Mon profil</MenuItem>
+              {location.pathname === "/user/profile" ? (
+                <MenuItem onClick={handlePlay}>Jouer</MenuItem>
+              ) : (
+                <MenuItem onClick={handleProfile}>Mon profil</MenuItem>
+              )}
               <MenuItem onClick={handleLogout}>Déconnexion</MenuItem>
             </Menu>
           </Box>
