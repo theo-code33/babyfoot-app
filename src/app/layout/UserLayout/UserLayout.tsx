@@ -52,7 +52,8 @@ const UserLayout: React.FC<UserLayoutProps> = ({ children }) => {
               onClick={handleClick}
             >
               <Avatar
-                src={userContext.user.cover ? userContext?.user.cover : null}
+                alt={userContext?.user.username}
+                src={userContext?.user.cover}
               />
             </Button>
             <Menu
