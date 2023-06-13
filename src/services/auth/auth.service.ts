@@ -55,7 +55,7 @@ export const signInWithGoogle = async (
       const userDb = await getDocs(queryUserDb);
 
       if (userDb.docs.length === 0 && user.displayName !== null && user.email !== null) {
-        const newUser = {
+        const newUser: User = {
           email: user.email,
           username: user.displayName,
           goals: 0,
