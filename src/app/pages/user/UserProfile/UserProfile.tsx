@@ -1,4 +1,4 @@
-import { Avatar, Box, Grid } from "@mui/material";
+import { Avatar, Box, Grid, Typography } from "@mui/material";
 import backgroundUser from "../../../../assets/background-user.svg";
 import { UserContext } from "../../../../context/userContext";
 import { useContext } from "react";
@@ -19,55 +19,87 @@ const UserProfile = () => {
   if (user === undefined) return null;
   return (
     <Box sx={style}>
-      <h1>Hello, {user.username} !</h1>
       <Box>
-        <h2>My informations</h2>
-        <Grid container width={"80%"} sx={{ margin: "auto" }}>
-          <Grid item xs={4}>
-            <Avatar alt={user.username} src={user.cover} />
+        <Grid
+          container
+          justifyContent="center"
+          alignItems="center"
+          flexDirection="row"
+        >
+          <Grid item xs={12} md={6}>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                flexDirection: "column",
+                marginTop: "70px",
+              }}
+            >
+              <Avatar
+                alt={user.username}
+                src={user.cover}
+                sx={{
+                  width: "100px",
+                  height: "100px",
+                  border: "2px solid #fff",
+                }}
+              />
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  flexDirection: "column",
+                  marginTop: "20px",
+                }}
+              >
+                <Typography variant="h4">{user.username}</Typography>
+                <Typography variant="h6">{user.email}</Typography>
+              </Box>
+            </Box>
           </Grid>
-          <Grid item xs={8}>
-            <p>Pseudo: {user.username}</p>
-            <p>Email: {user.email}</p>
-          </Grid>
-        </Grid>
-      </Box>
-      <Box>
-        <h2>Mes stats</h2>
-        <Grid container width={"80%"} sx={{ margin: "auto" }}>
-          <Grid item xs={4}>
-            <p>Matchs joués</p>
-          </Grid>
-          <Grid item xs={8}>
-            <p>{user.playedGames ? user.playedGames : 0}</p>
-          </Grid>
-        </Grid>
-        <Grid container width={"80%"} sx={{ margin: "auto" }}>
-          <Grid item xs={4}>
-            <p>Matchs gagnés</p>
-          </Grid>
-          <Grid item xs={8}>
-            <p>{user.wins ? user.wins : 0}</p>
-          </Grid>
-        </Grid>
-        <Grid container width={"80%"} sx={{ margin: "auto" }}>
-          <Grid item xs={4}>
-            <p>Buts</p>
-          </Grid>
-          <Grid item xs={8}>
-            <p>{user.goals ? user.goals : 0}</p>
-          </Grid>
-        </Grid>
-        <Grid container width={"80%"} sx={{ margin: "auto" }}>
-          <Grid item xs={4}>
-            <p>Goal Average</p>
-          </Grid>
-          <Grid item xs={8}>
-            <p>
-              {user.goals && user.playedGames
-                ? user.goals / user.playedGames
-                : 0}
-            </p>
+          <Grid item xs={12} md={6}>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                flexDirection: "column",
+                marginTop: "30px",
+              }}
+            >
+              <Typography variant="h4">Mes Statistiques</Typography>
+              <Grid container p={2}>
+                <Grid item xs={12} display={"flex"} flexDirection="row">
+                  <Grid item xs={5}>
+                    <Typography variant="h6">Parties jouées</Typography>
+                  </Grid>
+                  <Grid item xs={2}>
+                    <Typography variant="h6">:</Typography>
+                  </Grid>
+                  <Grid item xs={5}>
+                    <Typography variant="h6">
+                      {user.playedGames ? user.playedGames : 0}
+                    </Typography>
+                  </Grid>
+                </Grid>
+                <Grid item xs={12} display={"flex"} flexDirection="row">
+                  <Grid item xs={5}>
+                    <Typography variant="h6">Parties gagnées</Typography>
+                  </Grid>
+                  <Grid item xs={2}>
+                    <Typography variant="h6">:</Typography>
+                  </Grid>
+                  <Grid item xs={5}>
+                    <Typography variant="h6">
+                      {user.wins ? user.wins : 0}
+                    </Typography>
+                  </Grid>
+                </Grid>
+                <Box></Box>
+              </Grid>
+            </Box>
           </Grid>
         </Grid>
       </Box>

@@ -3,7 +3,8 @@ import { UserLayoutProps } from "./utils";
 import { useContext, useState } from "react";
 import { UserContext } from "../../../context/userContext";
 import { logOut } from "../../../services/auth/auth.service";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useMatch, useNavigate } from "react-router-dom";
+import MenuIcon from "@mui/icons-material/Menu";
 
 const UserLayout: React.FC<UserLayoutProps> = ({ children }) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -11,6 +12,7 @@ const UserLayout: React.FC<UserLayoutProps> = ({ children }) => {
   const userContext = useContext(UserContext);
   const navigate = useNavigate();
   const location = useLocation();
+  const match = useMatch("/user/profile");
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -56,10 +58,19 @@ const UserLayout: React.FC<UserLayoutProps> = ({ children }) => {
               aria-expanded={open ? "true" : undefined}
               onClick={handleClick}
             >
-              <Avatar
-                alt={userContext?.user.username}
-                src={userContext?.user.cover}
-              />
+              {match ? (
+                <MenuIcon
+                  fontSize="large"
+                  sx={{
+                    color: "#fff",
+                  }}
+                />
+              ) : (
+                <Avatar
+                  alt={userContext?.user.username}
+                  src={userContext?.user.cover}
+                />
+              )}
             </Button>
             <Menu
               id="user-profile-menu"
@@ -70,7 +81,7 @@ const UserLayout: React.FC<UserLayoutProps> = ({ children }) => {
                 "aria-labelledby": "basic-button",
               }}
             >
-              {location.pathname === "/user/profile" ? (
+              {match ? (
                 <MenuItem onClick={handlePlay}>Jouer</MenuItem>
               ) : (
                 <MenuItem onClick={handleProfile}>Mon profil</MenuItem>
