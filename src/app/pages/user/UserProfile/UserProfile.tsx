@@ -102,6 +102,17 @@ const UserProfile = () => {
             </Box>
           </Grid>
         </Grid>
+        <Grid container width={"80%"} sx={{ margin: "auto" }}>
+          <Grid item xs={4}>
+            <p>Rateau</p>
+          </Grid>
+          <Grid item xs={8}>
+            <p>
+              {user.fouls &&
+                user.fouls.find((foul) => foul.name === "rateau")?.count}
+            </p>
+          </Grid>
+        </Grid>
       </Box>
     </Box>
   );
