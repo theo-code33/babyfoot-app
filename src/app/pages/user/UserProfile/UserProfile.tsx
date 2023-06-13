@@ -19,7 +19,7 @@ const UserProfile = () => {
   if (user === undefined) return null;
   return (
     <Box sx={style}>
-      <h1>Hello, {user.username} !</h1>
+      <h1 style={{ marginTop: 0 }}>Hello, {user.username} !</h1>
       <Box>
         <h2>My informations</h2>
         <Grid container width={"80%"} sx={{ margin: "auto" }}>
@@ -67,6 +67,17 @@ const UserProfile = () => {
               {user.goals && user.playedGames
                 ? user.goals / user.playedGames
                 : 0}
+            </p>
+          </Grid>
+        </Grid>
+        <Grid container width={"80%"} sx={{ margin: "auto" }}>
+          <Grid item xs={4}>
+            <p>Rateau</p>
+          </Grid>
+          <Grid item xs={8}>
+            <p>
+              {user.fouls &&
+                user.fouls.find((foul) => foul.name === "rateau")?.count}
             </p>
           </Grid>
         </Grid>
