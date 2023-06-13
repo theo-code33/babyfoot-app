@@ -24,7 +24,7 @@ const UserProfile = () => {
           container
           justifyContent="center"
           alignItems="center"
-          flexDirection="row"
+          flexDirection="column"
         >
           <Grid item xs={12} md={6}>
             <Box
@@ -70,7 +70,20 @@ const UserProfile = () => {
               }}
             >
               <Typography variant="h4">Mes Statistiques</Typography>
-              <Grid container p={2}>
+              <Grid
+                container
+                p={2}
+                sx={{
+                  "& .MuiGrid-item": {
+                    backgroundColor: "rgba(11, 35, 54, 65%)",
+                    margin: "5px 0px",
+                    borderRadius: "5px",
+                    "& .MuiTypography-root": {
+                      textAlign: "center",
+                    },
+                  },
+                }}
+              >
                 <Grid item xs={12} display={"flex"} flexDirection="row">
                   <Grid item xs={5}>
                     <Typography variant="h6">Parties jouées</Typography>
@@ -97,20 +110,145 @@ const UserProfile = () => {
                     </Typography>
                   </Grid>
                 </Grid>
-                <Box></Box>
+                <Grid item xs={12} display={"flex"} flexDirection="row">
+                  <Grid item xs={5}>
+                    <Typography variant="h6">Parties perdues</Typography>
+                  </Grid>
+                  <Grid item xs={2}>
+                    <Typography variant="h6">:</Typography>
+                  </Grid>
+                  <Grid item xs={5}>
+                    <Typography variant="h6">
+                      {(user.playedGames ? user.playedGames : 0) -
+                        (user?.wins ? user.wins : 0)}
+                    </Typography>
+                  </Grid>
+                </Grid>
+              </Grid>
+              <Grid
+                container
+                p={2}
+                sx={{
+                  "& .MuiGrid-item": {
+                    backgroundColor: "rgba(11, 35, 54, 65%)",
+                    margin: "5px 0px",
+                    borderRadius: "5px",
+                    "& .MuiTypography-root": {
+                      textAlign: "center",
+                    },
+                  },
+                }}
+              >
+                <Grid item xs={12} display={"flex"} flexDirection="row">
+                  <Grid item xs={5}>
+                    <Typography variant="h6">Rateau</Typography>
+                  </Grid>
+                  <Grid item xs={2}>
+                    <Typography variant="h6">:</Typography>
+                  </Grid>
+                  <Grid item xs={5}>
+                    <Typography variant="h6">
+                      {user.fouls &&
+                        user.fouls.find((foul) => foul.name === "rateau")
+                          ?.count}
+                    </Typography>
+                  </Grid>
+                </Grid>
+                <Grid item xs={12} display={"flex"} flexDirection="row">
+                  <Grid item xs={5}>
+                    <Typography variant="h6">Roulette</Typography>
+                  </Grid>
+                  <Grid item xs={2}>
+                    <Typography variant="h6">:</Typography>
+                  </Grid>
+                  <Grid item xs={5}>
+                    <Typography variant="h6">
+                      {user.fouls &&
+                        user.fouls.find((foul) => foul.name === "roulette")
+                          ?.count}
+                    </Typography>
+                  </Grid>
+                </Grid>
+                <Grid item xs={12} display={"flex"} flexDirection="row">
+                  <Grid item xs={5}>
+                    <Typography variant="h6">Pisette</Typography>
+                  </Grid>
+                  <Grid item xs={2}>
+                    <Typography variant="h6">:</Typography>
+                  </Grid>
+                  <Grid item xs={5}>
+                    <Typography variant="h6">
+                      {user.fouls &&
+                        user.fouls.find((foul) => foul.name === "pisette")
+                          ?.count}
+                    </Typography>
+                  </Grid>
+                </Grid>
+              </Grid>
+              <Grid
+                container
+                p={2}
+                sx={{
+                  "& .MuiGrid-item": {
+                    backgroundColor: "rgba(11, 35, 54, 65%)",
+                    margin: "5px 0px",
+                    borderRadius: "5px",
+                    "& .MuiTypography-root": {
+                      textAlign: "center",
+                    },
+                  },
+                }}
+              >
+                <Grid item xs={12} display={"flex"} flexDirection="row">
+                  <Grid item xs={5}>
+                    <Typography variant="h6">Cendar</Typography>
+                  </Grid>
+                  <Grid item xs={2}>
+                    <Typography variant="h6">:</Typography>
+                  </Grid>
+                  <Grid item xs={5}>
+                    <Typography variant="h6">
+                      {user.technicals &&
+                        user.technicals.find(
+                          (technical) => technical.name === "cendar"
+                        )?.count}
+                    </Typography>
+                  </Grid>
+                </Grid>
+                <Grid item xs={12} display={"flex"} flexDirection="row">
+                  <Grid item xs={5}>
+                    <Typography variant="h6">Lob</Typography>
+                  </Grid>
+                  <Grid item xs={2}>
+                    <Typography variant="h6">:</Typography>
+                  </Grid>
+                  <Grid item xs={5}>
+                    <Typography variant="h6">
+                      {user.technicals &&
+                        user.technicals.find(
+                          (technical) => technical.name === "lob"
+                        )?.count}
+                    </Typography>
+                  </Grid>
+                </Grid>
+                <Grid item xs={12} display={"flex"} flexDirection="row">
+                  <Grid item xs={5}>
+                    <Typography variant="h6">But Incroyable</Typography>
+                  </Grid>
+                  <Grid item xs={2}>
+                    <Typography variant="h6">:</Typography>
+                  </Grid>
+                  <Grid item xs={5}>
+                    <Typography variant="h6">
+                      {user.technicals &&
+                        user.technicals.find(
+                          (technical) => technical.name === "but incroyable"
+                        )?.count}
+                    </Typography>
+                  </Grid>
+                </Grid>
               </Grid>
             </Box>
-          </Grid>
-        </Grid>
-        <Grid container width={"80%"} sx={{ margin: "auto" }}>
-          <Grid item xs={4}>
-            <p>Rateau</p>
-          </Grid>
-          <Grid item xs={8}>
-            <p>
-              {user.fouls &&
-                user.fouls.find((foul) => foul.name === "rateau")?.count}
-            </p>
           </Grid>
         </Grid>
       </Box>
