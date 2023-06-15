@@ -3,7 +3,7 @@ import { UserLayoutProps } from "./utils";
 import { useContext, useState } from "react";
 import { UserContext } from "../../../context/userContext";
 import { logOut } from "../../../services/auth/auth.service";
-import { useLocation, useMatch, useNavigate } from "react-router-dom";
+import { useMatch, useNavigate } from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu";
 
 const UserLayout: React.FC<UserLayoutProps> = ({ children }) => {
@@ -11,7 +11,6 @@ const UserLayout: React.FC<UserLayoutProps> = ({ children }) => {
   const open = Boolean(anchorEl);
   const userContext = useContext(UserContext);
   const navigate = useNavigate();
-  const location = useLocation();
   const match = useMatch("/user/profile");
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
