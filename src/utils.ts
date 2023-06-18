@@ -1,4 +1,4 @@
-import { Position } from "./db/utils";
+import { Fouls, Position, Postes, Technicals } from "./db/utils";
 
 export type Games = Game[];
 
@@ -20,4 +20,9 @@ export type User = {
   goals?: number;
   playerPoste?: Position;
   isAdmin: boolean;
+  playedGames?: number;
+  wins?: number;
+  fouls?: Fouls;
+  postes?: Postes;
+  technicals?: Technicals;
 };
