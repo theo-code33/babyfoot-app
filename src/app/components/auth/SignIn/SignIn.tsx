@@ -20,8 +20,9 @@ import {
 import { Sign } from "../../../../services/auth/utils";
 
 import logoGoogle from "../../../../assets/logo-google.png";
-import { Props } from "./utils";
+import { MessageErrorResend, Props } from "./utils";
 import { UserContextType } from "../../../../context/utils";
+import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 
 const SignIn: React.FC<Props> = ({ id }) => {
   const [user, setUser] = useState<Sign>({
@@ -30,6 +31,8 @@ const SignIn: React.FC<Props> = ({ id }) => {
   });
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
+  const [messageResetPassword, setMessageResetPassword] =
+    useState<MessageErrorResend>();
   const { setUser: setGlobalUser } = useContext(UserContext) as UserContextType;
   const navigate = useNavigate();
 
@@ -63,6 +66,29 @@ const SignIn: React.FC<Props> = ({ id }) => {
 
   const handleSignIpWithGoogle = async (): Promise<void> => {
     await signInWithGoogle(setError, navigate, id);
+  };
+
+  const handleResetPassword = async () => {
+    if (user.email === "") {
+      setMessageResetPassword({
+        message: "Veuillez renseigner un email valide dans le champ email",
+        status: "error",
+      });
+      return;
+    } else if (user.email === "demo@babyfoot-app.fr") {
+      setMessageResetPassword({
+        message:
+          "Vous ne pouvez pas réinitialiser le mot de passe du compte démo",
+        status: "error",
+      });
+      return;
+    }
+    const auth = getAuth();
+    await sendPasswordResetEmail(auth, user.email);
+    setMessageResetPassword({
+      message: "Un email de réinitialisation a été envoyé",
+      status: "success",
+    });
   };
 
   return (
@@ -133,6 +159,25 @@ const SignIn: React.FC<Props> = ({ id }) => {
         <img src={logoGoogle} alt="logo google" />
         Se connecter avec Google
       </Button>
+      <Button
+        variant="text"
+        onClick={handleResetPassword}
+        className="sign-in-form_link"
+      >
+        Mot de passe oublié ?
+      </Button>
+      {messageResetPassword && (
+        <span
+          className={
+            messageResetPassword.status === "success"
+              ? "sign-in-form_success"
+              : "sign-in-form_error"
+          }
+          style={{ marginBottom: "10px" }}
+        >
+          {messageResetPassword.message}
+        </span>
+      )}
       {id ? (
         <Link to={`/signup/${id}`} className="sign-in-form_link">
           Créer un compte
