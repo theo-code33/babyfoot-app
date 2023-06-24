@@ -25,4 +25,5 @@ export type User = {
   fouls?: Fouls;
   postes?: Postes;
   technicals?: Technicals;
+  isDemo?: boolean;
 };
