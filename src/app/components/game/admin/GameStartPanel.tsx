@@ -19,6 +19,8 @@ const GameStartPanel = () => {
   const navigate = useNavigate();
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
+  const isProd = process.env.REACT_APP_PROD === "production";
+
   const handleStartGame = async (): Promise<void> => {
     if (game === undefined) return;
     const updatedGame = await updateGameStatus(game, true);
@@ -40,7 +42,9 @@ const GameStartPanel = () => {
     } else {
       QRCode.toCanvas(
         canvasRef.current,
-        `https://babyfoot-app-24750.web.app/qr-code/${id}`,
+        isProd
+          ? `https://babyfoot-app-prod.web.app/qr-code/${id}`
+          : `https://babyfoot-app-24750.web.app/qr-code/${id}`,
         (error) => error && console.error(error)
       );
     }
@@ -80,7 +84,9 @@ const GameStartPanel = () => {
           <canvas ref={canvasRef} />
           <p>ou</p>
           <p className="link-code">
-            https://babyfoot-app-24750.web.app/signin/
+            {isProd
+              ? "https://babyfoot-app-prod.web.app/signin/"
+              : "https://babyfoot-app-24750.web.app/signin/"}
             <span style={{ fontWeight: "bold", fontSize: "18px" }}>{id}</span>
           </p>
         </Box>
