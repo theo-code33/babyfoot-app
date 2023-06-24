@@ -12,6 +12,7 @@ jobs:
       REACT_APP_APP_ID: ${{ secrets.REACT_APP_APP_ID_PROD }}
       REACT_APP_SLACK_TOKEN: ${{ secrets.REACT_APP_SLACK_TOKEN_PROD }}
       CI: false
+      REACT_APP_PROD: "production"
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
