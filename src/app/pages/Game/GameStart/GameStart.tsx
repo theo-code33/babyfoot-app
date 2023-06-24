@@ -6,14 +6,8 @@ import { UserContextType } from "../../../../context/utils";
 
 const GameStart = () => {
   const { user } = useContext(UserContext) as UserContextType;
-
   return (
-    <>
-      {user && user.isAdmin === true
-      ? <GameCreate />
-      : <UserGameConnect />
-      }
-    </>
+    <>{user && user.isAdmin === true ? <GameCreate /> : <UserGameConnect />}</>
   );
 };
 

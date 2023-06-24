@@ -2,23 +2,31 @@ import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { GameContext } from "../../../../context/gameContext";
-import { Team } from "../../../../context/utils";
+import { Team, UserContextType } from "../../../../context/utils";
 
 import { getUserByUid } from "../../../../db/users/read.users";
 import { updateUser } from "../../../../db/users/update.users";
 import { User, UserGame } from "../../../../db/utils";
 
 import score from "../../../../assets/endGame/scoreboard.png";
+import { UserContext } from "../../../../context/userContext";
+import { deleteDoc, doc } from "firebase/firestore";
+import { db } from "../../../../services/config/firebase";
 
 const GameResult = () => {
   const { game } = useContext(GameContext);
+  const { user } = useContext(UserContext) as UserContextType;
   const [topBlueScorer, setTopBlueScorer] = useState<string>("");
   const [topRedScorer, setTopRedScorer] = useState<string>("");
   const [realUserList, setRealUserList] = useState<UserGame[]>([]);
 
   const navigate = useNavigate();
 
-  const handleClick = () => {
+  const handleClick = async () => {
+    if (user && user.isDemo === true && game !== undefined) {
+      const gameRef = doc(db, "games", game.id);
+      await deleteDoc(gameRef);
+    }
     navigate("/game/create");
   };
 
@@ -115,6 +123,7 @@ const GameResult = () => {
   }, [game]);
 
   useEffect(() => {
+    if (user && user.isDemo === true) return;
     realUserList.forEach(async (userPlayer: any) => {
       let userDb = (await getUserByUid(userPlayer.userId)) as User;
 

@@ -1,6 +1,6 @@
 import { useContext, useEffect, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Box, Button } from "@mui/material";
+import { Box } from "@mui/material";
 
 import { GameContext } from "../../../../context/gameContext";
 import { UserContext } from "../../../../context/userContext";
@@ -11,7 +11,6 @@ import { closeGame, updateGameStatus } from "../../../../db/game/updateGame";
 import QRCode from "qrcode";
 
 import backgroundGameStartPanel from "../../../../assets/background-start-game.svg";
-import { updateDoc } from "firebase/firestore";
 
 const GameStartPanel = () => {
   const { id } = useParams<{ id: string }>();
@@ -29,8 +28,8 @@ const GameStartPanel = () => {
   };
 
   const handleCloseGame = async (): Promise<void> => {
-    if (game === undefined) return;
-    await closeGame(game);
+    if (game === undefined || user === undefined) return;
+    await closeGame(game, user);
     setGame(undefined);
     navigate(`/game/create`);
   };
