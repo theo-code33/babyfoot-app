@@ -1,3 +1,10 @@
+# Welcome on Babyfoot App
+
+If you want to test the app, you can go on [Babyfoot App](https://babyfoot-app-prod.web.app/game) and use the following account:
+
+- email: demo@babyfoot-app.fr
+- password: babyfoot-demo
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

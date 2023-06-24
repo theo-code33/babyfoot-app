@@ -1,6 +1,7 @@
-import { doc, onSnapshot, setDoc } from "firebase/firestore";
+import { deleteDoc, doc, onSnapshot, setDoc } from "firebase/firestore";
 import { db } from "../../services/config/firebase";
 import { Game, Team, UpdatedUser } from "../utils";
+import { User } from "../../utils";
 
 export const updateGamePlayer = async (user: UpdatedUser, position: string, team: Team, gameId: number, game: Game): Promise<void> => {
     try {
@@ -120,15 +121,19 @@ export const updateGameStatus = async (game: Game, status: boolean): Promise<Gam
     }
 }
 
-export const closeGame = async (game: Game): Promise<void> => {
+export const closeGame = async (game: Game, user: User): Promise<void> => {
     try {
         const gameRef = doc(db, 'games', game.id)
-        const updatedGame = {
-            ...game,
-            isActive: false,
-            isPlaying: false
+        if(user.isDemo === true) {
+            await deleteDoc(gameRef)
+        }else{
+            const updatedGame = {
+                ...game,
+                isActive: false,
+                isPlaying: false
+            }
+            await setDoc(gameRef, updatedGame, { merge: true })
         }
-        await setDoc(gameRef, updatedGame, { merge: true })
     } catch (error: any) {
         throw new Error(error.message)
     }

@@ -1,6 +1,6 @@
 import { useContext, useEffect, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Box, Button } from "@mui/material";
+import { Box } from "@mui/material";
 
 import { GameContext } from "../../../../context/gameContext";
 import { UserContext } from "../../../../context/userContext";
@@ -11,32 +11,31 @@ import { closeGame, updateGameStatus } from "../../../../db/game/updateGame";
 import QRCode from "qrcode";
 
 import backgroundGameStartPanel from "../../../../assets/background-start-game.svg";
-import { updateDoc } from "firebase/firestore";
 
 const GameStartPanel = () => {
-  const { id } = useParams<{id: string}>();
+  const { id } = useParams<{ id: string }>();
   const { game, setGame } = useContext(GameContext);
   const { user } = useContext(UserContext) as UserContextType;
   const navigate = useNavigate();
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   const handleStartGame = async (): Promise<void> => {
-    if(game === undefined) return;
+    if (game === undefined) return;
     const updatedGame = await updateGameStatus(game, true);
     const { id } = updatedGame;
-    setGame(updatedGame)
+    setGame(updatedGame);
     navigate(`/game/${id}`);
   };
 
   const handleCloseGame = async (): Promise<void> => {
-    if(game === undefined) return;
-    await closeGame(game);
-    setGame(undefined)
+    if (game === undefined || user === undefined) return;
+    await closeGame(game, user);
+    setGame(undefined);
     navigate(`/game/create`);
-  }
+  };
 
   useEffect(() => {
-    if (user && user.email !== "admin@admin.com") {
+    if (user && user.isAdmin !== true) {
       navigate("/game");
     } else {
       QRCode.toCanvas(
@@ -49,50 +48,61 @@ const GameStartPanel = () => {
 
   const style: React.CSSProperties = {
     background: `url(${backgroundGameStartPanel})`,
-  }
+  };
 
   return (
     <Box sx={style} className="container-start-game">
-        <button onClick={handleCloseGame} className="leave" style={{position: "absolute", top: "50px", right: "50px"}}>Quitter la partie</button>
-        <Box className="content-start-game">
-            <Box className="container-player">
-                {game !== undefined && game.blue &&
-                    game.blue.users.map((player, index) => {
-                    return (
-                        <div key={index} className="player blue">
-                        <p>
-                            {player.userName
-                            ? player.userName
-                            : `Player ${player.playerNumber}`}
-                        </p>
-                        </div>
-                    );
-                })}
-            </Box>
-            <Box className="container-code">
-                <h2>Scanner pour se connecter</h2>
-                <canvas ref={canvasRef} />
-                <p>ou</p>
-                <p className="link-code">
-                    https://babyfoot-app-24750.web.app/signin/<span style={{fontWeight: "bold", fontSize: "18px"}}>{id}</span>
-                </p>
-            </Box>
-            <Box className="container-player red-container">
-                {game !== undefined && game.red &&
-                    game.red.users.map((player, index) => {
-                    return (
-                        <div key={index} className="player red">
-                        <p>
-                            {player.userName
-                            ? player.userName
-                            : `Player ${player.playerNumber}`}
-                        </p>
-                        </div>
-                    );
-                })}
-            </Box>
+      <button
+        onClick={handleCloseGame}
+        className="leave"
+        style={{ position: "absolute", top: "50px", right: "50px" }}
+      >
+        Quitter la partie
+      </button>
+      <Box className="content-start-game">
+        <Box className="container-player">
+          {game !== undefined &&
+            game.blue &&
+            game.blue.users.map((player, index) => {
+              return (
+                <div key={index} className="player blue">
+                  <p>
+                    {player.userName
+                      ? player.userName
+                      : `Player ${player.playerNumber}`}
+                  </p>
+                </div>
+              );
+            })}
         </Box>
-      <button onClick={handleStartGame} className="button-start">Start !</button>
+        <Box className="container-code">
+          <h2>Scanner pour se connecter</h2>
+          <canvas ref={canvasRef} />
+          <p>ou</p>
+          <p className="link-code">
+            https://babyfoot-app-24750.web.app/signin/
+            <span style={{ fontWeight: "bold", fontSize: "18px" }}>{id}</span>
+          </p>
+        </Box>
+        <Box className="container-player red-container">
+          {game !== undefined &&
+            game.red &&
+            game.red.users.map((player, index) => {
+              return (
+                <div key={index} className="player red">
+                  <p>
+                    {player.userName
+                      ? player.userName
+                      : `Player ${player.playerNumber}`}
+                  </p>
+                </div>
+              );
+            })}
+        </Box>
+      </Box>
+      <button onClick={handleStartGame} className="button-start">
+        Start !
+      </button>
     </Box>
   );
 };
