@@ -45,6 +45,7 @@ const SignIn: React.FC<Props> = ({ id }) => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setError(false);
+    setMessageResetPassword(undefined);
     setUser({ ...user, [e.target.name]: e.target.value });
   };
 
@@ -84,11 +85,35 @@ const SignIn: React.FC<Props> = ({ id }) => {
       return;
     }
     const auth = getAuth();
-    await sendPasswordResetEmail(auth, user.email);
-    setMessageResetPassword({
-      message: "Un email de réinitialisation a été envoyé",
-      status: "success",
-    });
+    sendPasswordResetEmail(auth, user.email)
+      .then(() => {
+        setMessageResetPassword({
+          message: "Un email de réinitialisation a été envoyé",
+          status: "success",
+        });
+      })
+      .catch((error) => {
+        const { code } = error;
+        if (code === "auth/user-not-found") {
+          setMessageResetPassword({
+            message: "Cet email n'existe pas",
+            status: "error",
+          });
+          return;
+        }
+        if (code === "auth/invalid-email") {
+          setMessageResetPassword({
+            message:
+              "L'email est invalide, veuillez renseigner un email valide dans le champ email",
+            status: "error",
+          });
+          return;
+        }
+        setMessageResetPassword({
+          message: "Une erreur s'est produite. Veuillez réesayer plus tard",
+          status: "error",
+        });
+      });
   };
 
   return (
